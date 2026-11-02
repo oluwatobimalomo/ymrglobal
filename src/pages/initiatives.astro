@@ -1,0 +1,400 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const initiatives = [
+  {
+    id: 'youth-aflame',
+    name: 'Youth Aflame Conference',
+    short: 'YAC',
+    detail: 'A conference equipping young people to carry their faith into their work, leadership, and communities.',
+    highlights: [
+      { label: 'Audience', value: 'Young people', icon: 'users' },
+      { label: 'Reach', value: 'Thousands in person and online', icon: 'globe' },
+      { label: 'Focus', value: 'Faith in every sphere', icon: 'compass' },
+    ],
+    image: '/images/initiatives/youth-aflame.jpg',
+    alt: 'Young ministers at a Youth Aflame Conference',
+    videoId: 'eLoGqiWRkpA',
+    videoPlaylist: 'PLrPBxFbbwD7iFVNaBgk_ii_vyS_3Z7Lxt',
+    gallery: [
+      { src: '/images/initiatives/yac/pastor-daniel-speaking.jpg', alt: 'Pastor Daniel Olawande speaking at Youth Aflame Conference', caption: 'Pastor Daniel Olawande' },
+      { src: '/images/initiatives/yac/pastor-nifemi-speaking.jpg', alt: 'Pastor Mrs. Nifemi Olawande speaking at Youth Aflame Conference', caption: 'A message from Pastor Mrs. Nifemi Olawande' },
+      { src: '/images/initiatives/yac/conference-audience.jpg', alt: 'Young people attending a Youth Aflame Conference session', caption: 'Conference session' },
+      { src: '/images/initiatives/yac/career-panel.jpg', alt: 'Speakers sharing insights at a Youth Aflame Conference panel', caption: 'Daniel Playbook panel' },
+      { src: '/images/initiatives/yac/pastor-poju-teaching.jpg', alt: 'Pastor Poju Oyemade teaching at Youth Aflame Conference', caption: 'Teaching and leadership' },
+      { src: '/images/initiatives/yac/technology-panel.jpg', alt: 'Technology and career panel at Youth Aflame Conference', caption: 'Technology and the marketplace' },
+      { src: '/images/initiatives/yac/auditorium.jpg', alt: 'The auditorium during a Youth Aflame Conference', caption: 'Youth Aflame Conference' },
+    ],
+    sections: [
+      {
+        title: 'The Beginning: How YAC Started',
+        paragraphs: [
+          'In the late 2010s, Pastor Daniel Olawande, popularly known as P. Daniel, noticed something among young Christians. Many youths were becoming spiritually on fire through church retreats and prayer meetings, but when they stepped into the competitive world outside the church, some struggled to stand firm in their faith and succeed without compromising their values.',
+          'This was what led to the birth of YAC. P. Daniel wanted to create something that would help young people not only grow spiritually but also learn how to stand firm in their faith while navigating the world around them.',
+          'Over the years, YAC grew into a major annual conference, attracting thousands of young people physically and online. One of its notable editions was the Youth Aflame Conference in Ikeja, Lagos, which brought together young people with a desire to grow in their faith and purpose.',
+        ],
+      },
+      {
+        title: 'The Purpose: Living Out Your Faith Beyond the Church',
+        paragraphs: ['YAC was built on the belief that you don’t have to choose between being a dedicated Christian and being successful in your career. Its aim is to raise people who carry the fire of God into the marketplace and make a difference through their work, innovation, and leadership, while maintaining their faith and integrity.'],
+      },
+      {
+        title: 'The Strategic Activities',
+        paragraphs: ['YAC combines spiritual empowerment with practical teachings that prepare young people for the marketplace. Its activities include:'],
+        items: [
+          'The Daniel Playbook Panels: These sessions feature corporate leaders, tech founders and media executives, such as Pastor Poju Oyemade, Apostle Emmanuel Iren and tech pioneer Iyin Aboyeji, who share practical insights and experiences on building successful careers.',
+          'Prophetic Allocations and Charges: These are intensive prayer and worship sessions led by P. Daniel. They focus on building spiritual confidence, overcoming fear and helping participants receive direction for their careers and purpose.',
+          'Sector-Specific Breakout Sessions: These sessions focus on different areas of influence, including Technology, Education, Politics, Entertainment and Business. They provide participants with insights relevant to their respective fields.',
+        ],
+      },
+      {
+        title: 'The Goal: Raising a Generation of Kingdom Influencers',
+        paragraphs: ['The ultimate vision of YAC is “The Emergence of the Daniels, Esthers, and Josephs.” The conference seeks to raise young professionals who will make a difference in their various industries. These are people who refuse to lie, cut corners or compromise their values to fit into unhealthy corporate environments. Instead, they stand out through their integrity, excellence and commitment to doing what is right.'],
+      },
+      {
+        title: 'The Impact: Raising a Generation of Excellence',
+        paragraphs: [
+          'YAC has influenced the mindset of many young Africans. Rather than waiting for things to change, many of its participants have gone on to establish businesses, grow in their careers and take up positions in public service while maintaining their values and kingdom mindset.',
+          'As P. Daniel often emphasizes during the conferences, one of YAC’s greatest impacts is changing the way people see Nigerian and African youths by showing that young people can be committed to their faith, excel in their different fields and remain truthful without compromising their values.',
+        ],
+      },
+    ],
+  },
+  { id: 'envoys', name: 'RCCG The Envoys', short: 'THE ENVOYS', detail: 'An RCCG youth ministry that equips young people to live as kingdom ambassadors.', image: '/images/initiatives/envoys.jpg', alt: 'A minister speaking with The Envoys congregation', external: 'https://rccgtheenvoys.org/' },
+  {
+    id: 'city-to-city',
+    name: 'City to City Fire Conference',
+    short: 'CITY TO CITY',
+    detail: 'A YMR initiative that carries revival fire into cities and territories beyond the main retreat.',
+    highlights: [
+      { label: 'First conference', value: '12,600+ attended in one night', icon: 'users' },
+      { label: 'Approach', value: 'Prayer, impartation, and outreach', icon: 'hands' },
+      { label: 'Vision', value: 'Fire in cities and communities', icon: 'mapPin' },
+    ],
+    image: '/images/initiatives/city-to-city.jpg',
+    alt: 'A worshipper responding at a City to City Fire Conference',
+    sections: [
+      {
+        title: 'How the City-to-City Conferences Began',
+        paragraphs: [
+          'Every December, hundreds of thousands of young believers travelled from different parts of the continent to attend YMR Global (Young Ministers Retreat) at the Redemption City. While the retreat brought many young people together, Pastor Daniel Olawande (P. Daniel) noticed that some of them struggled to keep the same spiritual fire burning when they returned to their different states and university campuses. Many found it difficult to stay spiritually active in environments where they had little encouragement.',
+          'This led P. Daniel and the YMR team to think of a way to reach these young people in their different locations. Rather than having everyone travel to the main camp every December, they decided to take the meetings to different cities. This was how the City-to-City Fire Conferences (CFC) began.',
+          'The first edition was held at the Ekiti Parapo Pavilion in Ado Ekiti, where more than 12,600 people attended in one night. The turnout showed the need to take the meetings beyond the main camp and reach young people in other parts of the country.',
+        ],
+      },
+      {
+        title: 'The Main Activities: What Happens at the Conferences?',
+        paragraphs: ['The CFC brings together prayer meetings, spiritual impartation and community outreach. Some of its major activities include:'],
+        items: [
+          'Marathon Corporate Intercession: Hours of prayer focused on the spiritual and social challenges facing the host city.',
+          'The “Mantle” Impartations: Sessions led by P. Daniel and guest ministers to encourage and strengthen local campus leaders, student fellowships and youth pastors.',
+          'Community Outreaches: Evangelism across nearby academic institutions, alongside welfare support for less privileged communities around the conference venue.',
+        ],
+      },
+      {
+        title: 'The Goal: Raising Watchmen in Different Cities',
+        paragraphs: ['The goal of the CFC is to establish Northern, Southern and Western Fire Conferences across Nigeria and beyond. The vision is to raise young people who will remain committed to God and take responsibility for the spiritual growth of their communities. It is not just about organising conferences; it is also about building a lasting presence in these cities.'],
+      },
+      {
+        title: 'The Impact: Changing Communities Through Young People',
+        paragraphs: [
+          'The conferences have brought different churches together, giving them the opportunity to work towards a common purpose despite their denominational differences.',
+          'Beyond the meetings, the impact is seen in the lives of young people who return to their schools and communities with a stronger commitment to prayer, their academics and their faith. The aim is for them to continue living out what they have received, even after the conferences are over.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'samaritan',
+    name: 'YMR Samaritan',
+    short: 'SAMARITAN',
+    detail: 'YMR’s humanitarian and community-impact work turns compassion into practical support for people and communities.',
+    highlights: [
+      { label: 'Education', value: 'School-fee and JAMB support', icon: 'book' },
+      { label: 'Empowerment', value: 'Small-business startup support', icon: 'sparkles' },
+      { label: 'Community care', value: 'Healthcare and humanitarian aid', icon: 'heart' },
+    ],
+    image: '/images/initiatives/samaritan.jpg',
+    alt: 'Schoolchildren writing in their notebooks',
+    sections: [
+      {
+        title: 'Beyond the retreat',
+        paragraphs: [
+          'YMR Samaritan is the humanitarian and community-impact arm of Young Ministers’ Retreat. It extends YMR’s vision through practical acts of love, compassion, and social responsibility.',
+          'Through educational assistance, entrepreneurship support, humanitarian interventions, and healthcare outreach, YMR Samaritan works to meet practical needs, restore hope, and create opportunities for individuals and communities.',
+        ],
+      },
+      {
+        title: 'Vision and mission',
+        paragraphs: [
+          'Our vision is a compassionate and empowered society where people can access opportunities, essential support, and the resources they need to thrive.',
+          'Our mission is to demonstrate practical love through educational support, business empowerment, healthcare access, and humanitarian assistance.',
+        ],
+      },
+      {
+        title: 'Educational support',
+        paragraphs: ['Financial limitations should not prevent deserving people from accessing education and pursuing their ambitions. YMR Samaritan supports students and young people through:'],
+        items: [
+          'School-fee assistance for students from financially challenged backgrounds.',
+          'Free JAMB registration for more than 100 candidates in 2024.',
+          'Support for young people taking steps towards admission into higher institutions.',
+        ],
+      },
+      {
+        title: 'Entrepreneurship and business empowerment',
+        paragraphs: ['In December 2025, YMR Samaritan collaborated with Premium Trust to provide startup support to people seeking to establish or grow small businesses. Funding worth millions of naira was made available to beneficiaries to encourage self-reliance and sustainable economic growth.'],
+      },
+      {
+        title: 'Humanitarian and transportation support',
+        paragraphs: ['During the Lagos Fire Conference, YMR Samaritan helped people who needed transportation assistance to attend. The support eased participation costs and made it possible for beneficiaries to take part in the programme.'],
+      },
+      {
+        title: 'Healthcare outreach',
+        paragraphs: ['A free medical outreach at the University of Lagos (UNILAG) gave people an opportunity to access medical support and reflected YMR Samaritan’s commitment to physical wellbeing and dignity.'],
+      },
+      {
+        title: 'Our approach',
+        paragraphs: ['YMR Samaritan’s work is guided by five principles:'],
+        items: [
+          'Compassion: responding to genuine human needs with care and dignity.',
+          'Empowerment: providing support that creates opportunities for growth and self-reliance.',
+          'Accessibility: helping people overcome barriers to education, healthcare, and participation.',
+          'Partnership: working with organisations, institutions, and individuals to extend our reach.',
+          'Sustainability: encouraging interventions that create lasting benefits.',
+        ],
+      },
+      {
+        title: 'Partnership and future impact',
+        paragraphs: [
+          'YMR Samaritan welcomes corporate organisations, institutions, foundations, and individuals who share a commitment to humanitarian service and community development. The collaboration with Premium Trust reflects how collective effort can expand practical support and opportunity.',
+          'The work ahead includes supporting more students with fees, learning resources, and examination registration; expanding small-business empowerment; organising more free medical outreaches; assisting vulnerable people and families; and building partnerships that strengthen community programmes.',
+        ],
+      },
+      {
+        title: 'Partner with YMR Samaritan',
+        paragraphs: ['Your partnership can help open doors to education, strengthen small businesses, improve access to healthcare, and provide timely support to people who need it.'],
+      },
+    ],
+  },
+];
+---
+
+<SiteLayout title="Initiatives" description="Explore the initiatives connected to Young Ministers Retreat." current="initiatives">
+  <main id="main" class="resource-page initiatives-page">
+    <section class="resource-hero section-wrap" id="top" aria-labelledby="initiatives-title">
+      <span class="section-index">YMR GLOBAL · INITIATIVES</span>
+      <div class="resource-hero__row"><div><h1 id="initiatives-title">Revival in<br /><span>every sphere.</span></h1><p>YMR’s work continues beyond the annual retreat through events, leadership development, evangelism, and community support.</p></div><a class="button button--ember" href="mailto:info@ymrglobal.org"><Icon name="sparkles" size={17} />Connect with YMR</a></div>
+    </section>
+    <section class="initiative-directory section-wrap" aria-label="YMR initiatives">
+      {initiatives.map((initiative, index) => (
+        <article class:list={['initiative-directory__card', index % 2 === 1 && 'initiative-directory__card--reverse']} id={initiative.id}>
+          <figure><img src={initiative.image} alt={initiative.alt} loading="lazy" decoding="async" /></figure>
+          <div><span class="section-index">{initiative.short}</span><h2>{initiative.name}</h2><p>{initiative.detail}</p>
+            {initiative.external ? <a class="text-link" href={initiative.external} target="_blank" rel="noopener noreferrer">Visit The Envoys <span aria-hidden="true">↗</span></a> : initiative.sections ? <button class="about-overview__link initiative-directory__read" type="button" data-initiative-open data-title={initiative.name} data-short={initiative.short} data-detail={initiative.detail} data-highlights={JSON.stringify(initiative.highlights ?? [])} data-sections={JSON.stringify(initiative.sections)} data-gallery={JSON.stringify(initiative.gallery ?? [])} data-video-id={initiative.videoId ?? ''} data-video-playlist={initiative.videoPlaylist ?? ''} aria-haspopup="dialog" aria-controls="initiative-modal" aria-label={`Read more about ${initiative.name}`}>Read more</button> : <a class="text-link" href="mailto:info@ymrglobal.org?subject=YMR%20Samaritan">Contact YMR about Samaritan <span aria-hidden="true">↗</span></a>}
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <div class="visually-hidden" aria-hidden="true">
+      <template data-initiative-icon="book"><Icon name="book" size={18} /></template>
+      <template data-initiative-icon="compass"><Icon name="compass" size={18} /></template>
+      <template data-initiative-icon="flame"><Icon name="flame" size={18} /></template>
+      <template data-initiative-icon="globe"><Icon name="globe" size={18} /></template>
+      <template data-initiative-icon="hands"><Icon name="hands" size={18} /></template>
+      <template data-initiative-icon="heart"><Icon name="heart" size={18} /></template>
+      <template data-initiative-icon="mapPin"><Icon name="mapPin" size={18} /></template>
+      <template data-initiative-icon="sparkles"><Icon name="sparkles" size={18} /></template>
+      <template data-initiative-icon="users"><Icon name="users" size={18} /></template>
+    </div>
+    <dialog class="edition-modal initiative-modal" id="initiative-modal" data-initiative-modal aria-labelledby="initiative-modal-title" aria-describedby="initiative-modal-intro">
+      <div class="edition-modal__scroll">
+        <header class="edition-modal__header">
+          <div><span class="section-index" data-initiative-modal-kicker>YMR INITIATIVE</span><h2 id="initiative-modal-title" data-initiative-modal-title>Youth Aflame Conference</h2></div>
+          <button class="edition-modal__close" type="button" data-initiative-close aria-label="Close initiative overview"><span>Close</span><span class="edition-modal__close-mark" aria-hidden="true">×</span></button>
+        </header>
+        <div class="edition-modal__content">
+          <section class="edition-modal__overview" aria-labelledby="initiative-overview-title">
+            <span class="section-index">OVERVIEW</span>
+            <h3 id="initiative-overview-title" data-initiative-modal-heading>Faith at work and in every sphere.</h3>
+            <p class="initiative-modal__intro" id="initiative-modal-intro" data-initiative-modal-intro></p>
+            <section class="initiative-modal__highlights" aria-labelledby="initiative-highlights-title">
+              <div class="initiative-modal__highlights-heading"><span class="section-index">AT A GLANCE</span><h4 id="initiative-highlights-title">The work in focus.</h4></div>
+              <div class="initiative-modal__highlight-grid" data-initiative-highlights></div>
+            </section>
+            <div class="initiative-modal__sections" data-initiative-sections></div>
+          </section>
+          <div class="initiative-modal__media-layout">
+          <section class="edition-modal__gallery initiative-modal__gallery" data-initiative-gallery-section aria-labelledby="initiative-gallery-title" hidden>
+            <div class="edition-modal__section-heading"><div><span class="section-index">PAST EDITIONS</span><h3 id="initiative-gallery-title">YAC in pictures</h3></div></div>
+            <figure class="initiative-modal__slide"><div class="initiative-modal__slide-media"><img data-initiative-slide-image src="/images/initiatives/yac/pastor-daniel-speaking.jpg" alt="" /><button class="nation-carousel__control nation-carousel__control--previous" type="button" data-initiative-prev aria-label="Previous photo"><Icon name="arrowLeft" size={19} /></button><button class="nation-carousel__control nation-carousel__control--next" type="button" data-initiative-next aria-label="Next photo"><Icon name="arrowRight" size={19} /></button><span class="nation-carousel__count initiative-modal__slide-count" data-initiative-slide-count aria-live="polite"></span></div><figcaption data-initiative-slide-caption></figcaption></figure>
+          </section>
+          <section class="edition-modal__sessions initiative-modal__video-section" data-initiative-video-section aria-labelledby="initiative-video-title" hidden>
+            <div class="edition-modal__section-heading"><div><span class="section-index">WATCH AGAIN</span><h3 id="initiative-video-title">YAC sessions on YouTube</h3></div></div>
+            <div class="initiative-modal__video"><iframe data-initiative-video title="Youth Aflame Conference on YouTube" src="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+          </section>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  </main>
+</SiteLayout>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const modal = document.querySelector('[data-initiative-modal]');
+  const openers = [...document.querySelectorAll('[data-initiative-open]')];
+  const motionAllowed = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  const parseData = (value, fallback = []) => {
+    try { return JSON.parse(value || JSON.stringify(fallback)); } catch { return fallback; }
+  };
+  const makeInitiativeIcon = (name, className = 'initiative-modal__icon') => {
+    const template = document.querySelector(`template[data-initiative-icon="${name}"]`);
+    if (!(template instanceof HTMLTemplateElement)) return null;
+    const icon = template.content.firstElementChild?.cloneNode(true);
+    if (!(icon instanceof SVGElement)) return null;
+    const wrapper = document.createElement('span');
+    wrapper.className = className;
+    wrapper.setAttribute('aria-hidden', 'true');
+    wrapper.append(icon);
+    return wrapper;
+  };
+  const iconForSection = (title) => {
+    const normalized = title.toLowerCase();
+    if (/education|learning|study/.test(normalized)) return 'book';
+    if (/health|medical|wellbeing/.test(normalized)) return 'heart';
+    if (/city|community|humanitarian|transport/.test(normalized)) return 'mapPin';
+    if (/partnership|impact|approach|activities/.test(normalized)) return 'hands';
+    if (/purpose|vision|mission|goal/.test(normalized)) return 'compass';
+    if (/beginning|started|beyond|entrepreneurship|business/.test(normalized)) return 'sparkles';
+    if (/watchmen|fire|prayer/.test(normalized)) return 'flame';
+    return 'users';
+  };
+
+  if (modal instanceof HTMLDialogElement) {
+    const image = modal.querySelector('[data-initiative-slide-image]');
+    const caption = modal.querySelector('[data-initiative-slide-caption]');
+    const count = modal.querySelector('[data-initiative-slide-count]');
+    const video = modal.querySelector('[data-initiative-video]');
+    let slides = [];
+    let activeSlide = 0;
+    let hoverTimer;
+
+    const showSlide = (index) => {
+      if (!slides.length || !(image instanceof HTMLImageElement)) return;
+      activeSlide = (index + slides.length) % slides.length;
+      const slide = slides[activeSlide];
+      image.src = slide.src;
+      image.alt = slide.alt || 'Photo from a past YMR initiative';
+      if (caption) caption.textContent = slide.caption || '';
+      if (count) count.textContent = `${String(activeSlide + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    };
+
+    openers.forEach((opener) => opener.addEventListener('click', () => {
+      if (modal.open) return;
+      const title = opener.dataset.title || 'YMR initiative';
+      const short = opener.dataset.short || 'YMR INITIATIVE';
+      const sections = parseData(opener.dataset.sections);
+      const highlights = parseData(opener.dataset.highlights);
+      slides = parseData(opener.dataset.gallery);
+      activeSlide = 0;
+      const modalTitle = modal.querySelector('[data-initiative-modal-title]');
+      const kicker = modal.querySelector('[data-initiative-modal-kicker]');
+      const heading = modal.querySelector('[data-initiative-modal-heading]');
+      const intro = modal.querySelector('[data-initiative-modal-intro]');
+      const highlightsContainer = modal.querySelector('[data-initiative-highlights]');
+      const sectionContainer = modal.querySelector('[data-initiative-sections]');
+      const gallerySection = modal.querySelector('[data-initiative-gallery-section]');
+      const videoSection = modal.querySelector('[data-initiative-video-section]');
+      const videoId = opener.dataset.videoId;
+      const videoPlaylist = opener.dataset.videoPlaylist;
+
+      if (modalTitle) modalTitle.textContent = title;
+      if (kicker) kicker.textContent = `${short} · YMR INITIATIVE`;
+      if (heading) heading.textContent = short === 'YAC' ? 'Faith at work and in every sphere.' : short === 'CITY TO CITY' ? 'Taking the meetings to more cities.' : 'Practical compassion that creates opportunity.';
+      if (intro) intro.textContent = opener.dataset.detail || '';
+      if (highlightsContainer instanceof HTMLElement) {
+        highlightsContainer.replaceChildren();
+        highlights.forEach(({ label, value, icon }) => {
+          const card = document.createElement('article');
+          card.className = 'initiative-modal__highlight';
+          const iconNode = makeInitiativeIcon(icon);
+          if (iconNode) card.append(iconNode);
+          const copy = document.createElement('div');
+          copy.className = 'initiative-modal__highlight-copy';
+          const labelNode = document.createElement('span');
+          labelNode.className = 'initiative-modal__highlight-label';
+          labelNode.textContent = label || 'Initiative focus';
+          const valueNode = document.createElement('strong');
+          valueNode.textContent = value || '';
+          copy.append(labelNode, valueNode);
+          card.append(copy);
+          highlightsContainer.append(card);
+        });
+      }
+      if (sectionContainer instanceof HTMLElement) {
+        sectionContainer.replaceChildren();
+        sections.forEach(({ title: sectionTitle, paragraphs = [], items = [] }, index) => {
+          const section = document.createElement('article');
+          section.className = 'initiative-modal__section';
+          const sectionHeader = document.createElement('div');
+          sectionHeader.className = 'initiative-modal__section-header';
+          const iconNode = makeInitiativeIcon(iconForSection(sectionTitle));
+          const headingNode = document.createElement('h4');
+          headingNode.textContent = sectionTitle;
+          const sectionNumber = document.createElement('span');
+          sectionNumber.className = 'initiative-modal__section-number';
+          sectionNumber.textContent = String(index + 1).padStart(2, '0');
+          sectionHeader.append(sectionNumber);
+          if (iconNode) sectionHeader.append(iconNode);
+          sectionHeader.append(headingNode);
+          section.append(sectionHeader);
+          paragraphs.forEach((text) => {
+            const paragraph = document.createElement('p');
+            paragraph.textContent = text;
+            section.append(paragraph);
+          });
+          if (items.length) {
+            const list = document.createElement('ul');
+            items.forEach((text) => {
+              const item = document.createElement('li');
+              item.textContent = text;
+              list.append(item);
+            });
+            section.append(list);
+          }
+          sectionContainer.append(section);
+        });
+      }
+      if (gallerySection instanceof HTMLElement) gallerySection.hidden = !slides.length;
+      if (videoSection instanceof HTMLElement) videoSection.hidden = !videoId;
+      if (video instanceof HTMLIFrameElement) {
+        const params = new URLSearchParams();
+        if (videoPlaylist) params.set('list', videoPlaylist);
+        video.src = videoId ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}${params.size ? `?${params}` : ''}` : '';
+      }
+      window.clearInterval(hoverTimer);
+      showSlide(0);
+      const scroll = modal.querySelector('.edition-modal__scroll');
+      if (scroll instanceof HTMLElement) scroll.scrollTop = 0;
+      modal.showModal();
+      if (motionAllowed) gsap.fromTo(modal.querySelectorAll('.edition-modal__overview, .initiative-modal__gallery, .initiative-modal__video-section'), { y: 12, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .38, stagger: .06, ease: 'power2.out', clearProps: 'transform,opacity,visibility' });
+    }));
+
+    modal.querySelector('[data-initiative-close]')?.addEventListener('click', () => modal.close());
+    modal.addEventListener('click', (event) => { if (event.target === modal) modal.close(); });
+    modal.addEventListener('close', () => { if (video instanceof HTMLIFrameElement) video.src = ''; });
+    modal.querySelector('[data-initiative-prev]')?.addEventListener('click', () => showSlide(activeSlide - 1));
+    modal.querySelector('[data-initiative-next]')?.addEventListener('click', () => showSlide(activeSlide + 1));
+    const slideFrame = modal.querySelector('.initiative-modal__slide');
+    slideFrame?.addEventListener('pointerenter', () => {
+      if (!motionAllowed || slides.length < 2) return;
+      window.clearInterval(hoverTimer);
+      hoverTimer = window.setInterval(() => showSlide(activeSlide + 1), 2600);
+    });
+    slideFrame?.addEventListener('pointerleave', () => window.clearInterval(hoverTimer));
+    modal.addEventListener('close', () => window.clearInterval(hoverTimer));
+  }
+</script>

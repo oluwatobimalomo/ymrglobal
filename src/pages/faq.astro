@@ -1,0 +1,138 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const faqGroups = [
+  {
+    id: 'about-ymr',
+    label: 'About YMR',
+    description: 'Who the retreat is for and what it is about.',
+    questions: [
+      { q: 'What is YMR?', a: 'YMR is Young Ministers’ Retreat, a gathering of believers from around the world where people are set on fire for God. Since 2017, its vision has been to raise burning kingdom giants.' },
+      { q: 'Is YMR only for young people or ministers?', a: 'No. YMR is not restricted by age or church role. It is for everyone who desires to burn for God in their generation.' },
+      { q: 'Who is YMR for?', a: 'Young or old, men or women, students or workers, married or single, teenagers, young adults, and children are welcome at YMR.' },
+      { q: 'What are the eligibility requirements to attend?', a: 'YMR is open to everyone. Come with a desire to be blessed and soaked in the presence of God.' },
+      { q: 'I am not a Christian. Can I come for YMR?', a: 'Yes. YMR is for everyone. Come as you are, and be open to what God will do in your life.' },
+    ],
+  },
+  {
+    id: 'event',
+    label: 'The retreat',
+    description: 'Dates, sessions, and what to expect when you arrive.',
+    questions: [
+      { q: 'When and where is YMR Global Festival 2026?', a: 'December 26–30, 2026, at the Old Auditorium, Redemption City, KM 46, Lagos–Ibadan Expressway.' },
+      { q: 'What should I expect at YMR 2026?', a: 'Expect worship, teaching, prayer, and a fresh encounter with the Holy Spirit. YMR is a place where the Lord transforms ordinary believers into vessels ready for His purpose.' },
+      { q: 'How will the sessions run this year?', a: 'The 2026 schedule will be shared soon. Follow <a href="https://www.instagram.com/ymrglobal/" target="_blank" rel="noopener noreferrer">YMR on Instagram</a> or check this page for updates.' },
+      { q: 'Can I come with my children?', a: 'Yes. Specialized classes are available where children are taught by ministers.' },
+      { q: 'Are trousers allowed for ladies?', a: 'Yes. Ladies may wear trousers. Everyone is encouraged to dress decently.' },
+      { q: 'Are we fasting throughout the program?', a: 'Fasting throughout YMR is the retreat’s custom. Participants may drink water and eat fruit from time to time.' },
+    ],
+  },
+  {
+    id: 'planning',
+    label: 'Plan your visit',
+    description: 'Travel, accommodation, and preparation.',
+    questions: [
+      { q: 'What are the accommodation options?', a: 'Free dormitories are available, and paid accommodation may also be booked through the <a href="https://accommodation.ymrglobal.org" target="_blank" rel="noopener noreferrer">accommodation page</a>. For questions, call <a href="tel:+2347048782063">+234 704 878 2063</a>.' },
+      { q: 'How do I prepare for YMR?', a: 'Pray ahead, pack the personal items you need, and invite someone to come with you.' },
+      { q: 'How can I locate the venue?', a: 'Use the <a href="https://www.google.com/maps/search/?api=1&amp;query=Old+Auditorium+Redemption+City+of+God+Ogun+State+Nigeria" target="_blank" rel="noopener noreferrer">venue directions</a>, or contact the admin line on <a href="tel:+2347048782063">+234 704 878 2063</a> for travel guidance, including information about free buses.' },
+    ],
+  },
+  {
+    id: 'get-involved',
+    label: 'Get involved',
+    description: 'Register, volunteer, share the word, or partner with YMR.',
+    questions: [
+      { q: 'How do I register or volunteer for YMR 2026?', a: 'Register or sign up to volunteer through the <a href="https://register.ymrglobal.org/" target="_blank" rel="noopener noreferrer">official YMR registration page</a>. “Whatever you do, work at it with all your heart, as working for the Lord.” — Colossians 3:23–24.' },
+      { q: 'What is my responsibility?', a: 'Be a media evangelist: tell people about YMR and share the event flyer across your social media pages.' },
+      { q: 'How can I give towards YMR?', a: 'Thank you for partnering with YMR. Visit the <a href="/partner">Partner with YMR page</a> to find ways to give.' },
+    ],
+  },
+];
+---
+
+<SiteLayout title="Frequently Asked Questions" description="Find answers about YMR Global Festival 2026, who can attend, travel, accommodation, and getting involved." current="faq">
+  <main id="main" class="resource-page faq-page">
+    <section class="faq-hero section-wrap" id="top" aria-labelledby="faq-title">
+      <div class="faq-hero__copy">
+        <a class="faq-back" href="/#plan-your-visit"><span aria-hidden="true">←</span> Back to YMR 2026</a>
+        <span class="section-index">YMR GLOBAL FESTIVAL · 2026</span>
+        <h1 id="faq-title">Frequently asked<br /><span>questions.</span></h1>
+        <p>Everything you need to know before you join us at Redemption City.</p>
+      </div>
+      <aside class="faq-hero__event" aria-label="YMR 2026 event details">
+        <span class="faq-hero__edition">THE TENTH EDITION · CITY TAKERS</span>
+        <h2>YMR 2026</h2>
+        <dl class="faq-hero__facts">
+          <div><dt><Icon name="calendar" size={18} />Dates</dt><dd>December 26–30, 2026</dd></div>
+          <div><dt><Icon name="mapPin" size={18} />Venue</dt><dd>Old Auditorium, Redemption City of God</dd></div>
+          <div><dt><Icon name="globe" size={18} />Location</dt><dd>Ogun State, Nigeria</dd></div>
+        </dl>
+        <div class="faq-hero__actions">
+          <a class="button button--ember" href="https://register.ymrglobal.org/" target="_blank" rel="noopener noreferrer"><Icon name="calendar" size={17} />Register</a>
+          <a class="faq-hero__directions" href="https://www.google.com/maps/search/?api=1&amp;query=Old+Auditorium+Redemption+City+of+God+Ogun+State+Nigeria" target="_blank" rel="noopener noreferrer"><Icon name="mapPin" size={17} />Get directions</a>
+        </div>
+        <p class="faq-hero__support">Travelling from another country?<br /><a href="/delegates">Contact our Foreign Delegates Management team for support.</a></p>
+      </aside>
+    </section>
+
+    <section class="faq-content section-wrap" aria-label="Frequently asked questions">
+      <div class="faq-tools">
+        <label class="faq-search"><span class="faq-search__icon" aria-hidden="true">⌕</span><span class="visually-hidden">Search frequently asked questions</span><input type="search" data-faq-search placeholder="Search your question…" autocomplete="off" /></label>
+        <nav class="faq-topics" aria-label="FAQ topics">
+          {faqGroups.map((group) => <a href={`#${group.id}`}>{group.label}<span aria-hidden="true">↘</span></a>)}
+        </nav>
+      </div>
+      <p class="faq-empty" data-faq-empty hidden>No answers match that search. Try a different word or browse a topic above.</p>
+
+      <div class="faq-groups" data-faq-groups>
+        {faqGroups.map((group, groupIndex) => (
+          <section class="faq-group" id={group.id} data-faq-group aria-labelledby={`${group.id}-title`}>
+            <header class="faq-group__heading">
+              <span class="faq-group__number">0{groupIndex + 1}</span>
+              <div><h2 id={`${group.id}-title`}>{group.label}</h2><p>{group.description}</p></div>
+            </header>
+            <div class="faq-group__questions">
+              {group.questions.map((item) => (
+                <details class="faq-item" data-faq-item>
+                  <summary><span>{item.q}</span><span class="faq-item__mark" aria-hidden="true">+</span></summary>
+                  <div class="faq-item__answer" set:html={item.a}></div>
+                </details>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+      <aside class="faq-contact">
+        <span class="section-index">NEED MORE HELP?</span>
+        <div><h2>We’re happy to help.</h2><p>Call the YMR admin line if you have a question that isn’t answered here.</p></div>
+        <a class="button button--ember" href="tel:+2347048782063">Call +234 704 878 2063 <span aria-hidden="true">↗</span></a>
+      </aside>
+    </section>
+  </main>
+  <script>
+    const search = document.querySelector('[data-faq-search]');
+    const groups = [...document.querySelectorAll('[data-faq-group]')];
+    const result = document.querySelector('[data-faq-results]');
+    const empty = document.querySelector('[data-faq-empty]');
+    const total = groups.reduce((count, group) => count + group.querySelectorAll('[data-faq-item]').length, 0);
+
+    search?.addEventListener('input', () => {
+      const query = search.value.trim().toLocaleLowerCase();
+      let visible = 0;
+      groups.forEach((group) => {
+        const items = [...group.querySelectorAll('[data-faq-item]')];
+        let groupVisible = 0;
+        items.forEach((item) => {
+          const matches = !query || item.textContent.toLocaleLowerCase().includes(query);
+          item.hidden = !matches;
+          if (matches) groupVisible += 1;
+        });
+        group.hidden = groupVisible === 0;
+        visible += groupVisible;
+      });
+      result.textContent = query ? `${visible} ${visible === 1 ? 'answer' : 'answers'} found` : `${total} answers across ${groups.length} topics`;
+      empty.hidden = visible !== 0;
+    });
+  </script>
+</SiteLayout>

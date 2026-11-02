@@ -1,0 +1,16 @@
+---
+import EditionCardContent from './EditionCardContent.astro';
+
+const { edition } = Astro.props;
+---
+<li class:list={["edition-card", edition.upcoming && "edition-card--upcoming", edition.landscape && "edition-card--wide"]} data-motion>
+  {edition.upcoming ? (
+    <a class="edition-card__open edition-card__open--link" href="https://register.ymrglobal.org/" aria-label="Register now for YMR 2026: City Takers">
+      <EditionCardContent edition={edition} />
+    </a>
+  ) : (
+    <button class="edition-card__open" type="button" data-edition-open data-year={edition.year} data-theme={edition.theme} data-overview={edition.overview} data-youtube={edition.youtube} data-youtube-cta={edition.youtubeLabel ?? ''} data-session-summary={edition.sessionSummary ?? ''} data-mixlr={edition.mixlr ?? ''} data-mixlr-label={edition.mixlrLabel ?? ''} data-highlights={JSON.stringify(edition.highlights ?? [])} data-photos={JSON.stringify(edition.photos ?? [])} data-upcoming="false" aria-haspopup="dialog" aria-controls="edition-modal" aria-label={`Open the YMR ${edition.year} edition: ${edition.theme}`}>
+      <EditionCardContent edition={edition} />
+    </button>
+  )}
+</li>

@@ -1,0 +1,959 @@
+---
+import Countdown from '../components/Countdown.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import EditionCard from '../components/EditionCard.astro';
+import Icon from '../components/Icon.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { galleryPhotos } from '../data/gallery';
+import '../styles/global.css';
+
+const galleryHighlights = [1, 6, 11, 25, 54, 66].map((id) => galleryPhotos.find((photo) => photo.id === id)!);
+
+const initiatives = [
+  { number: '01', name: 'Youth Aflame Conference', short: 'YAC', detail: 'A YMR expression for young professionals and those preparing to excel in their careers.', image: '/images/initiatives/youth-aflame.jpg', alt: 'Youth Aflame Conference panel on stage', href: '/initiatives#youth-aflame' },
+  { number: '02', name: 'RCCG The Envoys', short: 'THE ENVOYS', detail: 'A young people church expression of RCCG, raising kingdom ambassadors.', image: '/images/initiatives/envoys.jpg', alt: 'A minister speaking with The Envoys congregation', href: 'https://rccgtheenvoys.org/', external: true },
+  { number: '03', name: 'City to City Fire Conference', short: 'CITY TO CITY', detail: 'A YMR initiative that carries revival fire into cities and territories beyond the main retreat.', image: '/images/initiatives/city-to-city.jpg', alt: 'A worshipper responding at a City to City Fire Conference', href: '/initiatives#city-to-city' },
+  { number: '04', name: 'YMR Samaritan', short: 'SAMARITAN', detail: 'Supporting YMR participants through education, empowerment, and health initiatives.', image: '/images/initiatives/samaritan.jpg', alt: 'Schoolchildren writing in their notebooks', href: '/initiatives#samaritan' },
+];
+
+const expectations = [
+  { icon: 'music', title: 'Passionate Worship', detail: 'Join vibrant worship that ignites your spirit and releases God’s fire.', image: 'expect-worship.jpg', alt: 'A worship leader singing and lifting his hands during YMR' },
+  { icon: 'book', title: 'Bible Study', detail: 'Engage in in-depth studies that reveal fresh insights from God’s Word.', image: 'expect-bible-study.jpg', alt: 'Young people listening during a YMR Bible teaching session' },
+  { icon: 'hands', title: 'Intensive Prayer', detail: 'Participate in prayer sessions that spark revival and release divine fire.', image: 'expect-prayer.jpg', alt: 'A young woman praying during a YMR retreat' },
+  { icon: 'flame', title: 'Release of Fire', detail: 'Encounter God’s fire, igniting your passion and empowering your service.', image: 'expect-fire.jpg', alt: 'A young man worshipping with his hands raised' },
+];
+
+const impact = [
+  { value: '7+', label: 'Nations Reached', icon: 'globe' },
+  { value: '20K+', label: 'Souls Saved', icon: 'heart' },
+  { value: '45K+', label: 'Volunteers', icon: 'users' },
+  { value: '750K+', label: 'People on Fire', icon: 'flame' },
+];
+
+const testimonyStories = [
+  {
+    year: '2024',
+    category: 'Academic Breakthroughs',
+    icon: 'book',
+    title: 'A fully funded PhD scholarship',
+    detail: 'After receiving a Canadian visa, an invitation to interview for a US scholarship arrived on the way to YMR.',
+  },
+  {
+    year: '2022–23',
+    category: 'Marital Settlement',
+    icon: 'heart',
+    title: 'A marriage and new jobs',
+    detail: 'After attending YMR 2022 as a single, one participant returned in 2023 married and with two bigger jobs.',
+  },
+  {
+    year: '2025',
+    category: 'Business Breakthrough',
+    icon: 'sparkles',
+    title: 'A ₦2 Million Business Grant',
+    detail: 'Mary Anu was one of the beneficiaries of the business grant initiative organised by YMR in partnership with Premium Trust Bank.',
+  },
+];
+
+const testimonyUrl = '/testimonies';
+
+const principles = [
+  { title: 'Rooted in the Word & Fire', icons: ['book', 'flame'], detail: 'We are grounded in Scripture and ablaze with the power of the Holy Ghost.' },
+  { title: 'Rugged in Spirit', icons: ['dove'], detail: 'Through prayer, fasting, and tarrying, we cultivate discipline, purity, and supernatural boldness.' },
+  { title: 'Driven by Purpose', icons: ['compass'], detail: 'With a heart for evangelism, excellence, and revival, we pursue kingdom impact with passion and power.' },
+];
+
+const telegramSermons = 'https://t.me/pdanielfireinmybones';
+const editions = [
+  { year: '2017', theme: 'Fire for Needed Impact', overview: `The Young Ministers Retreat (YMR) was born out of a personal spiritual habit that collided with a direct divine instruction. It began as a small, local meeting of friends in Nigeria and rapidly evolved into a global movement of youth seeking spiritual revival.
+
+The Seed: A Personal End-of-Year Tradition (December 2017)
+The foundational roots of YMR trace back to December 2017. The convener, Pastor Daniel Olawande (“PDaniel”), had a personal habit of spending the last three days of every year at the Redemption Camp to fast, pray, and seek direction for the upcoming year. Having just transitioned into full-time ministry, he decided not to do his usual retreat alone. He asked his wife and a few colleagues join him.
+
+The simple flyer they designed went viral, and what should have been a small, intimate circle of ministers and friends outgrew their intended small eatery venue before the event even began. By late December 2017, between 700 and 1,000 young people from over 24 different denominations converged at the camp under the inaugural theme, “Fire for Needed Impact.” The overwhelming spiritual hunger of that first crowd proved that there was a massive vacuum for revival among the youth.`, youtube: 'https://www.youtube.com/@PDanielOlawande/search?query=YMR%202017', youtubeLabel: 'Find YMR 2017 sessions on YouTube', sessionSummary: '', highlights: [
+    { value: '721', label: 'On-site participants', note: 'At Teens Auditorium, RCCG Camp.' },
+    { value: '1,800+', label: 'Online participants', note: 'Joined the 2017 retreat online.' },
+    { value: '9', label: 'Speakers', note: 'Teaching on ministry and the Christian life.' },
+    { value: '37%', label: 'From outside Lagos', note: 'Participants travelled from other locations.' },
+    { value: '54% / 46%', label: 'Male / female participants', note: 'Participant breakdown.' },
+    { value: '72 hours', label: 'Prayer and fasting', note: 'The retreat included a 3-day dry fast.' },
+  ], flyer: '/images/editions/ymr-2017-fire-needed-impact.jpg' },
+  { year: '2018', theme: 'Explosive Exploits', overview: `Following a profound vision in Dubai where Pastor Daniel Olawande saw giant spiritual figures emerging from fire, the event shifted from a casual meeting of friends to an intentional training camp. Over 4,000 youth attended for 72 hours of uninterrupted fasting and prayer under the banner of "Explosive Exploits".
+
+Pastor Daniel delivered the charge “The Mandate of the Giants”. Guest youth ministers emphasized the heavy price of spiritual stature and the importance of prayer endurance.`, youtube: 'https://www.youtube.com/@PDanielOlawande/search?query=YMR%202018', youtubeLabel: 'Find YMR 2018 sessions on YouTube', sessionSummary: '', flyer: '/images/editions/ymr-2018-explosive-exploits.jpeg' },
+  { year: '2019', theme: 'FIRE TO TAKE THE CITY', overview: `The 2019 edition of the Young Ministers’ Retreat (YMR), convened by P. Daniel Olawande, was centred on the theme Fire to Take the City. The retreat carried a burden to raise a generation of believers who would be ignited by the fire of God and equipped to influence their cities for Jesus Christ.
+
+The vision behind the theme was that spiritual encounters should produce tangible expressions of faith beyond the retreat. Believers were called to prepare themselves spiritually and actively participate in spreading the gospel, winning souls, and advancing God’s Kingdom.
+
+Spiritual Encounters and Expectations
+The retreat emphasised several areas of spiritual growth and transformation, including salvation and restoration, baptism in the Holy Spirit, divine direction, spiritual empowerment, renewed intimacy with God, and preparation for kingdom assignments. Healing, miracles, and supernatural encounters were also highlighted among the expectations communicated in the retreat’s promotional materials.
+
+These emphases reflected the desire to see believers strengthened in their faith, equipped for service, and prepared to fulfil their God-given assignments.
+
+The Message Behind the Theme
+Fire to Take the City communicated a call to move beyond personal spiritual experiences into active kingdom service. The vision was to raise believers who would carry the presence of God into their communities, workplaces, and other spheres of influence, becoming effective witnesses of Jesus Christ.
+
+The retreat emphasised that taking a city requires preparing people who are ready to act, particularly through evangelism and the proclamation of the gospel.`, youtube: 'https://www.youtube.com/@PDanielOlawande/search?query=YMR%202019', youtubeLabel: 'Find YMR 2019 sessions on YouTube', sessionSummary: '', flyer: '/images/editions/ymr-2019-fire-to-take-the-city.jpeg', landscape: true },
+  { year: '2020', theme: 'GO IN THIS THY MIGHT', overview: `The 2020 edition of the Young Ministers’ Retreat (YMR), convened by P. Daniel Olawande, was themed “Go in This Thy Might,” drawn from Judges 6:14.
+
+The theme emphasised the need for believers to recognise the strength and empowerment God has given them and step forward to fulfil their divine assignments. It was a call to move beyond spiritual preparation into action, trusting God to equip them for the work ahead.
+
+Sermons and Guest Ministers
+The retreat featured several ministers who delivered teachings on spiritual empowerment, divine guidance, kingdom service, and practical Christian living.
+• P. Daniel Olawande: In What Might
+P. Daniel preached on In What Might, addressing the question of the strength in which believers are expected to fulfil their assignments. The message connected with the retreat’s central theme of recognising God’s empowerment and responding to His call.
+• Pastor Chingtok Ishaku: Go in This Thy Might
+Pastor Chingtok delivered a two-part teaching titled Go in This Thy Might. His message explored the theme of the retreat and the call to step forward in the strength God provides.
+• Apostle Michael Orokpo: The Might of concentration
+Apostle Michael Orokpo challenged young ministers to examine the depth of their consecration and the condition of their private lives with God. He emphasised that true spiritual power is not built on public recognition or charisma, but through prayer, holiness, sacrifice, and total surrender to God. He called them to die to self, abandon the pride that can accompany ministry, and return to the secret place, reminding them that the strength to influence territories begins with a life fully yielded to God.
+
+Spiritual Emphasis and Expected Encounters
+The retreat focused on spiritual empowerment, wisdom, divine direction, the work of the Holy Spirit, and the practical application of faith. Participants were encouraged to develop the spiritual capacity and understanding necessary to fulfil their God-given assignments. The teachings also addressed practical areas of life, including financial wisdom, family, and responding to God’s leading.`, youtube: 'https://www.youtube.com/watch?v=QPSInlH0ETo', youtubeLabel: 'Watch YMR 2020 on YouTube', sessionSummary: '', flyer: '/images/editions/ymr-2020-go-in-this-thy-might.jpeg' },
+  { year: '2021', theme: 'Weapons of War', overview: `The 2021 edition of the Young Ministers’ Retreat was centred on a call to raise believers who understand their identity and responsibility in God’s kingdom. Under the theme Weapons of War, P. Daniel Olawande emphasised that believers are not merely called to salvation, but are also God’s instruments for advancing His kingdom and confronting the works of darkness.
+
+This vision was reflected in the Heaven’s Defence Academy (HAD), which focused on raising and equipping believers for their spiritual assignment and influence in society.
+
+The retreat featured teachings on The Authority of the Believer by Bishop Francis Wale Oke and The Prophetic Church by Apostle Tomi Arayomi, alongside a worship session led by Dunsin Oyekan.
+
+Participants also shared testimonies of remarkable personal experiences, including reported healings from long-term anaemia, restored vision, improved speech, and restored hearing.
+
+The message of Weapons of War was a call to spiritual preparation, consecration, and responsibility, reminding young ministers that they have a part to play in advancing God’s kingdom in their generation.`, youtube: 'https://www.youtube.com/watch?v=tYB01vtOl7o', youtubeLabel: 'Watch YMR 2021 on YouTube', sessionSummary: '', flyer: '/images/editions/ymr-2021-weapons-of-war.jpeg' },
+  { year: '2022', theme: 'Witnesses', overview: `Under the theme Witnesses, P. Daniel Olawande expressed his desire to see a generation of believers who would boldly stand for God wherever they found themselves, carrying the fullness of His power and presence. He envisioned raising men and women who would not only believe in Christ but also become living expressions of His kingdom in their everyday lives.
+
+The retreat featured teachings from several ministers, including P. Daniel Olawande, who ministered on Witnesses and The Supernatural Witnesses. Other messages included Living Witnesses and Manifestation as a Witness by Pastor Sola Osunmakinde, The Prophetic Church—no, The Witnesses by Prophet Tomi Arayomi, and Are You Sendable? By Rev. Samson Ajetumobi. Pastor Chingtok Ishaku also ministered on Witnesses in two sessions.
+
+Beyond the spiritual sessions, the 2022 edition expanded its reach by introducing specialised classes in areas such as career development, government, politics, cybersecurity, entrepreneurship and financial growth.
+
+The retreat also featured worship sessions led by ministers including Nathaniel Bassey, Sunmisola Agbebi and Paul Tomisin. It called believers beyond simply identifying as Christians to becoming visible witnesses of Christ through their lives, service and influence in their generation`, youtube: 'https://www.youtube.com/watch?v=2liacNFtt9I', youtubeLabel: 'Watch YMR 2022 on YouTube', sessionSummary: '', flyer: '/images/editions/ymr-2022-witnesses.jpeg' },
+  { year: '2023', theme: 'The Rain', overview: `The 2023 Young Ministers’ Retreat was themed The Rain, a call to experience more of God’s presence and power. The vision was to see a generation of believers encounter God in a way that would leave a lasting impact on their lives and ministries.
+
+Announcing the theme, P. Daniel Olawande said, “When you’re coming, you won’t need to bring an umbrella, but you’ll be wet because the glory and power of God is going to rain heavily on you!” His words captured the expectation for the retreat and the outpouring of God’s presence that it was built around.
+
+Held from December 27 to 30, 2023, at the Old Auditorium, Redemption Camp, the retreat featured ministers including Pastor E.A. Adeboye, Pastor J.T. Kalejaiye, Rev. Samson Ajetomobi, Rev. Fola Achudume, Pastor Isaac Oyedepo, Pastor Bolaji Idowu, Pastor Olalekan Julius and Pastor Tosin Okunloye.
+
+The ministers taught on different aspects of the theme. Pastor E.A. Adeboye ministered on The Rain, while P. Daniel Olawande spoke on When the Heavens Are Open, Things You Must Do for a Heaven to Open, The Man That Makes the Rain to Fall and Prayer Rain.
+
+Other messages included The Rain of God’s Mercy by Rev. Fola Achudume, The Rain of Anointing by Pastor J.T. Kalejaiye, Mount Carmel: The Fire and the Rain by Pastor Isaac Oyedepo, The Essence of the Rain by Pastor Tosin Okunloye, and The New Skin for the Rain by Pastor Nifemi Olawande. Rev. Samson Ajetomobi also ministered on The Rain, while Pastor Olalekan Julius taught on How to Prepare for the Rain.
+
+Worship was also a major part of the retreat, with ministrations from Dunsin Oyekan, Theophilus Sunday, Ebuka Songs and BBO.
+
+The 2023 edition reminded participants that the rain was not just about what they would experience during the retreat, but also about what God would do in and through them afterwards. The call was to receive from God and carry His presence into their lives, ministries and the places He had called them to serve.`, youtube: 'https://www.youtube.com/watch?v=YuhIZZkPiUw', youtubeLabel: 'Watch YMR 2023 on YouTube', sessionSummary: '', flyer: '/images/editions/ymr-2023-the-rain.jpeg', landscape: true },
+  { year: '2024', theme: 'Floodgates', overview: `What does it mean to experience an outpouring of God’s Spirit, and what does it take to sustain that experience? These were some of the ideas at the heart of the 2024 Young Ministers’ Retreat, themed Floodgates.
+
+The theme was presented as a prophetic declaration of an unusual outpouring of God’s blessings, revival and breakthroughs. P. Daniel Olawande and the organising team envisioned a retreat where young believers would grow in their hunger for God, experience His presence and receive the spiritual strength needed to fulfil their assignments.
+
+Held from December 26 to 30, 2024, at the Old Auditorium, Redemption City, Ogun State, the retreat brought together young believers from different places for days of prayer, fasting, worship and teachings. A major part of the retreat was 72 hours of prayer, fasting and fellowship, creating time for participants to seek God beyond the regular sessions.
+
+One of the notable moments was the ministry of Pastor E.A. Adeboye on December 27. Speaking from Ephesians 5:18, he challenged the young ministers not to become comfortable with their present experience of the Holy Spirit. He explained that just as a person cannot remain drunk without taking more wine, believers must continually seek to be filled with the Spirit. He also shared personal experiences of God’s power in ministry and challenged the young ministers to desire a fresh manifestation of that power in their own lives and ministries.
+
+P. Daniel Olawande also led a series of teachings titled Floodgates of the Spirit of God, delivered in three parts, and The Price for the Flood. These sessions addressed the work of the Holy Spirit and the spiritual preparation required of those who desire to experience His outpouring.
+
+Worship was another important part of the retreat, with ministrations from Pastor Nathaniel Bassey, Dunsin Oyekan, Tee Worship, BBO, Naomi David and Precious Worship. Their sessions provided moments for participants to worship, pray and seek God together.
+
+The 2024 edition carried a message that went beyond receiving an encounter at a retreat. Through the teachings, prayers and worship, young ministers were challenged to desire more of the Holy Spirit and to make room for His work in their everyday lives and ministries. Floodgates was a call to a generation to seek God deeply and become vessels through which His power and presence could be made known.`, youtube: 'https://www.youtube.com/@PDanielOlawande/search?query=YMR%202024%20Flood%20Gates', youtubeLabel: 'Find YMR 2024 sessions on YouTube', sessionSummary: '', highlights: [
+    { value: '281,003', label: 'Estimated participants', note: 'In person and online.' },
+    { value: '294,506', label: 'Livestream views', note: 'Combined views across the retreat’s livestream sessions.' },
+    { value: '5 days', label: 'Retreat programme', note: 'December 26–30, 2024, at Redemption City.' },
+    { value: '5 platforms', label: 'Livestream coverage', note: 'Dove TV, YouTube, Mixlr, Facebook Live, and Instagram Live.' },
+    { value: '4+ countries', label: 'International delegates', note: 'Including the UK, Ghana, Benin Republic, and Germany.' },
+    { value: 'Thousands', label: 'Volunteers', note: 'Teams served across core and specialist departments.' },
+  ], flyer: '/images/editions/ymr-2024-flood-gates.jpeg', photos: [
+    { src: '/images/gallery/ymr-2024/ymr-2024-worship.webp', alt: 'A worship leader singing during YMR 2024', caption: 'Worship and ministry' },
+    { src: '/images/gallery/ymr-2024/ymr-2024-teaching.webp', alt: 'A minister teaching during a YMR 2024 session', caption: 'Teaching the Word' },
+    { src: '/images/gallery/ymr-2024/ymr-2024-crowd.webp', alt: 'Retreat participants attending a YMR 2024 session', caption: 'Together at YMR 2024' },
+  ] },
+  { year: '2025', theme: 'The New Army', overview: `This year, the retreat brought together participants from across Nigeria and International delegates in what represents the largest edition of YMR to date, with over 300,000 people attending physically across the duration of the event. The retreat maintained its established annual structure; spanning prayer, worship, word sessions, evangelism, children and teen programming, counselling, and testimony documentation, while introducing significant operational improvements including a battalion-based participant classification model, a QR code-driven registration system, and expanded multi-platform live production coverage.`, youtube: 'https://www.youtube.com/@PDanielOlawande/search?query=YMR%202025%20The%20New%20Army', youtubeLabel: 'Find YMR 2025 sessions on YouTube', sessionSummary: '', mixlr: 'https://flamingnetwork.mixlr.com/', mixlrLabel: 'Listen to Flaming Network on Mixlr', highlights: [
+    { value: '300,000+', label: 'Estimated attendees', note: 'Field estimate across the five days.' },
+    { value: '39,409', label: 'Registered participants', note: 'Registered through the QR-code system.' },
+    { value: '1,499', label: 'New converts', note: 'During four days of counselling.' },
+    { value: '608,500', label: 'YouTube views', note: 'Approximate total across two channels.' },
+    { value: '5,000+', label: 'Attendees mobilised', note: '33 mission buses served 23 locations.' },
+    { value: '944', label: 'Patients treated', note: 'At three medical stations.' },
+  ], flyer: '/images/editions/ymr-2025-the-new-army.jpeg', photos: [
+    { src: '/images/gallery/ymr-2025/ymr-2025-stage.webp', alt: 'A minister sharing a message on stage at YMR 2025', caption: 'Messages that equip' },
+    { src: '/images/gallery/ymr-2025/ymr-2025-worship.webp', alt: 'Retreat participants worshipping at YMR 2025', caption: 'Worship at YMR 2025' },
+    { src: '/images/gallery/ymr-2025/ymr-2025-prayer-walk.webp', alt: 'YMR 2025 participants on a prayer walk', caption: 'Prayer in the city' },
+  ] },
+  { year: '2026', theme: 'City Takers', overview: 'The tenth-anniversary retreat is set for December 26–30, 2026, at Redemption City. City Takers is the theme for this upcoming edition.', youtube: 'https://www.youtube.com/@PDanielOlawande/search?query=YMR%202026%20City%20Takers', upcoming: true, flyer: '/images/brand/ymr-2026-city-takers-flyer.jpg' },
+];
+
+const regions = [
+  { id: 'canada', title: 'YMR Canada', location: 'Canada', href: '/nations#canada', image: 'https://i.ytimg.com/vi/n8wkl0ziroc/hqdefault.jpg', alt: 'A moment from the YMR Canada edition', summary: 'A Canadian expression of YMR, bringing young ministers together for worship, prayer, and teaching while strengthening Christian leadership.' },
+  { id: 'uk', title: 'YMR UK', location: 'Manchester, United Kingdom', href: '/nations#united-kingdom', image: 'https://i.ytimg.com/vi/hfU2VITljWc/hqdefault.jpg', alt: 'A moment from the YMR UK Manchester edition', summary: 'Manchester welcomed young ministers for worship, prophetic teaching, prayer, and commissioning.' },
+  { id: 'usa', title: 'YMR USA', location: 'Minnesota, United States', href: '/nations#united-states', image: 'https://i.ytimg.com/vi/5wqWM_j8Iq4/hqdefault.jpg', alt: 'A moment from the YMR USA Minnesota edition', summary: 'Young ministers met in Minnesota for worship, intercession, teaching, and leadership empowerment.' },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#121416" />
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem('ymr-theme');
+          const theme = saved || 'dark';
+          document.documentElement.dataset.theme = theme;
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#121416' : '#ffffff');
+        } catch {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
+    <meta name="description" content="Young Ministers Retreat is raising a generation on fire for Jesus. Join YMR 2026 from December 26." />
+    <link rel="canonical" href="https://ymrglobal.org/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="YMR Global" />
+    <meta property="og:url" content="https://ymrglobal.org/" />
+    <meta property="og:title" content="Young Ministers Retreat — YMR Global" />
+    <meta property="og:description" content="Setting a generation on fire for Jesus. YMR 2026 begins December 26." />
+    <meta property="og:image" content="https://ymrglobal.org/images/brand/ymr-2026-city-takers-flyer.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Young Ministers Retreat — YMR Global" />
+    <meta name="twitter:description" content="Setting a generation on fire for Jesus. YMR 2026 begins December 26." />
+    <meta name="twitter:image" content="https://ymrglobal.org/images/brand/ymr-2026-city-takers-flyer.jpg" />
+    <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: 'Young Ministers Retreat Global', alternateName: 'YMR Global', url: 'https://ymrglobal.org/', logo: 'https://ymrglobal.org/images/brand/ymr-high-quality-logo.png', sameAs: ['https://www.facebook.com/ymrglobal', 'https://x.com/ymrglobal', 'https://www.instagram.com/ymrglobal/', 'https://www.youtube.com/@PDanielOlawande'] })} />
+    <link rel="icon" type="image/png" sizes="64x64" href="/images/brand/ymr-favicon-64.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400..700&display=swap" rel="stylesheet" />
+    <title>Young Ministers Retreat — YMR Global</title>
+    <script is:inline>
+      (() => {
+        let shouldShowIntro = true;
+        try {
+          shouldShowIntro = localStorage.getItem('ymr-intro-seen') !== 'true';
+          if (shouldShowIntro) localStorage.setItem('ymr-intro-seen', 'true');
+        } catch {}
+        if (!shouldShowIntro) return;
+
+        try {
+          document.documentElement.classList.add('has-opening-sequence');
+          window.ymrIntroFailsafeTimer = window.setTimeout(() => {
+            document.documentElement.classList.remove('has-opening-sequence');
+            const intro = document.querySelector('[data-opening-sequence]');
+            if (intro instanceof HTMLElement) {
+              intro.hidden = true;
+              intro.style.removeProperty('display');
+              intro.style.removeProperty('clip-path');
+              intro.style.removeProperty('transform');
+            }
+            const handoff = document.querySelector('[data-opening-handoff]');
+            if (handoff instanceof HTMLElement) {
+              handoff.classList.remove('is-active');
+              handoff.hidden = true;
+            }
+            window.dispatchEvent(new Event('ymr:intro-complete'));
+          }, 10000);
+        } catch {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="opening-sequence" data-opening-sequence>
+      <div class="opening-sequence__grain" aria-hidden="true"></div>
+      <div class="opening-sequence__inner">
+        <div class="opening-sequence__art">
+          <div class="opening-sequence__lockup">
+            <div class="opening-sequence__mark-stage">
+              <div class="opening-sequence__orbit opening-sequence__orbit--outer" aria-hidden="true"></div>
+              <div class="opening-sequence__orbit opening-sequence__orbit--inner" aria-hidden="true"></div>
+              <svg class="opening-sequence__orbit-line" viewBox="0 0 320 320" aria-hidden="true"><circle class="opening-sequence__orbit-track" cx="160" cy="160" r="148" pathLength="1000" /><circle class="opening-sequence__orbit-runner" cx="160" cy="160" r="148" pathLength="1000" /><circle class="opening-sequence__orbit-beacon-halo" cx="308" cy="160" r="9" /><circle class="opening-sequence__orbit-beacon" cx="308" cy="160" r="3.5" /></svg>
+              <span class="opening-sequence__spark opening-sequence__spark--one" aria-hidden="true"></span>
+              <span class="opening-sequence__spark opening-sequence__spark--two" aria-hidden="true"></span>
+              <div class="opening-sequence__logo"><img src="/images/brand/ymr-at-10-logo.png" alt="YMR ten-year anniversary logo" width="1600" height="1238" /></div>
+            </div>
+            <div class="opening-sequence__theme-lockup">
+              <img class="opening-sequence__theme-art" src="/images/brand/ymr-city-takers-wordmark.png" alt="City Takers" width="609" height="342" />
+              <p class="opening-sequence__theme-kicker">YMR GLOBAL<br />REVIVAL 2026</p>
+            </div>
+          </div>
+        </div>
+        <div class="opening-sequence__copy">
+          <p class="opening-sequence__eyebrow">YOUNG MINISTERS RETREAT GLOBAL <span>·</span> TEN YEARS</p>
+          <div class="opening-sequence__countdown"><span class="opening-sequence__countdown-label">THE REVIVAL BEGINS IN</span><Countdown /></div>
+          <p class="opening-sequence__event">DECEMBER 26—30, 2026 <span>·</span> REDEMPTION CITY</p>
+        </div>
+        <button class="opening-sequence__skip" type="button" data-skip-opening>Skip intro</button>
+      </div>
+    </div>
+    <div class="opening-sequence__handoff" data-opening-handoff aria-hidden="true" hidden></div>
+    <script is:inline>
+      (() => {
+        const intro = document.querySelector('[data-opening-sequence]');
+        const skip = document.querySelector('[data-skip-opening]');
+        const handoff = document.querySelector('[data-opening-handoff]');
+        if (!(intro instanceof HTMLElement)) return;
+        if (!document.documentElement.classList.contains('has-opening-sequence')) {
+          intro.hidden = true;
+          return;
+        }
+
+        let completed = false;
+        let timer;
+        const hideIntro = () => {
+          intro.hidden = true;
+          intro.style.removeProperty('display');
+          intro.style.removeProperty('clip-path');
+          intro.style.removeProperty('transform');
+        };
+        const finishIntro = () => {
+          if (completed) return;
+          completed = true;
+          window.clearTimeout(timer);
+          window.clearTimeout(window.ymrIntroFailsafeTimer);
+          window.ymrIntroFailsafeTimer = undefined;
+          document.documentElement.classList.remove('has-opening-sequence');
+          window.dispatchEvent(new Event('ymr:intro-complete'));
+
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            intro.style.display = 'grid';
+            intro.classList.add('is-leaving');
+            window.setTimeout(hideIntro, 220);
+            return;
+          }
+
+          intro.style.display = 'grid';
+          intro.classList.add('is-leaving');
+
+          if (handoff instanceof HTMLElement) {
+            const mark = intro.querySelector('.opening-sequence__mark-stage');
+            const bounds = mark?.getBoundingClientRect();
+            const x = bounds ? bounds.left + bounds.width / 2 : window.innerWidth / 2;
+            const y = bounds ? bounds.top + bounds.height / 2 : window.innerHeight / 2;
+            const diameter = Math.ceil(Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y)) * 2 + 60);
+            handoff.style.setProperty('--handoff-x', `${x}px`);
+            handoff.style.setProperty('--handoff-y', `${y}px`);
+            handoff.style.setProperty('--handoff-diameter', `${diameter}px`);
+            handoff.hidden = false;
+            handoff.classList.add('is-active');
+          }
+
+          window.setTimeout(hideIntro, 980);
+          window.setTimeout(() => {
+            handoff?.classList.remove('is-active');
+            if (handoff instanceof HTMLElement) handoff.hidden = true;
+          }, 1550);
+        };
+
+        const handleSkip = (event) => {
+          const target = event.target;
+          if (!(target instanceof Element) || !target.closest('[data-skip-opening]')) return;
+          event.preventDefault();
+          finishIntro();
+        };
+        document.addEventListener('click', handleSkip, true);
+        skip?.addEventListener('click', finishIntro);
+        timer = window.setTimeout(finishIntro, 6000);
+
+        // Visual polish must never prevent Skip or the timed handoff from being ready.
+        try {
+          const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (!reduceMotion && typeof Element.prototype.animate === 'function') {
+            intro.querySelector('.opening-sequence__logo')?.animate(
+              [
+                { opacity: 0, transform: 'scale(.82) rotate(-4deg)', filter: 'blur(8px)' },
+                { opacity: 1, transform: 'scale(1) rotate(0)', filter: 'blur(0)' },
+              ],
+              { duration: 1050, easing: 'cubic-bezier(.2, .8, .2, 1)', fill: 'both' },
+            );
+            intro.querySelector('.opening-sequence__eyebrow')?.animate(
+              [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }],
+              { duration: 400, delay: 450, easing: 'ease-out', fill: 'both' },
+            );
+            intro.querySelector('.opening-sequence__theme-lockup')?.animate(
+              [{ opacity: 0, transform: 'translateY(13px)' }, { opacity: 1, transform: 'translateY(0)' }],
+              { duration: 550, delay: 900, easing: 'ease-out', fill: 'both' },
+            );
+            intro.querySelector('.opening-sequence__countdown')?.animate(
+              [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'translateY(0)' }],
+              { duration: 450, delay: 1150, easing: 'ease-out', fill: 'both' },
+            );
+            intro.querySelector('.opening-sequence__event')?.animate(
+              [{ opacity: 0, transform: 'translateY(7px)' }, { opacity: 1, transform: 'translateY(0)' }],
+              { duration: 360, delay: 1370, easing: 'ease-out', fill: 'both' },
+            );
+          }
+        } catch {}
+      })();
+    </script>
+    <script is:inline>
+      (() => {
+        const intro = document.querySelector('[data-opening-sequence]');
+        const orbit = intro?.querySelector('.opening-sequence__orbit-line');
+        const mark = intro?.querySelector('.opening-sequence__logo img');
+        if (!intro || !orbit || !mark) return;
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const orbitDuration = reduceMotion ? 6.5 : 3.8;
+        const markDuration = reduceMotion ? 4.8 : 3.2;
+        const markTravel = reduceMotion ? 5 : 9;
+        const markScale = reduceMotion ? 0.012 : 0.025;
+        const startedAt = performance.now();
+
+        const animateIntro = (now) => {
+          if (intro.hidden || !intro.isConnected || !document.documentElement.classList.contains('has-opening-sequence')) return;
+          const elapsed = now - startedAt;
+          const angle = -18 + (elapsed / (orbitDuration * 1000)) * 360;
+          orbit.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+
+          const phase = Math.sin((elapsed / (markDuration * 1000)) * Math.PI * 2);
+          mark.style.transform = `translate3d(0, ${phase * markTravel}px, 0) scale(${1 + phase * markScale})`;
+          requestAnimationFrame(animateIntro);
+        };
+
+        requestAnimationFrame(animateIntro);
+      })();
+    </script>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Young Ministers Retreat home">
+        <img class="brand__logo brand__logo--light" src="/images/brand/ymr-high-quality-logo.png" alt="Young Ministers Retreat, YMR" width="1600" height="858" />
+        <img class="brand__logo brand__logo--dark" src="/images/brand/ymr-site-logo.png" alt="" aria-hidden="true" width="2560" height="1374" />
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#about">About</a><a href="#experience">Meetings</a><a href="/nations" aria-label="Explore YMR nations">Nations</a><a href="/initiatives">Initiatives</a><a href="/delegates">Delegates</a><a href="/testimonies">Testimonies</a><a href="/prayer-wall">Prayer Wall</a><a href="/giving">Giving</a>
+      </nav>
+      <details class="mobile-nav">
+        <summary><Icon name="menu" size={18} /><span>Menu</span></summary>
+        <nav aria-label="Mobile navigation"><a href="#about">About</a><a href="#experience">Meetings</a><a href="/nations">Nations</a><a href="/initiatives">Initiatives</a><a href="/delegates">Delegates</a><a href="/testimonies">Testimonies</a><a href="/prayer-wall">Prayer Wall</a><a href="/giving">Giving</a><a href="#gallery">Gallery</a></nav>
+      </details>
+      <div class="header-actions"><ThemeToggle /><a class="button button--small button--dark" href="https://register.ymrglobal.org/"><Icon name="calendar" size={16} />Register</a></div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero__copy">
+          <p class="eyebrow"><span class="eyebrow__dash"></span> TEN YEARS OF YMR · 2017—2026</p>
+          <h1 id="hero-title" class="hero__lockup"><span class="hero__anniversary-mark"><img class="hero__anniversary-logo--light" src="/images/brand/ymr-at-10-logo-light.webp" alt="YMR ten-year anniversary logo" width="1600" height="1238" /><img class="hero__anniversary-logo--dark" src="/images/brand/ymr-at-10-logo.png" alt="" aria-hidden="true" width="1600" height="1238" /></span><span class="hero__theme-treatment"><img class="hero__theme-art" src="/images/brand/ymr-city-takers-wordmark.png" alt="City Takers" width="609" height="342" /><span class="hero__theme-caption">YMR GLOBAL<br />REVIVAL 2026</span></span></h1>
+          <p class="hero__intro">Young Ministers Retreat equips young leaders to follow Jesus and serve with purpose. Convened by P. Daniel Olawande, this tenth-year retreat continues a decade of raising a burning generation.</p>
+          <div class="hero__actions"><a class="button button--ember" href="https://register.ymrglobal.org/"><Icon name="calendar" size={17} />Register for YMR 2026</a><a class="text-link" href="#ymr-history">Learn More <span aria-hidden="true">↓</span></a></div>
+        </div>
+        <aside class="hero__event-panel" aria-label="YMR 2026 event countdown">
+          <p class="hero__event-kicker">THE TENTH EDITION</p>
+          <p class="hero__event-date">December <strong>26–30</strong>, 2026</p>
+          <div class="hero__event-countdown"><span class="event-strip__label">COUNTING DOWN TO YMR</span><Countdown /></div>
+          <p class="hero__event-venue"><strong>Old Auditorium</strong><span>Redemption City of God</span></p>
+          <a class="hero__event-guide-link" href="#plan-your-visit">Plan your visit <span aria-hidden="true">↓</span></a>
+        </aside>
+        <div class="hero__bottom"><span>ROOTED IN THE WORD</span><span class="hero__bottom-mark" aria-hidden="true">✳</span><span>READY FOR THE WORLD</span></div>
+      </section>
+
+
+      <section class="history section-wrap" id="ymr-history" aria-labelledby="history-title">
+        <div class="history__heading">
+          <div><span class="section-index">The Burning Mandate</span><h2 id="history-title">The Genesis of the Young Ministers<br /><span>Retreat (YMR)</span></h2></div>
+          <p>A beginning, a vision, and a mandate to raise a generation for Jesus.</p>
+        </div>
+        <div class="history__grid">
+          <article class="history-card history-card--genesis" data-motion>
+            <span class="history-card__index">01 · THE BEGINNING · 2017</span>
+            <p>What started as a retreat focused on young ministers has grown into a broader movement committed to raising, building, and equipping believers to become Kingdom ambassadors in every sphere of human influence.</p>
+            <div class="history-card__metrics">
+              <div><strong>700+</strong><span>participants at the first retreat</span></div>
+              <div><strong>24+</strong><span>denominations represented</span></div>
+              <div><strong>9</strong><span>speakers</span></div>
+              <div><strong>1,800+</strong><span>online participants</span></div>
+              <div><strong>72 hours</strong><span>of prayer and fasting</span></div>
+            </div>
+          </article>
+          <article class="history-card history-card--vision" data-motion>
+            <span class="history-card__index">02 · THE DUBAI VISION · MAY 2018</span>
+            <p>In a trance, I saw millions of young people coming out of fire, evading the cities. They were burning but they were not burnt.</p>
+            <br><p>I said, “Lord, what is this?” He said:</p>
+            <blockquote>“I have anointed you to raise and lead the burning generation.”</blockquote>
+            <p class="history-card__mantle">This is my Mantle!<br> This is my Mandate!</p>
+            <p class="history-card__attribution">The vision of Pastor Daniel Olawande</p>
+          </article>
+          <article class="history-card history-card--mandate" data-motion>
+            <span class="history-card__index">03 · THE MANDATE</span>
+            <span class="history-card__mandate-label">VISION</span>
+            <p>“Raising a Burning Generation”</p>
+            <span class="history-card__mandate-label">MISSION</span>
+            <blockquote>“To raise, build, and equip people as Kingdom ambassadors in every sphere of human influence.”</blockquote>
+            <span class="history-card__practices">Prayer · Fasting · Worship · Sound Doctrine</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="about-overview section-wrap" id="about" aria-labelledby="about-title">
+        <div class="about-overview__copy">
+          <span class="section-index">OVERVIEW</span>
+          <h2 id="about-title">Young ministers,<br /><span>equipped to serve.</span></h2>
+          <div class="about-overview__body">
+            <p>Young Ministers Retreat (YMR) is an annual Christian retreat convened by Pastor Daniel Olawande, popularly known as P.Daniel. Founded in 2017, YMR was established to create an environment where young ministers could seek God, experience spiritual renewal, and receive preparation for their Kingdom assignments.</p>
+          </div>
+          <div class="about-overview__actions">
+            <a class="about-overview__link" href="#convener">Meet the Convener</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="impact section-wrap" id="impact" aria-label="YMR at a glance">
+        <div class="impact__heading"><span class="section-index">A DECADE OF YMR</span><p>From the first retreat in 2017 to a global movement.</p></div>
+        <div class="impact__grid">{impact.map((item) => <article class="impact-card" data-motion><Icon name={item.icon} size={22} class="impact-card__icon" /><strong>{item.value}</strong><span>{item.label}</span></article>)}</div>
+      </section>
+
+      <section class="who section-wrap" id="who-we-are" aria-labelledby="who-title">
+        <div class="who__copy"><span class="section-index">THE YMR MANDATE</span><h2 id="who-title">Raising a generation<br />on fire for Jesus.</h2><p>YMR helps young believers grow in faith and carry the message of Jesus into their churches, communities, and the Mountains of Influence.</p><div class="who__pillars"><span>Raising Kingdom Leaders</span><span>Igniting Revival Fire</span><span>Discipleship &amp; Mentorship</span><span>Activating Purpose</span></div></div>
+        <div class="who__gallery" aria-label="YMR retreat moments">
+          <figure data-motion><img src="/images/current-site/who-1.jpg" alt="Young ministers attending YMR 2024" loading="lazy" decoding="async" /></figure>
+          <figure data-motion><img src="/images/current-site/who-2.jpg" alt="A large crowd worshipping at YMR" loading="lazy" decoding="async" /></figure>
+          <figure data-motion><img src="/images/current-site/who-3.jpg" alt="Pastor Daniel Olawande with a guest minister at YMR" loading="lazy" decoding="async" /></figure>
+          <figure data-motion><img src="/images/current-site/who-4.jpg" alt="Young people praying during a YMR healing and impartation night" loading="lazy" decoding="async" /></figure>
+        </div>
+      </section>
+
+      <section class="principles-section section-wrap" id="principles" aria-labelledby="principles-title">
+        <div class="principles-section__heading"><span class="section-index">YMR PRINCIPLES</span><h2 id="principles-title">What shapes<br /><span>the work.</span></h2></div>
+        <div class="principles" data-pretext-group>
+          {principles.map((item) => <article class="principle-card" data-motion><div class="principle-card__heading"><span class="principle-card__icons">{item.icons.map((name) => <Icon name={name} size={20} />)}</span><h3 data-pretext>{item.title}</h3></div><p>{item.detail}</p></article>)}
+        </div>
+        <figure class="principles-section__art"><canvas class="flame-canvas" data-flame-scene aria-hidden="true"></canvas><figcaption>RAISING A BURNING GENERATION</figcaption></figure>
+      </section>
+
+      <section class="convener section-wrap" id="convener" aria-labelledby="convener-title">
+        <figure class="convener__portrait" data-motion>
+          <img src="/images/about/pastor-daniel-olawande.jpg" alt="Pastor Daniel Olawande, convener of Young Ministers’ Retreat" width="940" height="1174" loading="lazy" decoding="async" />
+        </figure>
+        <div class="convener__content" data-motion>
+          <span class="section-index">CONVENER</span>
+          <h2 id="convener-title">Pastor Daniel Olawande</h2>
+          <p class="convener__bio">Daniel Olawande, fondly called P. Daniel, is a revivalist with a mandate to raise a burning generation for God. He is an ordained minister in the Redeemed Christian Church of God (RCCG).</p>
+          <a class="text-link text-link--dark" href="https://pdanielolawande.com" target="_blank" rel="noopener noreferrer">Meet P.Daniel</a>
+          <div class="convener__mandates">
+            <article><h3><Icon name="flame" size={17} />Revival Mandate</h3><p>Raising a burning generation passionately on fire for God in every sphere.</p></article>
+            <article><h3><Icon name="users" size={17} />Youth Leadership</h3><p>Leads students, corpers, and youth expressions across RCCG with a focus on revival.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="expect section-wrap" id="experience" aria-labelledby="experience-title">
+        <div class="expect__heading"><span class="section-index">WHAT TO EXPECT</span><h2 id="experience-title">Experience God’s Presence, Power, Word, and Fire</h2><p>Every YMR retreat is designed to awaken your spirit and align your heart with God’s purpose. Through deep worship, rich teaching, fervent prayer, and encounters with His fire, lives are transformed and destinies are activated.</p></div>
+        <div class="expect__grid" data-pretext-group>
+          {expectations.map((item) => <article class="expect-card" data-motion><img src={`/images/current-site/${item.image}`} alt={item.alt} loading="lazy" decoding="async" /><div class="expect-card__copy"><Icon name={item.icon} size={21} class="expect-card__icon" /><h3 data-pretext>{item.title}</h3><p>{item.detail}</p></div></article>)}
+        </div>
+      </section>
+
+      <section class="initiatives section-wrap" id="initiatives" aria-labelledby="initiatives-title">
+        <div class="initiatives__top"><div><span class="section-index">YMR INITIATIVES</span><p class="eyebrow">Serving beyond the retreat</p><h2 id="initiatives-title">One vision.<br /><span>Many expressions.</span></h2></div><p>The vision and ministry work continues throughout the year through initiatives in youth leadership, evangelism, ministry, and community support.</p></div>
+        <div class="initiative-grid">{initiatives.map((item) => <a class="initiative-card" href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noopener noreferrer' : undefined} aria-label={`Open ${item.name}`} data-motion><div class="initiative-card__image"><img src={item.image} alt={item.alt} loading="lazy" decoding="async" /><span class="initiative-card__number">{item.number}</span></div><div class="initiative-card__body"><span class="initiative-card__tag">{item.short}</span><h3>{item.name}</h3><p>{item.detail}</p></div></a>)}</div>
+      </section>
+
+      <section class="photo-story" id="gallery" aria-labelledby="archive-title">
+        <div class="photo-story__heading section-wrap"><div><span class="section-index">YMR GALLERY</span><h2 id="archive-title">Moments from<br /><span>the retreat.</span></h2></div><p>Experience past YMR editions in pictures...</p></div>
+        <div class="photo-grid section-wrap">{galleryHighlights.map((item, index) => <figure class:list={["photo-card", `photo-card--feature-${index + 1}`]} data-motion><img src={item.src} alt={item.alt} loading="lazy" decoding="async" /><figcaption><span>{item.caption === 'Prayer walk through Redemption City' ? item.caption : 'YMR in Pictures'}</span></figcaption></figure>)}</div>
+        <div class="photo-story__action section-wrap"><a class="button button--dark" href="/gallery">Explore more photos <Icon name="arrowRight" size={16} /></a><span>Browse 12 photos at a time</span></div>
+      </section>
+
+      <section class="testimonies section-wrap" id="testimonies" aria-labelledby="testimonies-title">
+        <div class="testimonies__heading">
+          <div><span class="section-index">YMR TESTIMONIES</span><h2 id="testimonies-title">Stories of <span>faith and renewal.</span></h2></div>
+          <p>Power your faith in prayers through stories of healing, answered prayer, and hope.</p>
+        </div>
+        <div class="testimonies__grid">
+          {testimonyStories.map((story) => (
+            <article class="testimony-card" data-motion data-testimony-card>
+              <span class="testimony-card__icon" aria-hidden="true">“</span>
+              <span class="testimony-card__label">YMR {story.year} · {story.category}</span>
+              <h3>{story.title}</h3>
+              <p>{story.detail}</p>
+            </article>
+          ))}
+        </div>
+        <div class="testimonies__footer">
+          <a class="about-overview__link" href={testimonyUrl}>Read Testimonies</a>
+        </div>
+      </section>
+
+      <section class="edition-archive section-wrap" id="editions" aria-labelledby="editions-title">
+        <div class="edition-archive__heading"><div><span class="section-index">TEN YEARS · ONE STORY</span><h2 id="editions-title">YMR@10 <span>through the years.</span></h2></div><div class="edition-archive__guide"><p>Explore YMR through the years...</p><nav class="edition-archive__controls" aria-label="Browse YMR editions"><button type="button" data-edition-scroll="previous" aria-label="Scroll to earlier editions" aria-controls="edition-timeline" disabled><span aria-hidden="true">←</span></button><button type="button" data-edition-scroll="next" aria-label="Scroll to later editions" aria-controls="edition-timeline"><span aria-hidden="true">→</span></button></nav></div></div>
+        <ol class="edition-timeline" id="edition-timeline" tabindex="0" aria-label="YMR editions from 2017 to 2026">
+          {editions.map((edition) => <EditionCard edition={edition} />)}
+        </ol>
+      </section>
+
+      <dialog class="edition-modal" id="edition-modal" data-edition-modal aria-labelledby="edition-modal-title" aria-describedby="edition-overview-copy">
+        <div class="edition-modal__scroll">
+          <header class="edition-modal__header">
+            <div><span class="section-index">YMR@10 · EDITION <span data-modal-year>2026</span></span><h2 id="edition-modal-title"><span data-modal-year>2026</span><span class="edition-modal__separator">/</span><span data-modal-theme>City Takers</span></h2></div>
+            <button class="edition-modal__close" type="button" data-close-edition aria-label="Close edition details"><span>Close</span><span class="edition-modal__close-mark" aria-hidden="true">×</span></button>
+          </header>
+          <div class="edition-modal__content">
+            <section class="edition-modal__overview" aria-labelledby="edition-overview-label">
+              <span class="section-index" id="edition-overview-label">EDITION OVERVIEW · <span data-modal-year>2026</span></span>
+              <div id="edition-overview-copy" class="edition-modal__full-overview" data-modal-full-overview></div>
+            </section>
+            <section class="edition-modal__highlights" aria-labelledby="edition-highlights-title" data-edition-highlights hidden>
+              <div class="edition-modal__section-heading"><div><span class="section-index">EDITION HIGHLIGHTS · <span data-modal-year>2025</span></span><h3 id="edition-highlights-title">YMR <span data-modal-year>2025</span> at a glance</h3></div></div>
+              <div class="edition-highlights__grid" data-edition-highlights-grid></div>
+            </section>
+            <section class="edition-modal__sessions" aria-labelledby="edition-sessions-title">
+              <div class="edition-modal__section-heading"><div><span class="section-index">MESSAGES &amp; TEACHING</span><h3 id="edition-sessions-title">Rewatch Sessions</h3></div><span class="edition-modal__section-index">YMR · <span data-modal-year>2026</span></span></div>
+              <p data-modal-sessions-copy>Return to the messages and teaching from this edition.</p>
+              <div class="edition-story__links">
+                <a class="edition-story__resource edition-story__resource--icon" data-youtube-link href="https://www.youtube.com/@PDanielOlawande/search?query=YMR%202026%20City%20Takers" target="_blank" rel="noopener noreferrer" aria-label="Find YMR sessions on YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8ZM9.6 15.6V8.4l6.3 3.6z"/></svg></a>
+                <a class="edition-story__resource edition-story__resource--icon" href={telegramSermons} target="_blank" rel="noopener noreferrer" data-telegram-link aria-label="Browse YMR sermons on Telegram" title="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 3-3.2 18-7.1-5.7-3.5 3.3.6-6.1L19 5.2 6 11.5 2 10.2z"/></svg></a>
+                <a class="edition-story__resource" data-mixlr-link href="https://flamingnetwork.mixlr.com/" target="_blank" rel="noopener noreferrer" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-9 9v6a3 3 0 0 0 3 3h2v-8H6v5H5v-6a7 7 0 0 1 14 0v6h-1v-5h-2v8h2a3 3 0 0 0 3-3v-6a9 9 0 0 0-9-9Z"/></svg><span data-mixlr-label>Listen on Mixlr</span></a>
+              </div>
+            </section>
+            <section class="edition-modal__gallery" aria-labelledby="edition-gallery-title" data-edition-gallery hidden>
+              <div class="edition-modal__section-heading"><div><span class="section-index">THE REVIVAL · <span data-modal-year>2026</span></span><h3 id="edition-gallery-title">Gallery: Experience YMR <span data-modal-year>2026</span> in Pictures</h3></div><span class="edition-modal__gallery-mark" aria-hidden="true">YMR@10</span></div>
+              <div class="edition-story__photos" data-edition-gallery-photos aria-label="Edition photo gallery">
+              </div>
+            </section>
+          </div>
+        </div>
+      </dialog>
+
+      <section class="regional-editions section-wrap" aria-labelledby="regional-title">
+        <div class="regional-editions__heading"><div><span class="section-index">YMR GLOBAL</span><h2 id="regional-title">YMR: To The Ends<br /><span>of the Earth</span></h2></div><a class="text-link text-link--dark" href="/nations">Explore all nations</a></div>
+        <div class="region-grid">{regions.map((region) => <a class="region-card" href={region.href} aria-label={`View ${region.title} on the YMR Nations page`} data-motion><span class="region-card__media"><img class="region-card__image" src={region.image} alt="" loading="lazy" decoding="async" /></span><span class="region-card__body"><span class="region-card__country">{region.location}</span><span class="region-card__title">{region.title}</span><span class="region-card__summary">{region.summary}</span><span class="region-card__open">View edition <Icon name="arrowRight" size={15} /></span></span></a>)}</div>
+      </section>
+
+      <section class="event-guide section-wrap" id="plan-your-visit" aria-labelledby="event-guide-title">
+        <div class="event-guide__heading">
+          <div><span class="section-index">YMR 2026 · ATTENDEE GUIDE</span><h2 id="event-guide-title">Plan your visit.<br /><span>Come ready.</span></h2></div>
+          <p>Curated questions and answers about YMR to aid your preparation and travel for the retreat</p>
+        </div>
+        <div class="event-guide__grid">
+          <article class="event-guide__essentials" data-motion aria-labelledby="event-essentials-title">
+            <span class="event-guide__edition">THE TENTH EDITION · CITY TAKERS</span>
+            <h3 id="event-essentials-title">YMR 2026</h3>
+            <dl class="event-guide__facts">
+              <div><dt><Icon name="calendar" size={17} />Dates</dt><dd>December 26–30, 2026</dd></div>
+              <div><dt><Icon name="mapPin" size={17} />Venue</dt><dd>Old Auditorium, Redemption City of God</dd></div>
+              <div><dt><Icon name="globe" size={17} />Location</dt><dd>Ogun State, Nigeria</dd></div>
+            </dl>
+            <div class="event-guide__actions">
+              <a class="button button--ember" href="https://register.ymrglobal.org/"><Icon name="calendar" size={17} />Register</a>
+              <a class="event-guide__directions" href="https://www.google.com/maps/search/?api=1&amp;query=Old+Auditorium+Redemption+City+of+God+Ogun+State+Nigeria" target="_blank" rel="noopener noreferrer"><Icon name="mapPin" size={17} />Get directions</a>
+            </div>
+            <p class="event-guide__note">Travelling from another country? <br><a href="/delegates">Contact our Foreign Delegates Management team for support.</a></p>
+          </article>
+          <div class="event-guide__faq" data-motion>
+            <a class="event-guide__faq-link" href="/faq">See FAQ <span aria-hidden="true"></span></a>
+            <h3>Things you need to know</h3>
+            <details>
+              <summary>What is YMR?<span aria-hidden="true">+</span></summary>
+              <p>YMR is Young Ministers’ Retreat, a gathering of believers from around the world where people are set on fire for God. Since 2017, its vision has been to raise burning kingdom giants.</p>
+            </details>
+            <details>
+              <summary>Is YMR only for young people or ministers?<span aria-hidden="true">+</span></summary>
+              <p>No. YMR is for everyone who desires to burn for God in their generation, regardless of age or church role.</p>
+            </details>
+            <details>
+              <summary>Who is YMR for?<span aria-hidden="true">+</span></summary>
+              <p>Young or old, men or women, students or workers, married or single, teenagers, young adults, and children are welcome at YMR.</p>
+            </details>
+            <details>
+              <summary>When and where is YMR Global Festival 2026?<span aria-hidden="true">+</span></summary>
+              <p>December 26–30, 2026, at the Old Auditorium, Redemption City, KM 46, Lagos–Ibadan Expressway.</p>
+            </details>
+            <details>
+              <summary>How do I register or volunteer?<span aria-hidden="true">+</span></summary>
+              <p>Register or sign up to volunteer through the <a href="https://register.ymrglobal.org/" target="_blank" rel="noopener noreferrer">official YMR registration page</a>. “Whatever you do, work at it with all your heart, as working for the Lord.” — Colossians 3:23–24.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing" aria-labelledby="closing-title">
+        <div class="closing__copy"><span class="section-index">DECEMBER 26–30, 2026</span><h2 id="closing-title">Join us at <span>YMR 2026.</span></h2><p>Worship, teaching, prayer, and spiritual renewal at Redemption City.</p></div>
+        <a class="button button--ember" href="https://register.ymrglobal.org/">Register for YMR 2026</a>
+      </section>
+
+    </main>
+
+    <footer class="site-footer" id="contact">
+      <div class="footer-main">
+        <div class="footer-brand"><a class="brand brand--footer" href="#top" aria-label="Young Ministers Retreat home"><img class="brand__logo brand__logo--light" src="/images/brand/ymr-high-quality-logo.png" alt="Young Ministers Retreat, YMR" width="1600" height="858" /><img class="brand__logo brand__logo--dark" src="/images/brand/ymr-site-logo.png" alt="" aria-hidden="true" width="2560" height="1374" /></a><p>Raising a burning generation...</p></div>
+        <div class="footer-column"><h2>Explore</h2><a href="#about">About Us</a><a href="/nations">Nations</a><a href="/initiatives">Initiatives</a><a href="/testimonies">Testimonies</a><a href="/prayer-wall">Prayer Wall</a></div>
+        <div class="footer-column"><h2>Get involved</h2><a href="/accommodation">Accommodation</a><a href="/delegates">International delegates</a><a href="/partner">Partner with YMR</a><a href="/giving">Giving</a><a href="/counselling">Counselling</a></div>
+        <div class="footer-column footer-contact"><h2>Contact</h2><a href="mailto:info@ymrglobal.org">info@ymrglobal.org</a><a href="tel:+2347048782063">+234 704 878 2063</a><a href="tel:+447881155846">+44 7881 155846</a></div>
+        <div class="footer-column footer-social"><h2>Follow YMR</h2><SocialLinks /></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Young Ministers Retreat</span><span>Young Ministers Retreat Global</span><a href="/privacy">Privacy</a><a href="#top">Back to top ↑</a></div>
+    </footer>
+    <script>
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      import { layout, prepare } from '@chenglou/pretext';
+
+      const motionAllowed = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+      gsap.registerPlugin(ScrollTrigger);
+
+      const alignTextGroups = () => {
+        document.querySelectorAll('[data-pretext-group]').forEach((group) => {
+          const headings = [...group.querySelectorAll('[data-pretext]')];
+          const measure = () => {
+            headings.forEach((heading) => { heading.style.minHeight = ''; });
+            const heights = headings.map((heading) => {
+              const style = getComputedStyle(heading);
+              const prepared = prepare(heading.textContent.trim(), `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`);
+              const lineHeight = Number.parseFloat(style.lineHeight) || Number.parseFloat(style.fontSize) * 1.2;
+              const result = layout(prepared, heading.getBoundingClientRect().width, lineHeight);
+              heading.dataset.pretextLines = String(result.lineCount);
+              return result.height;
+            });
+            const sharedHeight = Math.ceil(Math.max(0, ...heights));
+            headings.forEach((heading) => { heading.style.minHeight = `${sharedHeight}px`; });
+          };
+          document.fonts.ready.then(measure);
+          new ResizeObserver(measure).observe(group);
+        });
+      };
+      alignTextGroups();
+
+      const editionModal = document.querySelector('[data-edition-modal]');
+      const editionOpeners = [...document.querySelectorAll('[data-edition-open]')];
+      const modalYears = [...document.querySelectorAll('[data-modal-year]')];
+      const modalThemes = [...document.querySelectorAll('[data-modal-theme]')];
+      const modalFullOverview = editionModal?.querySelector('[data-modal-full-overview]');
+      const modalScroll = editionModal?.querySelector('.edition-modal__scroll');
+      const youtubeLink = document.querySelector('[data-youtube-link]');
+      const sessionCopy = document.querySelector('[data-modal-sessions-copy]');
+      const galleryPhotos = editionModal?.querySelector('[data-edition-gallery-photos]');
+      const gallerySection = editionModal?.querySelector('[data-edition-gallery]');
+      const highlightsSection = editionModal?.querySelector('[data-edition-highlights]');
+      const highlightsGrid = editionModal?.querySelector('[data-edition-highlights-grid]');
+      const mixlrLink = editionModal?.querySelector('[data-mixlr-link]');
+      const mixlrLabel = editionModal?.querySelector('[data-mixlr-label]');
+      const telegramLink = editionModal?.querySelector('[data-telegram-link]');
+
+      const renderEditionGallery = (year, photos) => {
+        if (!(galleryPhotos instanceof HTMLElement)) return;
+        galleryPhotos.replaceChildren();
+        const hasPhotos = Array.isArray(photos) && photos.length > 0;
+        if (gallerySection instanceof HTMLElement) gallerySection.hidden = !hasPhotos;
+        if (!hasPhotos) return;
+        photos.forEach((photo) => {
+          const figure = document.createElement('figure');
+          figure.className = 'edition-photo';
+          const image = document.createElement('img');
+          image.className = 'edition-photo__image';
+          image.src = photo.src;
+          image.alt = photo.alt || `A moment from YMR ${year}`;
+          image.loading = 'lazy';
+          image.decoding = 'async';
+          const caption = document.createElement('figcaption');
+          caption.textContent = photo.caption || `YMR ${year}`;
+          figure.append(image, caption);
+          galleryPhotos.append(figure);
+        });
+      };
+
+      const renderFullOverview = (overview, theme) => {
+        if (!(modalFullOverview instanceof HTMLElement)) return;
+        modalFullOverview.replaceChildren();
+        const blocks = overview.split(/\n\s*\n/).map((part) => part.trim()).filter(Boolean);
+        modalFullOverview.classList.toggle('edition-modal__full-overview--single', blocks.length === 1);
+        let pendingHeading = '';
+        blocks.forEach((block) => {
+          const lines = block.split('\n').map((line) => line.trim()).filter(Boolean);
+          if (!lines.length) return;
+          let headingText = '';
+          const firstLine = lines[0].replace(/^#{1,4}\s*/, '').replace(/\*\*/g, '').trim();
+          const isShortHeading = firstLine.length > 0 && firstLine.length < 82 && !/[.!?]$/.test(firstLine);
+          if (lines.length === 1 && isShortHeading && firstLine.toLowerCase() !== theme.toLowerCase()) {
+            pendingHeading = firstLine;
+            return;
+          }
+          if (lines.length > 1 && isShortHeading && firstLine.toLowerCase() !== theme.toLowerCase()) {
+            headingText = firstLine;
+            lines.shift();
+          } else {
+            headingText = pendingHeading;
+          }
+          pendingHeading = '';
+
+          const article = document.createElement('article');
+          article.className = 'edition-overview-block';
+          if (headingText) {
+            const heading = document.createElement('h4');
+            const icon = document.createElement('span');
+            icon.className = 'edition-overview-block__icon';
+            icon.setAttribute('aria-hidden', 'true');
+            icon.textContent = '✦';
+            heading.append(icon, document.createTextNode(headingText));
+            article.append(heading);
+          }
+
+          let paragraphLines = [];
+          let list = null;
+          const flushParagraph = () => {
+            if (!paragraphLines.length) return;
+            const paragraph = document.createElement('p');
+            paragraph.textContent = paragraphLines.join(' ');
+            article.append(paragraph);
+            paragraphLines = [];
+          };
+          lines.forEach((line) => {
+            if (/^[•·-]\s/.test(line)) {
+              flushParagraph();
+              if (!list) {
+                list = document.createElement('ul');
+                article.append(list);
+              }
+              const item = document.createElement('li');
+              item.textContent = line.replace(/^[•·-]\s*/, '');
+              list.append(item);
+            } else {
+              paragraphLines.push(line);
+            }
+          });
+          flushParagraph();
+          modalFullOverview.append(article);
+        });
+      };
+
+      const editionTimeline = document.querySelector('#edition-timeline');
+      const editionScrollNav = document.querySelector('.edition-archive__controls');
+      const editionScrollButtons = [...document.querySelectorAll('[data-edition-scroll]')];
+      const updateEditionScrollControls = () => {
+        if (!(editionTimeline instanceof HTMLElement)) return;
+        const maxScroll = Math.max(0, editionTimeline.scrollWidth - editionTimeline.clientWidth);
+        if (editionScrollNav instanceof HTMLElement) editionScrollNav.hidden = maxScroll <= 1;
+        editionScrollButtons.forEach((button) => {
+          button.disabled = button.dataset.editionScroll === 'previous'
+            ? editionTimeline.scrollLeft <= 1
+            : editionTimeline.scrollLeft >= maxScroll - 1;
+        });
+      };
+
+      if (editionTimeline instanceof HTMLElement) {
+        editionTimeline.addEventListener('scroll', updateEditionScrollControls, { passive: true });
+        new ResizeObserver(updateEditionScrollControls).observe(editionTimeline);
+        window.addEventListener('load', updateEditionScrollControls, { once: true });
+        updateEditionScrollControls();
+      }
+      editionScrollButtons.forEach((button) => button.addEventListener('click', () => {
+        if (!(editionTimeline instanceof HTMLElement)) return;
+        const firstCard = editionTimeline.querySelector('.edition-card');
+        const gap = Number.parseFloat(getComputedStyle(editionTimeline).columnGap) || 0;
+        const distance = firstCard instanceof HTMLElement ? firstCard.getBoundingClientRect().width + gap : editionTimeline.clientWidth * .8;
+        editionTimeline.scrollBy({ left: button.dataset.editionScroll === 'next' ? distance : -distance, behavior: motionAllowed ? 'smooth' : 'auto' });
+      }));
+
+      const openEdition = (opener) => {
+        if (!(editionModal instanceof HTMLDialogElement)) return;
+        const { year = '2026', theme = 'City Takers', overview = '', youtube = 'https://www.youtube.com/@PDanielOlawande', youtubeCta: providedYoutubeLabel = '', sessionSummary = '', mixlr = '', mixlrLabel: providedMixlrLabel = '', upcoming = 'false', highlights: highlightsJson = '[]', photos: photosJson = '[]' } = opener.dataset;
+        let photos = [];
+        let highlights = [];
+        try { photos = JSON.parse(photosJson); } catch { photos = []; }
+        try { highlights = JSON.parse(highlightsJson); } catch { highlights = []; }
+        modalYears.forEach((label) => { label.textContent = year; });
+        modalThemes.forEach((label) => { label.textContent = theme; });
+        renderFullOverview(overview, theme);
+        if (sessionCopy) sessionCopy.textContent = upcoming === 'true' ? 'Session recordings will be available after the retreat.' : (sessionSummary || `Watch messages and teaching from YMR ${year}.`);
+        renderEditionGallery(year, photos);
+        if (youtubeLink instanceof HTMLAnchorElement) youtubeLink.href = youtube;
+        if (youtubeLink instanceof HTMLAnchorElement) {
+          const label = providedYoutubeLabel || (youtube.includes('watch?v=') ? `Watch the YMR ${year} session on YouTube` : `Find YMR ${year} sessions on YouTube`);
+          youtubeLink.setAttribute('aria-label', label);
+          youtubeLink.title = label;
+        }
+        if (highlightsSection instanceof HTMLElement && highlightsGrid instanceof HTMLElement) {
+          highlightsGrid.replaceChildren();
+          highlightsSection.hidden = !highlights.length;
+          if (highlights.length) {
+            highlights.forEach(({ value, label, note }) => {
+              const card = document.createElement('article');
+              card.className = 'edition-highlight';
+              const number = document.createElement('strong');
+              number.textContent = value;
+              const title = document.createElement('span');
+              title.textContent = label;
+              const detail = document.createElement('small');
+              detail.textContent = note;
+              card.append(number, title, detail);
+              highlightsGrid.append(card);
+            });
+          }
+        }
+        if (mixlrLink instanceof HTMLAnchorElement) {
+          mixlrLink.hidden = !mixlr;
+          if (mixlr) mixlrLink.href = mixlr;
+        }
+        if (mixlrLabel) mixlrLabel.textContent = providedMixlrLabel || 'Listen on Mixlr';
+        if (telegramLink instanceof HTMLAnchorElement) telegramLink.hidden = year === '2025';
+        if (modalScroll instanceof HTMLElement) modalScroll.scrollTop = 0;
+        if (!editionModal.open) editionModal.showModal();
+        if (motionAllowed) {
+          gsap.fromTo(editionModal.querySelectorAll('.edition-modal__overview, .edition-modal__highlights, .edition-modal__sessions, .edition-modal__gallery'),
+            { y: 14, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: .42, stagger: .08, ease: 'power2.out', clearProps: 'transform,opacity,visibility' });
+        }
+      };
+
+      editionOpeners.forEach((opener) => opener.addEventListener('click', () => openEdition(opener)));
+      document.querySelector('[data-close-edition]')?.addEventListener('click', () => {
+        if (editionModal instanceof HTMLDialogElement) editionModal.close();
+      });
+      editionModal?.addEventListener('click', (event) => {
+        if (event.target === editionModal && editionModal instanceof HTMLDialogElement) editionModal.close();
+      });
+
+      if (motionAllowed) {
+        const playHeroIntro = () => {
+          const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+          intro.fromTo('.hero__copy > .eyebrow', { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .55 })
+            .fromTo('.hero__anniversary-mark', { y: 16, scale: .97, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: .72 }, '-=.16')
+            .fromTo('.hero__theme-treatment', { y: 12, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .5 }, '-=.3')
+            .fromTo('.hero__intro', { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .52 }, '-=.38')
+            .fromTo('.hero__actions', { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .48 }, '-=.28')
+            .fromTo('.event-strip', { y: 12, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .5 }, '-=.2')
+            .fromTo('.hero__visual', { y: 18, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .82, ease: 'power2.out' }, '-=.72');
+        };
+        if (document.documentElement.classList.contains('has-opening-sequence')) window.addEventListener('ymr:intro-complete', playHeroIntro, { once: true });
+        else playHeroIntro();
+
+        [
+          ['.impact__grid', '.impact-card'],
+          ['.event-guide__grid', '.event-guide__essentials, .event-guide__faq'],
+          ['.about-overview', '.about-overview__copy'],
+          ['.testimonies__grid', '.testimony-card'],
+          ['.history__grid', '.history-card'],
+          ['.convener', '.convener__portrait, .convener__content'],
+          ['.principles-section__heading', 'h2'],
+          ['.principles', '.principle-card'],
+          ['.who__gallery', 'figure'],
+          ['.initiative-grid', '.initiative-card'],
+          ['.expect__grid', '.expect-card'],
+          ['.photo-grid', '.photo-card'],
+          ['.edition-timeline', '.edition-card'],
+          ['.region-grid', '.region-card'],
+        ].forEach(([trigger, items]) => {
+          const group = document.querySelector(trigger);
+          if (!group) return;
+          gsap.fromTo(group.querySelectorAll(items), { y: 18, autoAlpha: 0 }, {
+            y: 0,
+            autoAlpha: 1,
+            duration: .55,
+            stagger: .07,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: group, start: 'top 86%', once: true },
+          });
+        });
+
+        const canvas = document.querySelector('[data-flame-scene]');
+        if (canvas) {
+          const startFlameScene = () => import('../scripts/flame-scene.js')
+            .then(({ mountFlameScene }) => mountFlameScene(canvas, gsap))
+            .catch((error) => console.warn('Decorative YMR flame scene could not start.', error));
+          if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+              if (entries.some((entry) => entry.isIntersecting)) {
+                observer.disconnect();
+                startFlameScene();
+              }
+            }, { rootMargin: '120px' });
+            observer.observe(canvas);
+          } else {
+            startFlameScene();
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

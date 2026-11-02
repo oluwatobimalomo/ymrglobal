@@ -1,0 +1,220 @@
+---
+import '../styles/global.css';
+import SocialLinks from '../components/SocialLinks.astro';
+import Icon from '../components/Icon.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import NationModal from '../components/NationModal.astro';
+import { nations } from '../data/nations';
+
+const upcomingEditions = [
+  {
+    year: '2027',
+    name: 'YMR Scotland',
+    flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    place: 'Glasgow',
+    date: 'March 20, 2027',
+    flyer: '/images/nations/ymr-scotland-2027-flyer-a.png',
+    href: 'https://access.ymrglobal.org/events/ymr-uk-glasgow',
+  },
+  {
+    year: '2027',
+    name: 'YMR USA',
+    flag: '🇺🇸',
+    place: 'New York',
+    date: 'April 17, 2027',
+    flyer: '/images/nations/ymr-usa-new-york-2027-flyer.png',
+    href: 'https://access.ymrglobal.org/events/ymr-usa-new-york',
+  },
+  {
+    year: '2027',
+    name: 'YMR USA',
+    flag: '🇺🇸',
+    place: 'Minnesota',
+    date: 'July 10, 2027',
+    flyer: '/images/nations/ymr-usa-minnesota-2027-flyer.png',
+    href: 'https://access.ymrglobal.org/events/ymr-usa-minnesota',
+  },
+  {
+    year: '2027',
+    name: 'YMR UK',
+    flag: '🇬🇧',
+    place: 'United Kingdom',
+    date: 'Date to be confirmed',
+  },
+  {
+    year: '2027',
+    name: 'YMR Canada',
+    flag: '🇨🇦',
+    place: 'Canada',
+    date: 'Date to be confirmed',
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#121416" />
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem('ymr-theme');
+          const theme = saved || 'dark';
+          document.documentElement.dataset.theme = theme;
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#121416' : '#ffffff');
+        } catch {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
+    <meta name="description" content="Explore YMR retreats in Canada, the United Kingdom, and the United States, plus upcoming international editions in 2027." />
+    <link rel="canonical" href="https://ymrglobal.org/nations" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="YMR Global" />
+    <meta property="og:url" content="https://ymrglobal.org/nations" />
+    <meta property="og:title" content="YMR Across Nations — YMR Global" />
+    <meta property="og:description" content="YMR retreats across nations, plus upcoming international editions in 2027." />
+    <meta property="og:image" content="https://ymrglobal.org/images/nations/ymr-scotland-2027-flyer-a.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="YMR Across Nations — YMR Global" />
+    <meta name="twitter:description" content="YMR retreats across nations, plus upcoming international editions in 2027." />
+    <meta name="twitter:image" content="https://ymrglobal.org/images/nations/ymr-scotland-2027-flyer-a.png" />
+    <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: 'Young Ministers Retreat Global', alternateName: 'YMR Global', url: 'https://ymrglobal.org/', logo: 'https://ymrglobal.org/images/brand/ymr-high-quality-logo.png', sameAs: ['https://www.facebook.com/ymrglobal', 'https://x.com/ymrglobal', 'https://www.instagram.com/ymrglobal/', 'https://www.youtube.com/@PDanielOlawande'] })} />
+    <link rel="icon" type="image/png" sizes="64x64" href="/images/brand/ymr-favicon-64.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400..700&display=swap" rel="stylesheet" />
+    <title>Nations — Young Ministers Retreat Global</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Young Ministers Retreat home">
+        <img class="brand__logo brand__logo--light" src="/images/brand/ymr-high-quality-logo.png" alt="Young Ministers Retreat, YMR" width="1600" height="858" />
+        <img class="brand__logo brand__logo--dark" src="/images/brand/ymr-site-logo.png" alt="" aria-hidden="true" width="2560" height="1374" />
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="/#about">About</a><a href="/#experience">Meetings</a><a href="/nations" aria-current="page">Nations</a><a href="/initiatives">Initiatives</a><a href="/delegates">Delegates</a><a href="/testimonies">Testimonies</a><a href="/prayer-wall">Prayer Wall</a><a href="/giving">Giving</a>
+      </nav>
+      <details class="mobile-nav">
+        <summary><Icon name="menu" size={18} /><span>Menu</span></summary>
+        <nav aria-label="Mobile navigation"><a href="/#about">About</a><a href="/#experience">Meetings</a><a href="/nations" aria-current="page">Nations</a><a href="/initiatives">Initiatives</a><a href="/delegates">Delegates</a><a href="/testimonies">Testimonies</a><a href="/prayer-wall">Prayer Wall</a><a href="/giving">Giving</a><a href="/#gallery">Gallery</a></nav>
+      </details>
+      <div class="header-actions"><ThemeToggle /><a class="button button--small button--dark" href="https://register.ymrglobal.org/"><Icon name="calendar" size={16} />Register</a></div>
+    </header>
+
+    <main id="main">
+      <section class="nations-hero" id="top" aria-labelledby="nations-title">
+        <div class="nations-hero__inner">
+          <div class="nations-hero__copy">
+            <span class="section-index">YMR GLOBAL · NATIONS</span>
+            <h1 id="nations-title">YMR, across<br /><span>nations.</span></h1>
+            <p class="nations-hero__intro">YMR began in Nigeria and has held retreats in Canada, the United Kingdom, and the United States. In 2027, YMR Scotland comes to Glasgow.</p>
+            <div class="nations-hero__actions"><a class="button button--ember" href="#revival"><Icon name="globe" size={17} />Explore YMR editions</a><a class="text-link" href="#upcoming-editions">Upcoming editions · 2027</a></div>
+          </div>
+          <figure class="nations-hero__visual" data-nations-hero-image>
+            <img src="/images/retreat/gathering-wide.jpg" alt="YMR participants worshipping together" width="1600" height="900" fetchpriority="high" />
+            <figcaption><span>YOUNG MINISTERS RETREAT</span><span>ONE CALL · EVERY NATION</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <nav class="nations-jump section-wrap" aria-label="Jump to a nation">
+        <a href="#canada"><Icon name="mapPin" size={15} />Canada</a><a href="#united-kingdom"><Icon name="mapPin" size={15} />United Kingdom</a><a href="#united-states"><Icon name="mapPin" size={15} />United States</a><a href="#upcoming-editions"><Icon name="calendar" size={15} />Upcoming editions</a>
+      </nav>
+
+      <section class="nations-list section-wrap" id="revival" aria-labelledby="revival-title">
+        <div class="nations-intro">
+          <div><span class="section-index">YMR AROUND THE WORLD</span><h2 id="revival-title">Retreats across nations.</h2></div>
+          <p>Explore past and upcoming YMR retreats by country.</p>
+        </div>
+        {nations.map((nation, index) => {
+          const registrationLink = nation.links.find((link) => link.primary);
+          return (
+            <article class:list={['nation-feature', index % 2 === 1 && 'nation-feature--reverse']} id={nation.id} data-nation-feature>
+              <figure class:list={['nation-feature__media', nation.gallery && 'nation-feature__media--watermarked']}><img src={nation.image} alt={nation.alt} loading="lazy" decoding="async" /></figure>
+              <div class="nation-feature__content" data-nation-country={nation.country ?? ''}>
+                <span class="nation-feature__eyebrow">{nation.eyebrow}</span>
+                <h3>{nation.title}</h3>
+                <p class="nation-feature__summary">{nation.summary}</p>
+                <div class="nation-feature__details">
+                  <p><Icon name="mapPin" size={14} /><strong>Location</strong> · {nation.place}</p>
+                  {nation.details.map((detail) => <p><Icon name={detail.label === 'Dates' ? 'calendar' : 'mapPin'} size={14} /><strong>{detail.label}</strong> · {detail.value}</p>)}
+                </div>
+                <div class="nation-feature__actions">
+                  <button
+                    class="nation-feature__explore"
+                    type="button"
+                    data-nation-open
+                    data-title={nation.title}
+                    data-country={nation.country ?? ''}
+                    data-eyebrow={nation.eyebrow}
+                    data-location={nation.place}
+                    data-summary={nation.summary}
+                    data-details={JSON.stringify(nation.details)}
+                    data-overview-continuation={nation.overviewContinuation ?? ''}
+                    data-extended={JSON.stringify(nation.extended ?? [])}
+                    data-ministers={JSON.stringify(nation.ministers ?? [])}
+                    data-image={nation.flyer ?? nation.image}
+                    data-gallery={JSON.stringify(nation.gallery ?? [])}
+                    data-youtube-id={nation.youtubeId ?? ''}
+                    data-youtube-next-id={nation.youtubeNextId ?? ''}
+                    data-instagram={nation.instagram}
+                    data-register-url={registrationLink?.href ?? ''}
+                    data-map-url={nation.mapUrl ?? ''}
+                  >See past edition</button>
+                  <a class="nation-feature__instagram" href={nation.instagram} aria-label={`Follow ${nation.title} on Instagram`} target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2" /><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" /><circle cx="17.5" cy="6.8" r="1.2" fill="currentColor" /></svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </section>
+
+      <NationModal />
+
+      <section class="edition-archive section-wrap nations-upcoming" id="upcoming-editions" aria-labelledby="upcoming-editions-title">
+        <div class="edition-archive__heading">
+          <div><span class="section-index">YMR ACROSS NATIONS · 2027</span><h2 id="upcoming-editions-title">Upcoming <span>editions.</span></h2></div>
+        </div>
+        <ol class="edition-timeline nations-upcoming__timeline" tabindex="0" aria-label="Upcoming YMR editions in 2027">
+          {upcomingEditions.map((edition) => (
+            <li class:list={['edition-card', 'nations-upcoming__card', edition.flyer && 'edition-card--wide', !edition.href && 'nations-upcoming__card--tbc']}>
+              {edition.href ? (
+                <a class="edition-card__open edition-card__open--link" href={edition.href} target="_blank" rel="noopener noreferrer" aria-label={`Register for ${edition.name} ${edition.place}, ${edition.date}`}>
+                  <span class="edition-card__image">
+                    {edition.flyer ? <><img class="edition-card__backdrop" src={edition.flyer} alt="" aria-hidden="true" loading="lazy" decoding="async" /><img class="edition-card__poster" src={edition.flyer} alt={`Official ${edition.name} ${edition.place} 2027 flyer`} loading="lazy" decoding="async" /></> : <span class="edition-flyer-placeholder" role="img" aria-label={`${edition.name} ${edition.place} 2027 details coming soon`}><span class="edition-flyer-placeholder__label">YMR · {edition.year}</span><span class="edition-flyer-placeholder__theme">{edition.place}</span><span class="edition-flyer-placeholder__note">{edition.date}</span></span>}
+                    <span class="edition-card__flag" aria-hidden="true">{edition.flag}</span>
+                    <span class="edition-card__year">{edition.year}</span><span class="edition-card__hint">Register <span aria-hidden="true">↗</span></span>
+                  </span>
+                  <span class="edition-card__copy"><span class="edition-card__theme">{edition.name} · {edition.place}</span><span class="nations-upcoming__date">{edition.date}</span></span>
+                </a>
+              ) : (
+                <div class="edition-card__open nations-upcoming__static" aria-label={`${edition.name} 2027, ${edition.date}`}>
+                  <span class="edition-card__image"><span class="edition-flyer-placeholder" role="img" aria-label={`${edition.name} details coming soon`}><span class="edition-flyer-placeholder__label">YMR · {edition.year}</span><span class="edition-flyer-placeholder__theme">{edition.place}</span><span class="edition-flyer-placeholder__note">COMING SOON</span></span><span class="edition-card__flag" aria-hidden="true">{edition.flag}</span><span class="edition-card__year">{edition.year}</span></span>
+                  <span class="edition-card__copy"><span class="edition-card__theme">{edition.name}</span><span class="nations-upcoming__date">{edition.date}</span></span>
+                </div>
+              )}
+            </li>
+          ))}
+        </ol>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-main footer-main--nations">
+        <div class="footer-brand"><a class="brand brand--footer" href="/" aria-label="Young Ministers Retreat home"><img class="brand__logo brand__logo--light" src="/images/brand/ymr-high-quality-logo.png" alt="Young Ministers Retreat, YMR" width="1600" height="858" /><img class="brand__logo brand__logo--dark" src="/images/brand/ymr-site-logo.png" alt="" aria-hidden="true" width="2560" height="1374" /></a><p>Raising a burning generation...</p></div>
+        <nav class="footer-column" aria-label="Quick links"><h2>Explore</h2><a href="/#about">About YMR</a><a href="/nations">Nations</a><a href="/delegates">International delegates</a><a href="/initiatives">Initiatives</a><a href="/testimonies">Testimonies</a><a href="/prayer-wall">Prayer Wall</a><a href="/giving">Giving</a></nav>
+        <div class="footer-column footer-contact"><h2>Contact</h2><a href="mailto:info@ymrglobal.org">info@ymrglobal.org</a><a href="tel:+2347048782063">+234 704 878 2063</a><a href="tel:+447881155846">+44 7881 155846</a></div>
+        <div class="footer-column footer-social"><h2>Follow YMR</h2><SocialLinks /></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Young Ministers Retreat</span><span>Young Ministers Retreat Global</span><a href="/privacy">Privacy</a><a href="#top">Back to top ↑</a></div>
+    </footer>
+
+
+  </body>
+</html>

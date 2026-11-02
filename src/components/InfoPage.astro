@@ -1,0 +1,22 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from './Icon.astro';
+
+const { title, eyebrow, description, noteTitle = 'Get in touch with YMR.', note, actionLabel = 'Contact YMR', actionHref = 'mailto:info@ymrglobal.org' } = Astro.props;
+---
+
+<SiteLayout title={title} description={description}>
+  <main id="main" class="resource-page info-page">
+    <section class="resource-hero section-wrap" id="top" aria-labelledby="resource-title">
+      <span class="section-index">{eyebrow}</span>
+      <div class="resource-hero__row">
+        <div><h1 id="resource-title">{title}</h1><p>{description}</p></div>
+        <a class="button button--ember" href={actionHref}><Icon name="sparkles" size={17} />{actionLabel}</a>
+      </div>
+    </section>
+    <section class="resource-note section-wrap" aria-label="Page information">
+      <span class="resource-note__icon"><Icon name="book" size={21} /></span>
+      <div><h2>{noteTitle}</h2><p>{note}</p></div>
+    </section>
+  </main>
+</SiteLayout>

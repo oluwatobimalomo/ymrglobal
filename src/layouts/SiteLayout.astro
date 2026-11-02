@@ -1,0 +1,90 @@
+---
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+
+const { title, description = 'Young Ministers Retreat is raising a generation on fire for Jesus.', current = '' } = Astro.props;
+const normalizedPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonicalUrl = new URL(normalizedPath, Astro.site);
+const pageTitle = `${title} — YMR Global`;
+const socialImage = new URL('/images/brand/ymr-2026-city-takers-flyer.jpg', Astro.site);
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Young Ministers Retreat Global',
+  alternateName: 'YMR Global',
+  url: Astro.site?.toString(),
+  logo: new URL('/images/brand/ymr-high-quality-logo.png', Astro.site).toString(),
+  sameAs: ['https://www.facebook.com/ymrglobal', 'https://x.com/ymrglobal', 'https://www.instagram.com/ymrglobal/', 'https://www.youtube.com/@PDanielOlawande'],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#121416" />
+    <script is:inline>
+      (() => {
+        try {
+          const theme = localStorage.getItem('ymr-theme') || 'dark';
+          document.documentElement.dataset.theme = theme;
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#121416' : '#ffffff');
+        } catch {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="YMR Global" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
+    <link rel="icon" type="image/png" sizes="64x64" href="/images/brand/ymr-favicon-64.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400..700&display=swap" rel="stylesheet" />
+    <title>{pageTitle}</title>
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Young Ministers Retreat home">
+        <img class="brand__logo brand__logo--light" src="/images/brand/ymr-high-quality-logo.png" alt="Young Ministers Retreat, YMR" width="1600" height="858" />
+        <img class="brand__logo brand__logo--dark" src="/images/brand/ymr-site-logo.png" alt="" aria-hidden="true" width="2560" height="1374" />
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="/#about">About</a><a href="/#experience">Meetings</a><a href="/nations">Nations</a><a href="/initiatives" aria-current={current === 'initiatives' ? 'page' : undefined}>Initiatives</a><a href="/delegates" aria-current={current === 'delegates' ? 'page' : undefined}>Delegates</a><a href="/testimonies" aria-current={current === 'testimonies' ? 'page' : undefined}>Testimonies</a><a href="/prayer-wall" aria-current={current === 'prayer-wall' ? 'page' : undefined}>Prayer Wall</a><a href="/giving" aria-current={current === 'giving' ? 'page' : undefined}>Giving</a>
+      </nav>
+      <details class="mobile-nav">
+        <summary><Icon name="menu" size={18} /><span>Menu</span></summary>
+        <nav aria-label="Mobile navigation"><a href="/#about">About</a><a href="/#experience">Meetings</a><a href="/nations">Nations</a><a href="/initiatives">Initiatives</a><a href="/delegates" aria-current={current === 'delegates' ? 'page' : undefined}>Delegates</a><a href="/testimonies">Testimonies</a><a href="/prayer-wall" aria-current={current === 'prayer-wall' ? 'page' : undefined}>Prayer Wall</a><a href="/giving" aria-current={current === 'giving' ? 'page' : undefined}>Giving</a></nav>
+      </details>
+      <div class="header-actions"><ThemeToggle /><a class="button button--small button--dark" href="https://register.ymrglobal.org/"><Icon name="calendar" size={16} />Register</a></div>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-brand"><a class="brand brand--footer" href="/" aria-label="Young Ministers Retreat home"><img class="brand__logo brand__logo--light" src="/images/brand/ymr-high-quality-logo.png" alt="Young Ministers Retreat, YMR" width="1600" height="858" /><img class="brand__logo brand__logo--dark" src="/images/brand/ymr-site-logo.png" alt="" aria-hidden="true" width="2560" height="1374" /></a><p>Raising a burning generation...</p></div>
+        <nav class="footer-column" aria-label="Explore"><h2>Explore</h2><a href="/#about">About YMR</a><a href="/nations">Nations</a><a href="/initiatives">Initiatives</a><a href="/testimonies">Testimonies</a><a href="/prayer-wall">Prayer Wall</a></nav>
+        <nav class="footer-column" aria-label="Get involved"><h2>Get involved</h2><a href="/accommodation">Accommodation</a><a href="/delegates">International delegates</a><a href="/partner">Partner with YMR</a><a href="/giving">Giving</a><a href="/counselling">Counselling</a></nav>
+        <div class="footer-column footer-contact"><h2>Contact</h2><a href="mailto:info@ymrglobal.org">info@ymrglobal.org</a><a href="tel:+2347048782063">+234 704 878 2063</a><a href="tel:+447881155846">+44 7881 155 846</a></div>
+        <div class="footer-column footer-social"><h2>Follow YMR</h2><SocialLinks /></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Young Ministers Retreat</span><span>Young Ministers Retreat Global</span><a href="/privacy">Privacy</a><a href="#top">Back to top ↑</a></div>
+    </footer>
+  </body>
+</html>

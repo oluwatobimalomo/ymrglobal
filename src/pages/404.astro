@@ -1,0 +1,16 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<SiteLayout title="Page not found" description="The page you are looking for could not be found. Explore Young Ministers Retreat Global.">
+  <main id="main" class="resource-page info-page">
+    <section class="resource-hero section-wrap" id="top" aria-labelledby="not-found-title">
+      <span class="section-index">404 · PAGE NOT FOUND</span>
+      <div class="resource-hero__row">
+        <div><h1 id="not-found-title">This page has<br /><span>moved on.</span></h1><p>We couldn’t find that page. Head back to YMR Global or explore the retreat.</p></div>
+        <a class="button button--ember" href="/"><Icon name="arrowLeft" size={17} />Back to YMR Global</a>
+      </div>
+    </section>
+  </main>
+</SiteLayout>

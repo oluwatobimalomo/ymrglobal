@@ -1,0 +1,70 @@
+---
+const eventStart = '2026-12-26T00:00:00+01:00';
+---
+
+<div class="countdown" data-countdown={eventStart} aria-label="Countdown to Young Ministers Retreat 2026">
+  <div class="countdown__unit"><span data-days>—</span><small>Days</small></div>
+  <span class="countdown__separator" aria-hidden="true">:</span>
+  <div class="countdown__unit"><span data-hours>—</span><small>Hours</small></div>
+  <span class="countdown__separator" aria-hidden="true">:</span>
+  <div class="countdown__unit"><span data-minutes>—</span><small>Minutes</small></div>
+  <span class="countdown__separator" aria-hidden="true">:</span>
+  <div class="countdown__unit"><span data-seconds>—</span><small>Seconds</small></div>
+  <p class="countdown__status" data-status aria-live="polite"></p>
+</div>
+
+<script>
+  const mountCountdown = () => {
+    const roots = [...document.querySelectorAll('[data-countdown]')].filter((root) => root.getAttribute('data-ready') !== 'true');
+    if (!roots.length) return;
+    const pad = (number) => String(number).padStart(2, '0');
+    const setValue = (field, value) => {
+      if (!field || field.textContent === value) return;
+      if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && typeof field.animate === 'function') {
+        field.animate([{ opacity: .55, transform: 'translateY(-5px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 260, easing: 'ease-out' });
+      }
+      field.textContent = value;
+    };
+    const clocks = roots.map((root) => {
+      root.setAttribute('data-ready', 'true');
+      return {
+        target: new Date(root.getAttribute('data-countdown')).getTime(),
+        fields: {
+          days: root.querySelector('[data-days]'),
+          hours: root.querySelector('[data-hours]'),
+          minutes: root.querySelector('[data-minutes]'),
+          seconds: root.querySelector('[data-seconds]'),
+        },
+        status: root.querySelector('[data-status]'),
+      };
+    });
+
+    let timer;
+    const tick = () => {
+      const now = Date.now();
+      clocks.forEach(({ target, fields, status }) => {
+        const remaining = target - now;
+        if (remaining <= 0) {
+          Object.values(fields).forEach((field) => setValue(field, '00'));
+          if (status) status.textContent = remaining > -86_400_000 ? 'YMR 2026 begins today.' : 'YMR 2026 has begun.';
+          return;
+        }
+        const days = Math.floor(remaining / 86_400_000);
+        const hours = Math.floor((remaining % 86_400_000) / 3_600_000);
+        const minutes = Math.floor((remaining % 3_600_000) / 60_000);
+        const seconds = Math.floor((remaining % 60_000) / 1_000);
+        setValue(fields.days, String(days));
+        setValue(fields.hours, pad(hours));
+        setValue(fields.minutes, pad(minutes));
+        setValue(fields.seconds, pad(seconds));
+      });
+      if (clocks.every(({ target }) => target + 86_400_000 <= now)) window.clearInterval(timer);
+    };
+
+    tick();
+    timer = window.setInterval(tick, 1000);
+  };
+
+  mountCountdown();
+</script>
+

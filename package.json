@@ -1,0 +1,23 @@
+{
+  "name": "ymr-global-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@chenglou/pretext": "1.0.0",
+    "astro": "^7.4.2",
+    "gsap": "3.15.0",
+    "three": "0.136.0"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1"
+  },
+  "devDependencies": {
+    "@types/three": "0.136.0"
+  }
+}

@@ -1,0 +1,86 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<SiteLayout
+  title="Delegates"
+  description="Plan your trip to YMR 2026 with visa invitation support, scheduled airport pick-up, arrival guidance, discounted accommodation information, and delegate contacts."
+  current="delegates"
+>
+  <main id="main" class="resource-page delegate-page">
+    <section class="delegate-hero section-wrap" id="top" aria-labelledby="delegate-title">
+      <div class="delegate-hero__copy">
+        <span class="section-index"><Icon name="globe" size={15} /> YMR GLOBAL · INTERNATIONAL DELEGATES</span>
+        <h1 id="delegate-title">Travel well.<br /><span>Arrive welcomed.</span></h1>
+        <p>Travelling to YMR from another nation? <br>Notify us of your travel plans so our Foreign Delegates team can prepare for your arrival.</p>
+        <a class="button button--ember" href="https://docs.google.com/forms/d/e/1FAIpQLSeoxqFQLAy59PnbameIz30g5ZzyvpAbkd_96T2NALrgq219EA/viewform?usp=send_form" target="_blank" rel="noopener noreferrer"><Icon name="plane" size={18} />Register as a delegate</a>
+      </div>
+      <div class="delegate-journey" aria-label="Personalized support for your journey to YMR">
+        <img class="delegate-journey__watermark delegate-journey__watermark--light" src="/images/brand/ymr-at-10-logo-light.webp" alt="" aria-hidden="true" />
+        <img class="delegate-journey__watermark delegate-journey__watermark--dark" src="/images/brand/ymr-at-10-logo.png" alt="" aria-hidden="true" />
+        <div class="delegate-journey__top"><span>YOUR YMR JOURNEY</span><span>26—30 DEC 2026</span></div>
+        <div class="delegate-journey__route" aria-hidden="true"><span class="delegate-journey__point"><Icon name="plane" size={20} /></span><i></i><span class="delegate-journey__point delegate-journey__point--arrival"><Icon name="mapPin" size={20} /></span><i></i><span class="delegate-journey__point delegate-journey__point--stay"><Icon name="bed" size={20} /></span><i></i><span class="delegate-journey__point delegate-journey__point--return"><Icon name="plane" size={20} /></span></div>
+        <div class="delegate-journey__labels"><span>Travel to Nigeria</span><span>Arrive in Nigeria</span><span>Stay &amp; YMR experience</span><span>Return to your destination</span></div>
+        <div class="delegate-journey__welcome"><span class="delegate-journey__globe"><Icon name="globe" size={25} /></span><span><strong>Guidance throughout your YMR journey.</strong><small>Our team can help you plan your arrival, stay, and return journey.</small></span><Icon name="sparkles" size={18} /></div>
+        <div class="delegate-journey__footer"><span>YMR GLOBAL</span><span>...raising a burning generation</span></div>
+      </div>
+    </section>
+
+    <section class="delegate-info section-wrap" id="before-you-travel" aria-labelledby="delegate-before-title">
+      <header class="delegate-info__heading">
+        <span class="section-index">BEFORE YOU TRAVEL · PLEASE TAKE NOTE</span>
+        <h2 id="delegate-before-title">A few things to plan before you go.</h2>
+        <p>These details will help you prepare for your journey and make arrival at Redemption City straightforward.</p>
+      </header>
+      <div class="delegate-info__grid">
+        <article class="delegate-info__card">
+          <span class="delegate-info__icon"><Icon name="book" size={20} /></span>
+          <div><span class="delegate-info__step">01 · VISA SUPPORT</span><h3>Need a visa?</h3><p>Contact the Foreign Delegates Management Team as soon as possible if you need a visa. The team will provide you with a letter of invitation promptly to support your application.</p></div>
+        </article>
+        <article class="delegate-info__card delegate-info__card--pickup">
+          <span class="delegate-info__icon"><Icon name="plane" size={20} /></span>
+          <div><span class="delegate-info__step">02 · AIRPORT PICK-UP</span><h3>One scheduled pick-up</h3><p>All delegates will be collected from the airport at one set time. Please plan your itinerary around it.</p><strong class="delegate-info__time"><Icon name="calendar" size={15} />12:00 noon · Saturday, 26 December 2026</strong></div>
+        </article>
+        <article class="delegate-info__card">
+          <span class="delegate-info__icon"><Icon name="car" size={20} /></span>
+          <div><span class="delegate-info__step">03 · ARRIVING EARLY?</span><h3>Ask about transport</h3><p>If you arrive before 26 December, the team can recommend professional airport transport to Redemption City at discounted rates.</p></div>
+        </article>
+        <article class="delegate-info__card">
+          <span class="delegate-info__icon"><Icon name="mapPin" size={20} /></span>
+          <div><span class="delegate-info__step">04 · ON ARRIVAL</span><h3>Visit the Information Desk</h3><p>When you arrive at the retreat, go to the Information Desk to register and collect your delegate tag.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="delegate-info delegate-info--stay section-wrap" aria-labelledby="delegate-stay-title">
+      <header class="delegate-info__heading">
+        <span class="section-index">YOUR STAY WITH US</span>
+        <h2 id="delegate-stay-title">During the retreat.</h2>
+      </header>
+      <div class="delegate-info__grid delegate-info__grid--three">
+        <article class="delegate-info__card">
+          <span class="delegate-info__icon"><Icon name="bed" size={20} /></span>
+          <div><span class="delegate-info__step">ACCOMMODATION</span><h3>Discounted delegate rates</h3><p>Paid accommodation details and a booking link will be shared with you. The team can help if you have questions or difficulty booking.</p></div>
+        </article>
+        <article class="delegate-info__card">
+          <span class="delegate-info__icon"><Icon name="heart" size={20} /></span>
+          <div><span class="delegate-info__step">A SPECIAL TIME OF PRAYER</span><h3>Plan to attend every session</h3><p>Pastor Daniel Olawande will call out the foreign delegates to pray for them during the retreat. Be present for every session so you don’t miss this moment.</p></div>
+        </article>
+        <article class="delegate-info__card">
+          <span class="delegate-info__icon"><Icon name="sparkles" size={20} /></span>
+          <div><span class="delegate-info__step">OFFICIAL MERCHANDISE</span><h3>Place your order</h3><p>YMR merchandise such as tops, caps, books among others are available for sale. Message Fiyin or Timileyin to get yours.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="delegate-contact section-wrap" id="delegate-contacts" aria-labelledby="delegate-contact-title">
+      <div class="delegate-contact__intro"><span class="section-index">DELEGATE OFFICERS · CALL/WHATSAPP</span><h2 id="delegate-contact-title">Questions? Reach Fiyin or Timileyin.</h2><p>They are available round-the-clock to attend to your needs.</p></div>
+      <div class="delegate-contact__links">
+        <a href="https://wa.me/447881155846" target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={18} /><span><small>WHATSAPP</small><strong>+44 7881 155 846</strong></span><Icon name="arrowRight" size={16} /></a>
+        <a href="https://wa.me/2348178213695" target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={18} /><span><small>WHATSAPP</small><strong>+234 817 821 3695</strong></span><Icon name="arrowRight" size={16} /></a>
+      </div>
+    </section>
+
+  </main>
+</SiteLayout>

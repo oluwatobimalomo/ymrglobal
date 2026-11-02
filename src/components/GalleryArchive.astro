@@ -1,0 +1,39 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from './Icon.astro';
+import { galleryPhotos } from '../data/gallery';
+
+const { page = 1 } = Astro.props;
+const perPage = 12;
+const totalPages = Math.ceil(galleryPhotos.length / perPage);
+const photos = galleryPhotos.slice((page - 1) * perPage, page * perPage);
+const pageHref = (number: number) => number === 1 ? '/gallery#gallery-library' : `/gallery/${number}#gallery-library`;
+---
+
+<SiteLayout title="YMR Gallery" description="Browse photo moments from the 2024 and 2025 Young Ministers Retreat editions." current="">
+  <main id="main" class="resource-page gallery-page">
+    <section class="gallery-hero section-wrap" id="top" aria-labelledby="gallery-title">
+      <span class="section-index"><Icon name="sparkles" size={15} /> YMR GLOBAL · PHOTO ARCHIVE</span>
+      <div class="gallery-hero__row">
+        <div><h1 id="gallery-title">Moments from<br /><span>the retreat.</span></h1><p>Revisit worship, prayer, teaching, and fellowship from the last two YMR editions.</p></div>
+        <div class="gallery-hero__count"><strong>70</strong><span>PHOTOS · 2024—2025</span></div>
+      </div>
+    </section>
+    <section class="gallery-library section-wrap" id="gallery-library" aria-labelledby="gallery-library-title">
+      <header class="gallery-library__heading"><div><span class="section-index">PHOTO COLLECTION</span><h2 id="gallery-library-title">Browse the moments</h2></div><p>Showing {photos.length} of {galleryPhotos.length} photos · page {page} of {totalPages}</p></header>
+      <div class="gallery-library__grid">
+        {photos.map((photo) => (
+          <figure class="gallery-library__card">
+            <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+            <figcaption><span>{photo.category === 'Prayer Walk' ? 'Prayer walk through Redemption City' : 'YMR in Pictures'}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+      <nav class="gallery-pagination" aria-label="Gallery pages">
+        {page > 1 ? <a class="gallery-pagination__step" href={pageHref(page - 1)} rel="prev"><Icon name="arrowLeft" size={16} />Previous</a> : <span class="gallery-pagination__step" aria-disabled="true"><Icon name="arrowLeft" size={16} />Previous</span>}
+        <div class="gallery-pagination__pages">{Array.from({ length: totalPages }, (_, index) => index + 1).map((number) => <a href={pageHref(number)} aria-current={number === page ? 'page' : undefined}>{String(number).padStart(2, '0')}</a>)}</div>
+        {page < totalPages ? <a class="gallery-pagination__step" href={pageHref(page + 1)} rel="next">Next<Icon name="arrowRight" size={16} /></a> : <span class="gallery-pagination__step" aria-disabled="true">Next<Icon name="arrowRight" size={16} /></span>}
+      </nav>
+    </section>
+  </main>
+</SiteLayout>

@@ -1,0 +1,146 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const supabaseUrl = (import.meta.env.PUBLIC_SUPABASE_URL || '').trim().replace(/\/$/, '');
+const supabaseKey = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || '').trim();
+
+const prayerFocuses = [
+  'Family & relationships',
+  'Health & healing',
+  'Education',
+  'Work & provision',
+  'Direction & purpose',
+  'Faith & spiritual growth',
+  'Other',
+];
+
+const scriptures = [
+  {
+    icon: 'sparkles',
+    theme: 'THE GOD WHO ANSWERS',
+    quote: 'Call unto me, and I will answer thee, and show thee great and mighty things, which thou knowest not.',
+    reference: 'Jeremiah 33:3',
+    href: 'https://www.biblegateway.com/passage/?search=Jeremiah%2033%3A3&version=KJV',
+  },
+  {
+    icon: 'hands',
+    theme: 'PRAYER & SUPPLICATION',
+    quote: 'Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God.',
+    reference: 'Philippians 4:6',
+    href: 'https://www.biblegateway.com/passage/?search=Philippians%204%3A6&version=KJV',
+  },
+  {
+    icon: 'heart',
+    theme: 'HELP IN TIME OF NEED',
+    quote: 'Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need.',
+    reference: 'Hebrews 4:16',
+    href: 'https://www.biblegateway.com/passage/?search=Hebrews%204%3A16&version=KJV',
+  },
+  {
+    icon: 'dove',
+    theme: 'HE HEARS YOUR CRY',
+    quote: 'The righteous cry, and the Lord heareth, and delivereth them out of all their troubles.',
+    reference: 'Psalm 34:17',
+    href: 'https://www.biblegateway.com/passage/?search=Psalm%2034%3A17&version=KJV',
+  },
+];
+---
+
+<SiteLayout title="Prayer Wall" description="Bring a prayer request to the YMR Prayer Wall and be encouraged by scripture about God hearing and helping." current="prayer-wall">
+  <main id="main" class="resource-page prayer-wall">
+    <section class="prayer-wall__hero section-wrap" id="top" aria-labelledby="prayer-wall-title">
+      <div class="prayer-wall__hero-copy">
+        <span class="section-index">YMR PRAYER WALL</span>
+        <h1 id="prayer-wall-title">Bring it to God.<br /><span>We’ll pray with you.</span></h1>
+        <p>Whatever is on your heart, bring it before God in prayer. Share your request with the YMR prayer team.</p>
+        <a class="button button--ember" href="#send-prayer"><Icon name="hands" size={18} />Send a prayer request</a>
+      </div>
+      <aside class="prayer-wall__hero-card" aria-label="Prayer encouragement">
+        <span class="prayer-wall__hero-symbol"><Icon name="dove" size={30} /></span>
+        <span class="prayer-wall__hero-kicker">A MOMENT TO PAUSE</span>
+        <p>Ask in faith.<br /><strong>Receive strength for today.</strong></p>
+        <span class="prayer-wall__hero-lines" aria-hidden="true"><i></i><i></i><i></i></span>
+      </aside>
+    </section>
+
+    <section class="prayer-wall__scriptures section-wrap" aria-labelledby="prayer-scriptures-title">
+      <div class="prayer-wall__section-heading">
+        <div><span class="section-index">HOLD ON TO THE WORD</span><h2 id="prayer-scriptures-title">God hears.<br /><span>He answers.</span></h2></div>
+        <p>When you pray, you can come boldly, ask with thanksgiving, and trust that God hears you.</p>
+      </div>
+      <div class="prayer-wall__verse-grid">
+        {scriptures.map((verse, index) => (
+          <article class={`prayer-verse prayer-verse--${index + 1}`}>
+            <div class="prayer-verse__top"><span class="prayer-verse__icon"><Icon name={verse.icon} size={19} /></span><span>{verse.theme}</span></div>
+            <blockquote>“{verse.quote}”</blockquote>
+            <a href={verse.href} target="_blank" rel="noopener noreferrer" aria-label={`Read ${verse.reference} in the King James Version`}><strong>{verse.reference}</strong><span>King James Version</span></a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="prayer-wall__submit section-wrap" id="send-prayer" aria-labelledby="send-prayer-title">
+      <div class="prayer-wall__submit-copy">
+        <span class="section-index">SHARE YOUR REQUEST</span>
+        <h2 id="send-prayer-title">You don’t have to carry it alone.</h2>
+        <p>Tell us what you would like prayer for. The YMR team will receive your request and stand with you in prayer.</p>
+        <div class="prayer-wall__callout"><Icon name="book" size={20} /><p><strong>“Ask, and it shall be given you; seek, and ye shall find.”</strong><span>Matthew 7:7</span></p></div>
+      </div>
+
+      <form class="prayer-request-form" data-prayer-form data-endpoint={supabaseUrl ? `${supabaseUrl}/rest/v1/prayer_requests` : ''} data-api-key={supabaseKey}>
+        <div class="prayer-request-form__field"><label for="prayer-name">Your name <span>Optional</span></label><input id="prayer-name" name="name" autocomplete="name" maxlength="100" /></div>
+        <div class="prayer-request-form__field"><label for="prayer-email">Email <span>Optional</span></label><input id="prayer-email" name="email" type="email" autocomplete="email" maxlength="200" /></div>
+        <div class="prayer-request-form__field prayer-request-form__field--full"><label for="prayer-focus">Prayer focus</label><select id="prayer-focus" name="prayer_focus" required><option value="" selected disabled>Select a focus</option>{prayerFocuses.map((focus) => <option value={focus}>{focus}</option>)}</select></div>
+        <div class="prayer-request-form__field prayer-request-form__field--full"><label for="prayer-request">Prayer request</label><textarea id="prayer-request" name="prayer_request" rows="6" minlength="10" maxlength="2500" required placeholder="Share what you would like us to pray for."></textarea></div>
+        <p class="form-privacy-note">Share only what you are comfortable sending. <a href="/privacy">Read our privacy information</a>.</p>
+        <input type="hidden" name="_subject" value="New YMR Prayer Wall request" />
+        <label class="prayer-request-form__honeypot" aria-hidden="true">Leave this field empty<input name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+        <div class="prayer-request-form__submit"><button class="button button--ember" type="submit"><Icon name="hands" size={18} />Send request</button><p data-prayer-status role="status" aria-live="polite"></p></div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const prayerForm = document.querySelector('[data-prayer-form]');
+    const prayerStatus = prayerForm?.querySelector('[data-prayer-status]');
+
+    prayerForm?.addEventListener('submit', async (event) => {
+      if (!(prayerForm instanceof HTMLFormElement)) return;
+      event.preventDefault();
+      const data = new FormData(prayerForm);
+      if (String(data.get('_gotcha') || '').trim()) return;
+      const endpoint = prayerForm.getAttribute('data-endpoint') || '';
+      const apiKey = prayerForm.getAttribute('data-api-key') || '';
+      const submitButton = prayerForm.querySelector('button[type="submit"]');
+      if (submitButton instanceof HTMLButtonElement) submitButton.disabled = true;
+
+      if (!endpoint || !apiKey) {
+        if (prayerStatus) prayerStatus.textContent = 'Online submissions are being set up. Please try again later.';
+        if (submitButton instanceof HTMLButtonElement) submitButton.disabled = false;
+        return;
+      }
+
+      if (prayerStatus) prayerStatus.textContent = 'Sending your request…';
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { apikey: apiKey, Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+          body: JSON.stringify({
+            name: String(data.get('name') || '').trim() || null,
+            email: String(data.get('email') || '').trim() || null,
+            prayer_focus: String(data.get('prayer_focus') || ''),
+            prayer_request: String(data.get('prayer_request') || '').trim(),
+          }),
+        });
+        if (!response.ok) throw new Error('Submission failed');
+        prayerForm.reset();
+        if (prayerStatus) prayerStatus.textContent = 'Your request has reached the YMR prayer team.';
+      } catch {
+        if (prayerStatus) prayerStatus.textContent = 'Unable to send your request right now. Please try again later.';
+      } finally {
+        if (submitButton instanceof HTMLButtonElement) submitButton.disabled = false;
+      }
+    });
+  </script>
+</SiteLayout>

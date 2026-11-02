@@ -1,0 +1,56 @@
+---
+---
+<dialog id="nation-modal" class="edition-modal nation-modal" data-nation-modal aria-labelledby="nation-modal-title" aria-describedby="nation-modal-summary">
+  <div class="edition-modal__scroll">
+    <header class="edition-modal__header">
+      <div><span class="section-index" data-nation-modal-kicker>YMR ACROSS NATIONS</span><h2 id="nation-modal-title"><span data-nation-modal-title>YMR USA</span><span class="nation-modal__flag" data-nation-modal-flag role="img" aria-label="United States flag" hidden>🇺🇸</span></h2></div>
+      <button class="edition-modal__close" type="button" data-close-nation aria-label="Close nation details"><span>Close</span><span class="edition-modal__close-mark" aria-hidden="true">×</span></button>
+    </header>
+    <div class="edition-modal__content">
+      <section class="edition-modal__overview" aria-labelledby="nation-modal-overview-title">
+        <span class="section-index">EDITION OVERVIEW</span>
+        <h3 id="nation-modal-overview-title" data-nation-modal-headline>A shared purpose.</h3>
+        <p id="nation-modal-summary" data-nation-modal-summary>YMR USA brought young ministers together in Minnesota for worship, prayer, and teaching.</p>
+        <div class="nation-modal__extended" data-nation-modal-extended></div>
+      </section>
+      <section class="nation-modal__ministers" data-minister-section aria-labelledby="nation-ministers-title" hidden>
+        <div class="edition-modal__section-heading"><div><span class="section-index">THE PEOPLE WHO SERVED</span><h3 id="nation-ministers-title">Ministers and Ministry Contributions</h3></div></div>
+        <div class="nation-minister-placeholder" data-minister-placeholder hidden><span class="nation-minister-placeholder__flag" data-minister-placeholder-flag aria-hidden="true"></span><strong>Minister details and photos coming soon</strong></div>
+        <div class="nation-minister-carousel" data-minister-carousel role="group" aria-roledescription="carousel" tabindex="0" aria-label="Minister slideshow">
+          <img data-minister-image src="" alt="" />
+          <button class="nation-carousel__control nation-carousel__control--previous" data-minister-previous type="button" aria-label="Previous minister">‹</button>
+          <button class="nation-carousel__control nation-carousel__control--next" data-minister-next type="button" aria-label="Next minister">›</button>
+          <span class="nation-carousel__count" data-minister-count aria-live="polite">1 / 7</span>
+        </div>
+        <p class="nation-carousel__caption nation-minister-carousel__caption" data-minister-caption aria-live="polite"></p>
+      </section>
+      <section class="nation-modal__full-gallery" data-full-gallery-section aria-labelledby="nation-full-gallery-title" hidden>
+        <div class="edition-modal__section-heading"><div><span class="section-index">THE GATHERING</span><h3 id="nation-full-gallery-title" data-full-gallery-title>Retreat gallery</h3></div></div>
+        <div class="nation-carousel" data-full-gallery-carousel role="group" aria-roledescription="carousel" aria-label="Nation photo slideshow" tabindex="0">
+          <img class="nation-carousel__image" data-full-gallery-image src="" alt="" />
+          <button class="nation-carousel__control nation-carousel__control--previous" data-full-gallery-previous type="button" aria-label="Previous gallery photo">‹</button>
+          <button class="nation-carousel__control nation-carousel__control--next" data-full-gallery-next type="button" aria-label="Next gallery photo">›</button>
+          <span class="nation-carousel__count" data-full-gallery-count aria-live="polite"></span>
+        </div>
+        <p class="nation-carousel__caption" data-full-gallery-caption aria-live="polite"></p>
+      </section>
+      <section class="edition-modal__sessions nation-modal__sessions" data-nation-sessions-section aria-labelledby="nation-modal-sessions-title" hidden>
+        <div class="edition-modal__section-heading"><div><span class="section-index">WATCH AGAIN</span><h3 id="nation-modal-sessions-title" data-nation-modal-sessions>Retreat sessions</h3></div></div>
+        <div class="nation-modal__video"><iframe data-nation-video title="YMR retreat sessions on YouTube" src="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      </section>
+      <section class="edition-modal__sessions" aria-label="More YMR links">
+        <div class="edition-story__links">
+          <a class="edition-story__resource nation-modal__icon-link" data-nation-youtube href="https://www.youtube.com/@PDanielOlawande" target="_blank" rel="noopener noreferrer" aria-label="Find YMR sessions on YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8ZM9.6 15.6V8.4l6.3 3.6z" /></svg></a>
+          <a class="edition-story__resource nation-modal__icon-link" href="https://t.me/pdanielfireinmybones" target="_blank" rel="noopener noreferrer" aria-label="YMR messages on Telegram" title="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.8 3.2 18.5 20c-.2 1.2-.9 1.5-1.9.9l-5.2-3.8-2.5 2.4c-.3.3-.5.5-1 .5l.4-5.3 9.7-8.8c.4-.4-.1-.6-.6-.2L5.4 13.2.3 11.6c-1.1-.3-1.1-1 .2-1.5L20.4 2.5c.9-.3 1.7.2 1.4.7Z" /></svg></a>
+          <a class="edition-story__resource nation-modal__icon-link" data-nation-register hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="Register for this YMR edition" title="Register"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7Zm12 16H5v-9h14v9ZM7 11h3v3H7v-3Z" /></svg></a>
+          <a class="edition-story__resource nation-modal__icon-link" data-nation-map hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="Open this edition venue in maps" title="Venue map"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.1 7 13 7 13s7-7.9 7-13a7 7 0 0 0-7-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" /></svg></a>
+          <a class="edition-story__resource nation-modal__icon-link" data-nation-instagram hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="Follow this nation on Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2" /><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" /><circle cx="17.5" cy="6.8" r="1.2" /></svg></a>
+        </div>
+      </section>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  import '../scripts/nations.js';
+</script>

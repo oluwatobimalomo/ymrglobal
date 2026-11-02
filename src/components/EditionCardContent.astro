@@ -1,0 +1,22 @@
+---
+const { edition } = Astro.props;
+---
+<span class="edition-card__image">
+  {edition.flyer ? (
+    <>
+      <img class="edition-card__backdrop" src={edition.flyer} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+      <img class="edition-card__poster" src={edition.flyer} alt={`Official YMR ${edition.year} ${edition.theme} flyer`} loading="lazy" decoding="async" />
+    </>
+  ) : (
+    <span class="edition-flyer-placeholder" role="img" aria-label={`YMR ${edition.year} edition artwork: ${edition.theme}`}>
+      <span class="edition-flyer-placeholder__label">YMR · {edition.year}</span>
+      <span class="edition-flyer-placeholder__theme">{edition.theme}</span>
+      <span class="edition-flyer-placeholder__note">YOUNG MINISTERS RETREAT</span>
+    </span>
+  )}
+  <span class="edition-card__year">{edition.year}</span>
+  <span class="edition-card__hint">Open edition <span aria-hidden="true">+</span></span>
+</span>
+<span class="edition-card__copy">
+  <span class="edition-card__theme">{edition.theme}</span>
+</span>

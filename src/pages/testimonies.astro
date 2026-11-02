@@ -1,0 +1,470 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const supabaseUrl = (import.meta.env.PUBLIC_SUPABASE_URL || '').trim().replace(/\/$/, '');
+const supabaseKey = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || '').trim();
+
+const categories = [
+  'Healings',
+  'Academic Breakthroughs',
+  'Marital Settlement',
+  'Family & Fruitfulness',
+  'Open Doors & Provision',
+  'Business Breakthrough',
+];
+
+const formatTestimonyCredit = (credit: string) => {
+  const [rawName, ...details] = credit.split(' · ');
+  const name = rawName.trim();
+  const parts = name.split(/\s+/).filter(Boolean);
+  const isPlaceholder = !name || /^ymr testimony$/i.test(name);
+  const isRoleAndInitial = /^(bro|sis)\s+[a-z]\.??$/i.test(name);
+  const displayName = isPlaceholder || isRoleAndInitial
+    ? 'Anonymous'
+    : parts.length > 1
+      ? `${parts[0]} ${parts.at(-1)?.replace(/[^\p{L}].*$/u, '').charAt(0)}.`
+      : name;
+
+  return [displayName, ...details].join(' · ');
+};
+
+const stories = [
+  {
+    id: 'limb-discrepancy',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'personStanding',
+    title: 'Seven years of limb pain ended',
+    summary: 'After an accident, my legs remained uneven and painful for seven years.',
+    full: `I give all glory to God for divine healing. Seven years ago, while working as a junior mechanic, I was accidentally hit by a car. Even after receiving treatment, my legs remained uneven, and I continued to experience severe pain. I lived with this for years, trusting God for healing.
+
+Tonight, Pastor Daniel asked us to shout Hallelujah prophetically, after shouting Hallelujah for the third time, my leg suddenly straightened, it became balanced, equal, and the pain completely disappeared.
+
+To God be the glory!`,
+    credit: 'Adenifuja DEJI · Nigeria',
+  },
+  {
+    id: 'breast-lump-moyinoluwa',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'heart',
+    title: 'A breast lump disappeared',
+    summary: 'After three surgeries and another lump appearing, I came to YMR believing God for a miracle.',
+    full: `I give glory to God. For the past three years, I have had recurring lumps in my breast. Within this period, I underwent three surgeries, and yet another lump had recently appeared, which I was already preparing to remove.
+
+I came to YMR believing God for a miracle. During the session, Pastor Daniel instructed us to shout Hallelujah loudly, declaring that miracles would happen. I shouted with faith, and immediately after, I could no longer feel the lump.
+
+Glory to Jesus!`,
+    credit: 'Moyinoluwa · Nigeria',
+  },
+  {
+    id: 'ulcer-healed',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'heart',
+    title: 'Eleven years of ulcer attacks ended',
+    summary: 'After years of ulcer attacks, I followed an instruction to fast during the retreat.',
+    full: `Glory to God! I began experiencing ulcer attacks in October 2013, and by December of that year, it had become extremely severe affecting both my health and my work. For years, I managed the condition carefully.
+
+At YMR 2023, I received an instruction to fast throughout the retreat, taking only water. As a medical practitioner (a pharmacist), I understood the implications, and it felt unusual but I obeyed.
+
+To the glory of God, from February 2024 until now, I have not had a single ulcer attack. I am completely healed!
+
+Glory to God!!!`,
+    credit: 'Wisdom U. Obi · Nigeria',
+  },
+  {
+    id: 'scholarship-open-doors',
+    edition: 'YMR 2024',
+    category: 'Academic Breakthroughs',
+    icon: 'book',
+    title: 'A fully funded PhD scholarship',
+    summary: 'After receiving a Canadian visa, an invitation to interview for a US scholarship arrived on the way to YMR.',
+    full: `At YMR 2022, Pastor Daniel declared that YMR would one day hold in Canada. I vividly remember saying to myself, “I will live in Canada.” At that time, I had just graduated from the university.
+
+By divine providence, I received a Canadian visa the following year. However, I chose to finish my NYSC before making any relocation plans.
+
+During NYSC, I felt a strong prompting to start applying for scholarships in the United States. On December 27th, 2023—just as I arrived at Redemption City for YMR—I received an interview invitation from one of the last schools I had applied to. I was overjoyed!
+
+That same YMR, Pastor Daniel instructed us prophetically to lift the flags of the nations we desired to go to. In faith, I lifted both the Canadian and US flags and declared, “They are open!”
+
+Today, by God’s grace, I am in the United States on a fully funded PhD scholarship, joining YMR from here.
+
+Glory to Jesus!`,
+    credit: 'Isaac Ikuejamoye · United States',
+  },
+  {
+    id: 'fruit-of-womb',
+    edition: 'YMR 2024',
+    category: 'Family & Fruitfulness',
+    icon: 'heart',
+    title: 'From waiting to celebration',
+    summary: 'After years of waiting for a child, I received a positive pregnancy test and later welcomed my son.',
+    full: `I've been waiting on God since 2015 for the fruit of the womb, tried several procedures, treatment, drugs, injections and all to no avail.
+
+Last year, I still went through another procedure where my Beta HCG was tested which still tested negative. I joined YMR (The Rain) last year and on the 2nd to the last day of the programme where Min. Dunsin Oyekan, PDaniel and Pastor Isaac Oyedepo ministered during the vigil. I noticed my body was getting weak in the course of the program but I was hoping and praying to God to work things out in my favour. While in camp, I used a pregnancy test strip twice. It tested negative even on Jan 1st, my hope got dashed so I left everything into the hands of God.
+
+I resumed back to work on Monday 8th Jan still feeling weak, when I couldn't take it anymore I did another test on Jan 12th, lo and behold it came out positive. By God's grace I carried my pregnancy, gave birth and named him Zoe, also known as Heaven's gift, Ayomikun, Obaloluwa etc.
+
+On the day of his circumcision the devil raised his ugly head, I was told he had jaundice, went for test and the bilirubin level shows his blood has to be changed completely, I wept and cried to God, you gave me this child please take charge and indeed God did because over the weekend after diagnosis the Lord cleared every traces of jaundice and my boy got healed.`,
+    credit: 'Adeleke Ifeoluwa · Nigeria',
+  },
+  {
+    id: 'swollen-stomach',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'sparkles',
+    title: 'Swelling returned to normal',
+    summary: 'I stepped forward during the healing session, and my stomach returned to normal.',
+    full: `I had been struggling with a vagina infection since 2017, and earlier this year around November I also developed an ulcer. Shortly after, my stomach became swollen.
+
+But when P. Daniel called people out for healings, I stepped out in faith… and I was instantly healed! My stomach returned to normal immediately.
+
+I give God all the glory for this miraculous healing.`,
+    credit: 'Oluwapelumi George · Nigeria',
+  },
+  {
+    id: 'hearing-right-bro-b',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'sparkles',
+    title: 'Hearing restored after a fall',
+    summary: 'After a fall from a ladder affected my hearing, my ear opened during the Lambano Hour.',
+    full: `A week before YMR, I fell from a ladder while at work, and afterward I realized I could no longer hear with my right ear.
+
+But during the Lambano Hour at YMR 2024, my ear suddenly popped open and I can now hear loud and clear!
+
+Glory be to God`,
+    credit: 'Bro B. · Nigeria',
+  },
+  {
+    id: 'severe-leg-pain',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'personStanding',
+    title: 'Ten years of leg pain disappeared',
+    summary: 'I had endured severe pain in my right leg for ten years before it suddenly disappeared during prayer.',
+    full: `I came for YMR 2023 with an excruciating pain in my right leg, a pain I had endured for 10 years. It was so severe that I often needed painkillers just to sleep.
+
+But while Pastor Ajetumobi was praying and making decrees over leg-related issues, I shouted “Amen” in faith. Suddenly, the pain disappeared! I began to jump and shout, the pain was completely gone.
+
+Glory be to Jesus!`,
+    credit: 'Sis T. · Nigeria',
+  },
+  {
+    id: 'hearing-left-sis-e',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'sparkles',
+    title: 'Hearing restored in the left ear',
+    summary: 'I came to YMR unable to hear clearly with my left ear and received my healing during the service.',
+    full: `I came to YMR 2024 unable to hear clearly with my left ear. I held on to my faith, believing I would not return without a miracle. As Pastor Daniel declared healings over the house, I received my healing. Now, I can hear clearly!
+
+I am so grateful to God
+Halleluyah!`,
+    credit: 'Sis E. · Nigeria',
+  },
+  {
+    id: 'myopia-healed',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'eye',
+    title: 'Myopia healed',
+    summary: 'After six years with myopia, the words on the screen became clear when I wiped my eyes with a handkerchief.',
+    full: `I was diagnosed with myopia 6 years ago. At YMR 2024, when Pastor Daniel asked us to dance after waving our handkerchiefs, I danced in faith. Then the Spirit of God instructed me to wipe my eyes with the white handkerchief.
+
+Immediately, the screen and words that had always been blurry became clear. I could read everything on the screen from where I was seated and do things I had never been able to do before.
+
+Glory be to God!`,
+    credit: 'Sis D. · Nigeria',
+  },
+  {
+    id: 'swollen-thumb',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'heart',
+    title: 'A swollen thumb returned to normal',
+    summary: 'I called my mum during the retreat and learned that the swelling in her thumb had gone down completely.',
+    full: `My mum had a swollen thumb three times its normal size and it had been that way for over a year. But tonight, after the dance, Pastor Daniel instructed us to call our loved ones at home who were sick to confirm their healing.
+
+I called my mum, and she told me the swelling had gone down completely! I also called my sister, and she confirmed that the thumb had returned to normal.
+
+Glory be to Jesus!`,
+    credit: 'Sis E. · Nigeria',
+  },
+  {
+    id: 'mothers-breast-lump',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'heart',
+    title: 'A mother’s breast lump disappeared',
+    summary: 'My mother’s lump disappeared while she watched the healing session at home.',
+    full: `In November, my mum called me from school. She had a lump in her breast that was growing. She hadn’t mentioned the medical treatments she had undergone because I was busy writing exams. When I got home, I realized the lump was still there, but I kept believing God for a miracle.
+
+On Friday night, when Pastor Daniel asked us to call our family members at home with sicknesses, I hesitated, but eventually, I called her. To my amazement, she had already sent a WhatsApp message saying she had been healed while watching the healing session! The lump is gone, my mum is completely healed.`,
+    credit: 'Sis T. · Nigeria',
+  },
+  {
+    id: 'dislocation-normalized',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'personStanding',
+    title: 'Hands healed after an accident',
+    summary: 'My hands were dislocated after an accident. During the ministration, I received my healing.',
+    full: `My hands were dislocated after an accident. During the ministration, as Pastor Daniel prophesied healings, I received my healing! Hallelujah`,
+    credit: 'Anonymous · Benin Republic',
+  },
+  {
+    id: 'uk-visa-approved',
+    edition: 'YMR 2023',
+    category: 'Open Doors & Provision',
+    icon: 'globe',
+    title: 'A UK visa was approved',
+    summary: 'After two refusals, my visa was approved following declarations at YMR Nigeria.',
+    full: `I attended YMR Nigeria in 2023, where Pastor Isaac Oyedepo and other ministers declared open doors. I had applied for a UK visa twice before and was refused. Before going to YMR, I applied again, feeling anxious and unsure.
+
+To the glory of God, my visa was approved, and here I am in the UK! Glory be to Jesus!`,
+    credit: 'Sis B. · United Kingdom',
+  },
+  {
+    id: 'galactorrhea-healed',
+    edition: 'YMR 2024',
+    category: 'Healings',
+    icon: 'heart',
+    title: 'Healing from galactorrhea',
+    summary: 'The discharge and discomfort I had experienced for months stopped during the dance.',
+    full: `I had been experiencing milk discharge from my breasts for several months, even though I was not pregnant. The doctor informed me that my prolactin levels were high. I called my mum to inform her, and she mentioned she had experienced the same thing when she was younger.
+
+When Pastor Daniel asked us to dance, I danced passionately. Before the dance was over, I noticed the discharge and the discomfort were completely gone!
+
+Glory be to Jesus`,
+    credit: 'Sis T. · Nigeria',
+  },
+  {
+    id: 'goiter-healed',
+    edition: 'YMR 2023',
+    category: 'Healings',
+    icon: 'heart',
+    title: 'Healing from goiter',
+    summary: 'I connected in faith when goiter was mentioned during prayer and later found it had disappeared.',
+    full: `As P. Daniel declared healings, he specifically mentioned “goiter.” I connected in faith and said “Amen.” Afterwards, I checked myself and discovered that the goiter had completely disappeared!
+
+Glory be to God!
+God is so good! Halleluyah!`,
+    credit: 'Sis M. · Nigeria',
+  },
+  {
+    id: 'growth-healed-bro-j',
+    edition: 'Past edition',
+    category: 'Healings',
+    icon: 'sparkles',
+    title: 'A growth disappeared during worship',
+    summary: 'After dancing prophetically during volunteers’ night, I noticed that the growth had disappeared.',
+    full: `I came to YMR with a growth in my private part, during the volunteers night, pastor asked us to dance prophetically, after dancing I noticed the growth in my private part disappeared miraculously. Hallelujah!`,
+    credit: 'Bro J.',
+  },
+  {
+    id: 'measles-healed',
+    edition: 'Past edition',
+    category: 'Healings',
+    icon: 'sparkles',
+    title: 'Healing from measles',
+    summary: 'As I danced, the measles over my body began to dry up.',
+    full: `I came to YMR with measles all over my body, p daniel asked us to dance, as I danced, the measles began to dry up without any medical intervention.`,
+    credit: 'Sis S.',
+  },
+  {
+    id: 'marital-settlement-2023',
+    edition: 'YMR 2022–23',
+    category: 'Marital Settlement',
+    icon: 'heart',
+    title: 'A marriage and new jobs',
+    summary: 'I attended YMR 2022 as a single, trusting God for a life partner. In 2023, I returned married and with two bigger jobs.',
+    full: `I came for YMR 2022 as a single, trusting God for a life partner, God did it in 2023, this year, she came married with 2 bigger jobs. Glory to God.`,
+    credit: 'YMR testimony',
+  },
+  {
+    id: 'bent-legs',
+    edition: 'Past edition',
+    category: 'Healings',
+    icon: 'personStanding',
+    title: 'Bent legs straightened',
+    summary: 'During the “The Rain” shout, I felt a vibration and my legs straightened.',
+    full: `I was born with bent legs that are said to be inherited from my father’s family. It got worse and I felt like she was never going to have an intervention, but God came through. While P Daniel asked us to shout The Rain, I felt a vibration that came in the form of a force and then before I realized anything, my legs were straightened.
+
+Glory be to God alone!`,
+    credit: 'Sis K.',
+  },
+  {
+    id: 'hearing-right-bro-s',
+    edition: 'Past edition',
+    category: 'Healings',
+    icon: 'sparkles',
+    title: 'Hearing restored during prayer',
+    summary: 'I came to YMR unable to hear well in my right ear and received my healing during prayer.',
+    full: `I came to YMR unable to hear well on my right ear, as pastor asked us to shout Jesus three times, during the prayer session, I received my healing. I started hearing well.`,
+    credit: 'Bro S.',
+  },
+  {
+    id: 'deliverance-from-sexual-sin',
+    edition: 'YMR 2021',
+    category: 'Deliverance & Freedom',
+    icon: 'sparkles',
+    title: 'Freedom from sexual sin',
+    summary: 'I responded to an altar call at “Weapons of War” and testified to lasting freedom.',
+    full: `I started attending YMR the year with the theme: Weapons of war. I have been trying to stop indulging in sexual sins like masturbation and some others but I couldn’t. During weapons of war, Pastor Daniel made an altar call saying “if you indulge in sexual sins and you want to be geninuely free” come forward. I went out in faith, unashamed, totally repentant, that night I received my deliverance, till date I haven’t indulged in sexual sin.
+
+Halleluyah!`,
+    credit: 'Sis P.',
+  },
+  {
+    id: 'twins-delivery',
+    edition: 'Past edition',
+    category: 'Family & Fruitfulness',
+    icon: 'heart',
+    title: 'A safe delivery of twins',
+    summary: 'My twins were delivered without complications after we prayed during my wife’s labour.',
+    full: `In April this year when my wife was in labour about to deliver, I made her put on the YMR VEST from last year and laid the anointed handkerchief on her head. It was intended that she would deliver through CS and the theatre was being prepared but God has the final say. The baby came out with just one push and with her legs. In less than 10 minutes, the second baby came out without complications. They are all doing fine to the glory of God. Hallelujah!`,
+    credit: 'Bro E.',
+  },
+  {
+    id: 'mary-anu-business-grant',
+    edition: 'YMR 2025',
+    category: 'Business Breakthrough',
+    icon: 'sparkles',
+    title: 'A ₦2 Million Business Grant',
+    summary: 'Mary Anu was one of the beneficiaries of the business grant initiative organised by YMR in partnership with Premium Trust Bank.',
+    full: 'Mary Anu was one of the beneficiaries of the business grant initiative organised by YMR in partnership with Premium Trust Bank. She received a ₦2 million grant, which she described as an unexpected but significant boost to her business. The support was intended to help her expand her operations, acquire better equipment and reach more customers. She expressed gratitude to P. Daniel Olawande and Premium Trust Bank for the opportunity.',
+    credit: 'Mary Anu · YMR 2025',
+  },
+];
+---
+
+<SiteLayout title="Testimonies" description="Read testimonies of healing and answered prayer from previous YMR editions, and share your own story." current="testimonies">
+  <main id="main" class="resource-page testimonies-page">
+    <section class="resource-hero section-wrap" id="top" aria-labelledby="testimonies-title">
+      <span class="section-index">YMR TESTIMONIES</span>
+      <div class="resource-hero__row">
+        <div><h1 id="testimonies-title">Lives changed.<br /><span>Be Inspired.</span></h1><p class="testimonies-page__scripture"><strong><em>For the testimony of Jesus is the spirit of prophecy.</em></strong> <strong>Rev. 19:10</strong> — Read about the testimonies recorded during the previous editions of YMR to stir up your faith as you receive yours.</p></div>
+        <a class="button button--ember" href="#send-testimony"><Icon name="sparkles" size={17} />Send your testimony</a>
+      </div>
+    </section>
+
+    <section class="testimonies-archive section-wrap" id="stories" aria-labelledby="story-list-title">
+      <div class="testimonies-filters" role="group" aria-label="Filter testimonies by category">
+        <button type="button" data-category-filter="all" aria-pressed="true">All stories <span>{stories.length}</span></button>
+        {categories.map((category) => <button type="button" data-category-filter={category} aria-pressed="false">{category} <span>{stories.filter((story) => story.category === category).length}</span></button>)}
+      </div>
+      <div class="testimonies-archive__grid" data-testimonies-grid>
+        {stories.map((story) => (
+          <article class="testimony-entry" data-testimony-entry data-category={story.category}>
+            <button class="testimony-entry__open" type="button" data-story-open data-story-title={story.title} data-story-category={story.category} data-story-edition={story.edition} data-story-credit={formatTestimonyCredit(story.credit)} data-story-full={story.full} aria-haspopup="dialog" aria-label={`Read full ${story.edition} testimony: ${story.title}`}>
+              <span class="testimony-entry__top"><span class="testimony-entry__icon"><Icon name={story.icon} size={20} /></span><span class="testimony-entry__meta"><span class="testimony-entry__category">{story.category}</span><span class="testimony-entry__year">{story.edition}</span></span></span>
+              <span class="testimony-entry__copy"><strong>{story.title}</strong><span>{story.summary}</span></span>
+              <span class="testimony-entry__credit">{formatTestimonyCredit(story.credit)}</span>
+              <span class="testimony-entry__action">Read full testimony</span>
+            </button>
+          </article>
+        ))}
+      </div>
+      <div class="testimonies-archive__empty" data-testimonies-empty hidden>
+        <Icon name="book" size={22} /><a class="text-link" href="#send-testimony">Send a testimony in this category</a>
+      </div>
+    </section>
+
+    <section class="testimony-submit section-wrap" id="send-testimony" aria-labelledby="send-testimony-title">
+      <div class="testimony-submit__intro"><span class="section-index">YOUR STORY MATTERS</span><h2 id="send-testimony-title">Tell us what God has done.</h2><p>Send a testimony from your YMR experience.</p></div>
+      <form class="testimony-form" data-testimony-form data-endpoint={supabaseUrl ? `${supabaseUrl}/rest/v1/testimony_submissions` : ''} data-api-key={supabaseKey}>
+        <div class="testimony-form__field"><label for="testimony-name">Your name</label><input id="testimony-name" name="name" autocomplete="name" maxlength="100" required /></div>
+        <div class="testimony-form__field"><label for="testimony-category">Testimony category</label><select id="testimony-category" name="category" required><option value="" selected disabled>Choose a category</option>{categories.map((category) => <option value={category}>{category}</option>)}</select></div>
+        <div class="testimony-form__field testimony-form__field--full"><label for="testimony-story">Your testimony</label><textarea id="testimony-story" name="testimony" rows="7" minlength="20" maxlength="2500" required placeholder="Share your testimony."></textarea></div>
+        <p class="form-privacy-note">Your story is reviewed before any publication. <a href="/privacy">Read our privacy information</a>.</p>
+        <input type="hidden" name="_subject" value="New YMR testimony submission" />
+        <label class="testimony-form__honeypot" aria-hidden="true">Leave this field empty<input name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+        <div class="testimony-form__submit"><button class="button button--ember" type="submit"><Icon name="sparkles" size={17} />Send testimony</button><p data-testimony-status role="status" aria-live="polite"></p></div>
+      </form>
+    </section>
+
+    <dialog class="story-modal" data-story-modal aria-labelledby="story-modal-title" aria-describedby="story-modal-body">
+      <div class="story-modal__panel"><header class="story-modal__header"><div><span class="section-index" data-story-modal-category>YMR TESTIMONY</span><h2 id="story-modal-title" data-story-modal-title>Testimony</h2></div><button type="button" class="story-modal__close" data-story-close aria-label="Close testimony">×</button></header><p id="story-modal-body" data-story-modal-body></p><p class="story-modal__credit" data-story-modal-credit></p></div>
+    </dialog>
+  </main>
+
+  <script>
+    const filters = [...document.querySelectorAll('[data-category-filter]')];
+    const entries = [...document.querySelectorAll('[data-testimony-entry]')];
+    const emptyState = document.querySelector('[data-testimonies-empty]');
+    const filterStories = (category) => {
+      let visibleCount = 0;
+      entries.forEach((entry) => {
+        const show = category === 'all' || entry.getAttribute('data-category') === category;
+        entry.toggleAttribute('hidden', !show);
+        if (show) visibleCount += 1;
+      });
+      if (emptyState instanceof HTMLElement) emptyState.hidden = visibleCount > 0;
+    };
+    filters.forEach((filter) => filter.addEventListener('click', () => {
+      filters.forEach((item) => item.setAttribute('aria-pressed', String(item === filter)));
+      filterStories(filter.getAttribute('data-category-filter') || 'all');
+    }));
+
+    const storyModal = document.querySelector('[data-story-modal]');
+    const modalTitle = storyModal?.querySelector('[data-story-modal-title]');
+    const modalCategory = storyModal?.querySelector('[data-story-modal-category]');
+    const modalBody = storyModal?.querySelector('[data-story-modal-body]');
+    const modalCredit = storyModal?.querySelector('[data-story-modal-credit]');
+    document.querySelectorAll('[data-story-open]').forEach((opener) => opener.addEventListener('click', () => {
+      if (!(storyModal instanceof HTMLDialogElement)) return;
+      if (modalTitle) modalTitle.textContent = opener.getAttribute('data-story-title') || 'YMR testimony';
+      if (modalCategory) modalCategory.textContent = `${opener.getAttribute('data-story-edition') || 'YMR TESTIMONY'} · ${opener.getAttribute('data-story-category') || 'TESTIMONY'}`;
+      if (modalBody) modalBody.textContent = opener.getAttribute('data-story-full') || '';
+      if (modalCredit) modalCredit.textContent = opener.getAttribute('data-story-credit') || '';
+      storyModal.showModal();
+    }));
+    storyModal?.querySelector('[data-story-close]')?.addEventListener('click', () => {
+      if (storyModal instanceof HTMLDialogElement) storyModal.close();
+    });
+    storyModal?.addEventListener('click', (event) => {
+      if (event.target === storyModal && storyModal instanceof HTMLDialogElement) storyModal.close();
+    });
+
+    const testimonyForm = document.querySelector('[data-testimony-form]');
+    const formStatus = testimonyForm?.querySelector('[data-testimony-status]');
+    testimonyForm?.addEventListener('submit', async (event) => {
+      if (!(testimonyForm instanceof HTMLFormElement)) return;
+      event.preventDefault();
+      const data = new FormData(testimonyForm);
+      if (String(data.get('_gotcha') || '').trim()) return;
+      const endpoint = testimonyForm.getAttribute('data-endpoint') || '';
+      const apiKey = testimonyForm.getAttribute('data-api-key') || '';
+      const submitButton = testimonyForm.querySelector('button[type="submit"]');
+      if (submitButton instanceof HTMLButtonElement) submitButton.disabled = true;
+      if (!endpoint || !apiKey) {
+        if (formStatus) formStatus.textContent = 'Online submissions are being set up. Please try again later.';
+        if (submitButton instanceof HTMLButtonElement) submitButton.disabled = false;
+        return;
+      }
+
+      if (formStatus) formStatus.textContent = 'Sending your testimony…';
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { apikey: apiKey, Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+          body: JSON.stringify({
+            name: String(data.get('name') || '').trim(),
+            category: String(data.get('category') || ''),
+            testimony: String(data.get('testimony') || '').trim(),
+          }),
+        });
+        if (!response.ok) throw new Error('Submission failed');
+        testimonyForm.reset();
+        if (formStatus) formStatus.textContent = 'Thank you. Your testimony has been sent for review.';
+      } catch {
+        if (formStatus) formStatus.textContent = 'We could not send that right now. Please try again later.';
+      } finally {
+        if (submitButton instanceof HTMLButtonElement) submitButton.disabled = false;
+      }
+    });
+  </script>
+</SiteLayout>

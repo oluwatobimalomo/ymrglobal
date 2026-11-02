@@ -1,0 +1,76 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<SiteLayout
+  title="Giving"
+  description="Support Young Ministers Retreat through bank transfer, PayPal, Paystack giving, or partnership."
+  current="giving"
+>
+  <main id="main" class="giving-page">
+    <section class="giving-hero section-wrap" id="top" aria-labelledby="giving-title">
+      <div class="giving-hero__copy">
+        <span class="section-index">GIVE · PARTNER · SUPPORT</span>
+        <h1 id="giving-title">Help carry<br /><span>the work forward.</span></h1>
+        <p>Choose your desired option to support the work of the Lord.</p>
+        <div class="giving-hero__actions">
+          <a class="button button--ember" href="https://paystack.shop/pay/ymr_givings" target="_blank" rel="noopener noreferrer"><Icon name="heart" size={17} />Online Giving</a>
+          <a class="button button--dark" href="https://paystack.shop/pay/ymr_partners" target="_blank" rel="noopener noreferrer">Partner with YMR</a>
+        </div>
+      </div>
+      <aside class="giving-hero__visual" aria-label="A scripture about giving">
+        <span class="giving-hero__visual-label">YMR · 2026</span>
+        <div class="giving-hero__visual-content">
+          <span class="giving-hero__visual-word">Give with<br /><i>purpose.</i></span>
+          <blockquote class="giving-hero__verse">
+            <p>“Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver.”</p>
+            <cite>I Cor. 9:7</cite>
+          </blockquote>
+        </div>
+        <span class="giving-hero__visual-mark" aria-hidden="true">✳</span>
+      </aside>
+    </section>
+
+    <section class="giving-options section-wrap" aria-labelledby="giving-options-title">
+      <div class="giving-section-heading">
+        <div><span class="section-index">BANK AND DIGITAL GIVING</span><h2 id="giving-options-title">Choose a giving option.</h2></div>
+       
+      </div>
+
+      <div class="giving-account-grid">
+        <article class="giving-account giving-account--premiumtrust">
+          <header><span class="giving-account__logo"><img src="/images/giving/logos/premiumtrust.png" alt="PremiumTrust Bank logo" /></span><div><span class="section-index">NAIRA TRANSFER</span><h3>PremiumTrust Bank</h3></div></header>
+          <dl><div><dt>Account name</dt><dd>Young Ministers Retreat Global</dd></div><div><dt>Account number</dt><dd>0040062934</dd></div></dl>
+        </article>
+
+        <article class="giving-account giving-account--ecobank">
+          <header><span class="giving-account__logo"><img src="/images/giving/logos/ecobank.png" alt="Ecobank logo" /></span><div><span class="section-index">NAIRA TRANSFER</span><h3>Ecobank</h3></div></header>
+          <dl><div><dt>Account name</dt><dd>Young Ministers Retreat Global</dd></div><div><dt>Account number</dt><dd>4250016845</dd></div></dl>
+        </article>
+
+        <article class="giving-account giving-account--lloyds">
+          <header><span class="giving-account__logo"><img src="/images/giving/logos/lloyds.png" alt="Lloyds Bank logo" /></span><div><span class="section-index">POUNDS TRANSFER</span><h3>Lloyds</h3></div></header>
+          <dl class="giving-account__details giving-account__details--sort-code"><div><dt>Account name</dt><dd>Young Ministers Retreat Global</dd></div><div><dt>Account number</dt><dd>24978060</dd></div><div><dt>Sort code</dt><dd>305466</dd></div></dl>
+        </article>
+
+        <article class="giving-account giving-account--wellsfargo">
+          <header><span class="giving-account__logo"><img src="/images/giving/logos/wells-fargo.png" alt="Wells Fargo logo" /></span><div><span class="section-index">BANK TRANSFER</span><h3>Wells Fargo</h3></div></header>
+          <dl class="giving-account__details giving-account__details--sort-code"><div><dt>Account name</dt><dd>Young Ministers Retreat Global</dd></div><div><dt>Account number</dt><dd>2357920640</dd></div><div><dt>Sort code</dt><dd>091000019</dd></div></dl>
+        </article>
+
+        <article class="giving-account giving-account--paypal">
+          <header><span class="giving-account__logo"><img src="/images/giving/logos/paypal.png" alt="PayPal logo" /></span><div><span class="section-index">ONLINE GIVING</span><h3>PayPal</h3></div></header>
+          <p>Send your seed through PayPal:</p>
+          <a class="giving-account__email" href="mailto:Give@ymrglobal.org">Give@ymrglobal.org</a>
+        </article>
+
+        <article class="giving-account giving-account--paystack">
+          <header><span class="giving-account__logo"><img src="/images/giving/logos/paystack.svg" alt="Paystack logo" /></span><div><span class="section-index">ONLINE GIVING</span><h3>Paystack</h3></div></header>
+          <p>Give securely online through Paystack.</p>
+          <a class="giving-account__link" href="https://paystack.shop/pay/ymr_givings" target="_blank" rel="noopener noreferrer">https://paystack.shop/pay/ymr_givings</a>
+        </article>
+      </div>
+    </section>
+  </main>
+</SiteLayout>
