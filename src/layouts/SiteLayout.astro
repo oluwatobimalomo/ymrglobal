@@ -8,7 +8,7 @@ const { title, description = 'Young Ministers Retreat is raising a generation on
 const normalizedPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const canonicalUrl = new URL(normalizedPath, Astro.site);
 const pageTitle = `${title} — YMR Global`;
-const socialImage = new URL('/images/brand/ymr-social-preview.png', Astro.site);
+const socialImage = new URL('https://new.ymrglobal.org/images/brand/ymr-social-preview.png');
 const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
