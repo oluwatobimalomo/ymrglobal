@@ -1214,13 +1214,14 @@ body { background: var(--paper); color: var(--ink); }
 .opening-sequence__spark { z-index: 3; }
 
 @media (max-width: 1050px) {
+  :root { --mobile-header-height: 76px; }
   .site-header { gap: 12px; }
   .site-header .desktop-nav { display: none; }
   .site-header .mobile-nav { position: relative; display: block; }
   .mobile-nav summary { display: inline-flex; min-height: 44px; align-items: center; gap: 7px; padding: 8px 10px; border-radius: 8px; cursor: pointer; list-style: none; font-size: 12px; font-weight: 700; }
   .mobile-nav summary::-webkit-details-marker { display: none; }
   .mobile-nav summary:focus-visible { outline: 2px solid var(--ember-ink); outline-offset: 3px; }
-  .mobile-nav[open] nav { position: absolute; z-index: 20; top: calc(100% + 8px); right: 0; display: grid; width: min(250px, calc(100vw - 24px)); padding: 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: 0 12px 28px rgba(20,17,15,.14); }
+  .mobile-nav[open] nav { position: fixed; z-index: 30; top: calc(var(--mobile-header-height) + env(safe-area-inset-top, 0px) + 8px); right: max(12px, env(safe-area-inset-right, 0px)); display: grid; width: min(280px, calc(100vw - 24px)); max-height: calc(100dvh - var(--mobile-header-height) - env(safe-area-inset-top, 0px) - 20px); overflow-y: auto; overscroll-behavior: contain; padding: 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: 0 12px 28px rgba(20,17,15,.14); }
   .mobile-nav nav a { display: flex; min-height: 44px; align-items: center; padding: 12px; border-radius: 7px; color: var(--ink); font-size: 13px; }
   .mobile-nav nav a { transition: background-color .18s ease, color .18s ease, transform .18s cubic-bezier(.2,0,0,1); }
   .mobile-nav nav a:hover { background: var(--surface); }
@@ -1239,6 +1240,7 @@ body { background: var(--paper); color: var(--ink); }
   .nation-feature--reverse .nation-feature__media { order: 0; }
 }
 @media (max-width: 760px) {
+  :root { --mobile-header-height: 68px; }
   .mobile-nav summary { display: inline-flex; min-height: 44px; align-items: center; gap: 7px; }
   .site-header .brand { width: 110px; }
   .site-header .brand__logo { width: 100%; }
