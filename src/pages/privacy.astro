@@ -2,24 +2,99 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
-<SiteLayout title="Privacy" description="Learn how YMR handles information submitted through its contact, prayer request, and testimony forms.">
-  <main id="main" class="resource-page info-page">
+<SiteLayout title="Privacy" description="Learn what information YMR Global collects, how it is used, and how to ask about or manage it.">
+  <main id="main" class="resource-page info-page privacy-page">
     <section class="resource-hero section-wrap" id="top" aria-labelledby="privacy-title">
       <span class="section-index">YOUR INFORMATION</span>
       <div class="resource-hero__row">
-        <div><h1 id="privacy-title">Privacy at<br /><span>YMR Global.</span></h1><p>We ask for only the information needed to respond to you and manage your submission.</p></div>
+        <div>
+          <h1 id="privacy-title">YMR<br /><span>Privacy Policy</span></h1>
+          <p>We respect your privacy and use the information you choose to share only for operational need.</p>
+        </div>
       </div>
     </section>
-    <section class="resource-note section-wrap" aria-label="Privacy information">
-      <div>
-        <h2>Forms and messages</h2>
-        <p>When configured, information you submit through the prayer request and testimony forms is stored in YMR’s Supabase database so the team can review and respond. Testimony submissions are held for review and are not automatically published. Do not include sensitive information you do not want YMR to receive.</p>
-        <p>Prayer requests may contain personal or sensitive details. Share only what you are comfortable sending, and avoid including private information about another person. Please email <a href="mailto:info@ymrglobal.org">info@ymrglobal.org</a> with questions or to request help with a submission.</p>
-        <h2>Testimonies and publication</h2>
-        <p>Submitting a testimony does not automatically publish it. Before publishing an identifiable story, the YMR team should obtain your permission and confirm the name format you prefer. You can ask the team to use your first name, an abbreviated name, or no name.</p>
-        <h2>Third-party services</h2>
-        <p>Supabase provides the hosted database used to store submissions. Review <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Supabase’s privacy policy</a>. Contact YMR at <a href="mailto:info@ymrglobal.org">info@ymrglobal.org</a> to ask about or request deletion of a submission. YMR should confirm its retention period and access practices before launch.</p>
+
+    <section class="resource-note section-wrap privacy-policy" aria-label="YMR Global privacy policy">
+      <div class="privacy-policy__content">
+        <p class="privacy-policy__updated"><strong>Last updated:</strong> 2 November 2026</p>
+        <p>YMR Global handles personal information in line with the Nigeria Data Protection Act 2023 (NDPA) and other applicable data protection laws, including the GDPR where it applies. We take appropriate steps to protect information and limit access ONLY to YMR Officials who need it for their work.</p>
+
+        <h2>Information you share with us</h2>
+        <p>Depending on how you contact us, you may share your name, email address, prayer focus, prayer request, testimony category, testimony, or details needed to help with an event or enquiry. You can choose whether to include your name and email when sending a prayer request. Please share only what is needed, and do not include private information about another person unless you have permission.</p>
+
+        <h2>How we use it</h2>
+        <p>We use the information you provide to receive and respond to prayer requests and enquiries, review testimony submissions, coordinate YMR activities, and provide support you have requested. We do not use your submissions for any other purpose.</p>
+
+        <h2>Testimonies and anonymity</h2>
+        <p>Sending a testimony does not automatically make it public. The YMR team reviews submissions before publication. If we publish your testimony, we keep your identity anonymous: we do not publish your name or direct contact details, and we remove details that could reasonably identify you.</p>
+        <p>You may contact us to ask a question, change your permission, or request that a published testimony be reviewed or removed.</p>
+
+        <h2>Who may handle your information</h2>
+        <p>Only YMR officials responsible for responding to submissions or managing the relevant activity should access your information. We do not sell your personal information. We may share limited information when needed to provide a service you request, meet a legal obligation, or protect someone’s safety.</p>
+
+        <h2>External links and event forms</h2>
+        <p>Some links on this website take you to separate registration, payment, accommodation, map, or media websites. Those websites are operated separately and have their own privacy information. Please review their notices before submitting information there. Their handling of your information is not controlled by this privacy policy.</p>
+
+        <h2>How long we keep information</h2>
+        <p>We keep personal information only for as long as it is needed to respond to you, manage the relevant YMR activity, meet legal requirements, or resolve a concern. You can contact us to ask whether information you submitted can be corrected or deleted.</p>
+
+        <h2>Your choices and privacy rights</h2>
+        <p>Depending on the law that applies to you, you may have the right to ask for a copy of your information, correct it, request its deletion, object to or limit certain uses, or withdraw consent where we rely on it. You may also raise a concern with the Nigeria Data Protection Commission or, where applicable, your local data protection authority.</p>
+
+        <h2>Website preferences and safety</h2>
+        <p>This website remembers simple choices such as your display theme and whether you have seen the welcome screen. These preferences are kept in your browser and can be cleared in its settings. We use reasonable safeguards to protect information, but no method of sending or storing information online can be guaranteed completely secure.</p>
+
+        <h2>Contact us</h2>
+        <p>For a privacy question or request about information you have submitted, email <a href="mailto:info@ymrglobal.org">info@ymrglobal.org</a>.</p>
       </div>
     </section>
   </main>
 </SiteLayout>
+
+<style>
+  .privacy-policy {
+    display: block;
+  }
+
+  .privacy-policy__content {
+    max-width: 900px;
+  }
+
+  .privacy-policy__content .privacy-policy__updated {
+    margin-bottom: 18px;
+    color: var(--ink);
+    font-size: 12px;
+  }
+
+  .privacy-policy__content > p {
+    max-width: 820px;
+    margin: 0 0 16px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .privacy-policy__content h2 {
+    margin: 30px 0 9px;
+    color: var(--ink);
+    font: 650 24px/1.2 var(--display);
+    letter-spacing: -.035em;
+  }
+
+  .privacy-policy__content a {
+    color: var(--ember-ink);
+    font-weight: 650;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .privacy-policy__content h2 {
+      margin-top: 25px;
+      font-size: 21px;
+    }
+
+    .privacy-policy__content > p {
+      font-size: 14px;
+    }
+  }
+</style>

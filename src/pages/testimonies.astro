@@ -14,20 +14,7 @@ const categories = [
   'Business Breakthrough',
 ];
 
-const formatTestimonyCredit = (credit: string) => {
-  const [rawName, ...details] = credit.split(' · ');
-  const name = rawName.trim();
-  const parts = name.split(/\s+/).filter(Boolean);
-  const isPlaceholder = !name || /^ymr testimony$/i.test(name);
-  const isRoleAndInitial = /^(bro|sis)\s+[a-z]\.??$/i.test(name);
-  const displayName = isPlaceholder || isRoleAndInitial
-    ? 'Anonymous'
-    : parts.length > 1
-      ? `${parts[0]} ${parts.at(-1)?.replace(/[^\p{L}].*$/u, '').charAt(0)}.`
-      : name;
-
-  return [displayName, ...details].join(' · ');
-};
+const formatTestimonyCredit = (_credit: string) => 'Anonymous';
 
 const stories = [
   {
@@ -42,7 +29,7 @@ const stories = [
 Tonight, Pastor Daniel asked us to shout Hallelujah prophetically, after shouting Hallelujah for the third time, my leg suddenly straightened, it became balanced, equal, and the pain completely disappeared.
 
 To God be the glory!`,
-    credit: 'Adenifuja DEJI · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'breast-lump-moyinoluwa',
@@ -56,7 +43,7 @@ To God be the glory!`,
 I came to YMR believing God for a miracle. During the session, Pastor Daniel instructed us to shout Hallelujah loudly, declaring that miracles would happen. I shouted with faith, and immediately after, I could no longer feel the lump.
 
 Glory to Jesus!`,
-    credit: 'Moyinoluwa · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'ulcer-healed',
@@ -72,7 +59,7 @@ At YMR 2023, I received an instruction to fast throughout the retreat, taking on
 To the glory of God, from February 2024 until now, I have not had a single ulcer attack. I am completely healed!
 
 Glory to God!!!`,
-    credit: 'Wisdom U. Obi · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'scholarship-open-doors',
@@ -92,7 +79,7 @@ That same YMR, Pastor Daniel instructed us prophetically to lift the flags of th
 Today, by God’s grace, I am in the United States on a fully funded PhD scholarship, joining YMR from here.
 
 Glory to Jesus!`,
-    credit: 'Isaac Ikuejamoye · United States',
+    credit: 'Anonymous',
   },
   {
     id: 'fruit-of-womb',
@@ -108,7 +95,7 @@ Last year, I still went through another procedure where my Beta HCG was tested w
 I resumed back to work on Monday 8th Jan still feeling weak, when I couldn't take it anymore I did another test on Jan 12th, lo and behold it came out positive. By God's grace I carried my pregnancy, gave birth and named him Zoe, also known as Heaven's gift, Ayomikun, Obaloluwa etc.
 
 On the day of his circumcision the devil raised his ugly head, I was told he had jaundice, went for test and the bilirubin level shows his blood has to be changed completely, I wept and cried to God, you gave me this child please take charge and indeed God did because over the weekend after diagnosis the Lord cleared every traces of jaundice and my boy got healed.`,
-    credit: 'Adeleke Ifeoluwa · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'swollen-stomach',
@@ -122,7 +109,7 @@ On the day of his circumcision the devil raised his ugly head, I was told he had
 But when P. Daniel called people out for healings, I stepped out in faith… and I was instantly healed! My stomach returned to normal immediately.
 
 I give God all the glory for this miraculous healing.`,
-    credit: 'Oluwapelumi George · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'hearing-right-bro-b',
@@ -136,7 +123,7 @@ I give God all the glory for this miraculous healing.`,
 But during the Lambano Hour at YMR 2024, my ear suddenly popped open and I can now hear loud and clear!
 
 Glory be to God`,
-    credit: 'Bro B. · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'severe-leg-pain',
@@ -150,7 +137,7 @@ Glory be to God`,
 But while Pastor Ajetumobi was praying and making decrees over leg-related issues, I shouted “Amen” in faith. Suddenly, the pain disappeared! I began to jump and shout, the pain was completely gone.
 
 Glory be to Jesus!`,
-    credit: 'Sis T. · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'hearing-left-sis-e',
@@ -163,7 +150,7 @@ Glory be to Jesus!`,
 
 I am so grateful to God
 Halleluyah!`,
-    credit: 'Sis E. · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'myopia-healed',
@@ -177,7 +164,7 @@ Halleluyah!`,
 Immediately, the screen and words that had always been blurry became clear. I could read everything on the screen from where I was seated and do things I had never been able to do before.
 
 Glory be to God!`,
-    credit: 'Sis D. · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'swollen-thumb',
@@ -191,7 +178,7 @@ Glory be to God!`,
 I called my mum, and she told me the swelling had gone down completely! I also called my sister, and she confirmed that the thumb had returned to normal.
 
 Glory be to Jesus!`,
-    credit: 'Sis E. · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'mothers-breast-lump',
@@ -203,7 +190,7 @@ Glory be to Jesus!`,
     full: `In November, my mum called me from school. She had a lump in her breast that was growing. She hadn’t mentioned the medical treatments she had undergone because I was busy writing exams. When I got home, I realized the lump was still there, but I kept believing God for a miracle.
 
 On Friday night, when Pastor Daniel asked us to call our family members at home with sicknesses, I hesitated, but eventually, I called her. To my amazement, she had already sent a WhatsApp message saying she had been healed while watching the healing session! The lump is gone, my mum is completely healed.`,
-    credit: 'Sis T. · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'dislocation-normalized',
@@ -213,7 +200,7 @@ On Friday night, when Pastor Daniel asked us to call our family members at home 
     title: 'Hands healed after an accident',
     summary: 'My hands were dislocated after an accident. During the ministration, I received my healing.',
     full: `My hands were dislocated after an accident. During the ministration, as Pastor Daniel prophesied healings, I received my healing! Hallelujah`,
-    credit: 'Anonymous · Benin Republic',
+    credit: 'Anonymous',
   },
   {
     id: 'uk-visa-approved',
@@ -225,7 +212,7 @@ On Friday night, when Pastor Daniel asked us to call our family members at home 
     full: `I attended YMR Nigeria in 2023, where Pastor Isaac Oyedepo and other ministers declared open doors. I had applied for a UK visa twice before and was refused. Before going to YMR, I applied again, feeling anxious and unsure.
 
 To the glory of God, my visa was approved, and here I am in the UK! Glory be to Jesus!`,
-    credit: 'Sis B. · United Kingdom',
+    credit: 'Anonymous',
   },
   {
     id: 'galactorrhea-healed',
@@ -239,7 +226,7 @@ To the glory of God, my visa was approved, and here I am in the UK! Glory be to 
 When Pastor Daniel asked us to dance, I danced passionately. Before the dance was over, I noticed the discharge and the discomfort were completely gone!
 
 Glory be to Jesus`,
-    credit: 'Sis T. · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'goiter-healed',
@@ -252,7 +239,7 @@ Glory be to Jesus`,
 
 Glory be to God!
 God is so good! Halleluyah!`,
-    credit: 'Sis M. · Nigeria',
+    credit: 'Anonymous',
   },
   {
     id: 'growth-healed-bro-j',
@@ -262,7 +249,7 @@ God is so good! Halleluyah!`,
     title: 'A growth disappeared during worship',
     summary: 'After dancing prophetically during volunteers’ night, I noticed that the growth had disappeared.',
     full: `I came to YMR with a growth in my private part, during the volunteers night, pastor asked us to dance prophetically, after dancing I noticed the growth in my private part disappeared miraculously. Hallelujah!`,
-    credit: 'Bro J.',
+    credit: 'Anonymous',
   },
   {
     id: 'measles-healed',
@@ -272,7 +259,7 @@ God is so good! Halleluyah!`,
     title: 'Healing from measles',
     summary: 'As I danced, the measles over my body began to dry up.',
     full: `I came to YMR with measles all over my body, p daniel asked us to dance, as I danced, the measles began to dry up without any medical intervention.`,
-    credit: 'Sis S.',
+    credit: 'Anonymous',
   },
   {
     id: 'marital-settlement-2023',
@@ -282,7 +269,7 @@ God is so good! Halleluyah!`,
     title: 'A marriage and new jobs',
     summary: 'I attended YMR 2022 as a single, trusting God for a life partner. In 2023, I returned married and with two bigger jobs.',
     full: `I came for YMR 2022 as a single, trusting God for a life partner, God did it in 2023, this year, she came married with 2 bigger jobs. Glory to God.`,
-    credit: 'YMR testimony',
+    credit: 'Anonymous',
   },
   {
     id: 'bent-legs',
@@ -294,7 +281,7 @@ God is so good! Halleluyah!`,
     full: `I was born with bent legs that are said to be inherited from my father’s family. It got worse and I felt like she was never going to have an intervention, but God came through. While P Daniel asked us to shout The Rain, I felt a vibration that came in the form of a force and then before I realized anything, my legs were straightened.
 
 Glory be to God alone!`,
-    credit: 'Sis K.',
+    credit: 'Anonymous',
   },
   {
     id: 'hearing-right-bro-s',
@@ -304,7 +291,7 @@ Glory be to God alone!`,
     title: 'Hearing restored during prayer',
     summary: 'I came to YMR unable to hear well in my right ear and received my healing during prayer.',
     full: `I came to YMR unable to hear well on my right ear, as pastor asked us to shout Jesus three times, during the prayer session, I received my healing. I started hearing well.`,
-    credit: 'Bro S.',
+    credit: 'Anonymous',
   },
   {
     id: 'deliverance-from-sexual-sin',
@@ -316,7 +303,7 @@ Glory be to God alone!`,
     full: `I started attending YMR the year with the theme: Weapons of war. I have been trying to stop indulging in sexual sins like masturbation and some others but I couldn’t. During weapons of war, Pastor Daniel made an altar call saying “if you indulge in sexual sins and you want to be geninuely free” come forward. I went out in faith, unashamed, totally repentant, that night I received my deliverance, till date I haven’t indulged in sexual sin.
 
 Halleluyah!`,
-    credit: 'Sis P.',
+    credit: 'Anonymous',
   },
   {
     id: 'twins-delivery',
@@ -326,7 +313,7 @@ Halleluyah!`,
     title: 'A safe delivery of twins',
     summary: 'My twins were delivered without complications after we prayed during my wife’s labour.',
     full: `In April this year when my wife was in labour about to deliver, I made her put on the YMR VEST from last year and laid the anointed handkerchief on her head. It was intended that she would deliver through CS and the theatre was being prepared but God has the final say. The baby came out with just one push and with her legs. In less than 10 minutes, the second baby came out without complications. They are all doing fine to the glory of God. Hallelujah!`,
-    credit: 'Bro E.',
+    credit: 'Anonymous',
   },
   {
     id: 'mary-anu-business-grant',
@@ -334,9 +321,9 @@ Halleluyah!`,
     category: 'Business Breakthrough',
     icon: 'sparkles',
     title: 'A ₦2 Million Business Grant',
-    summary: 'Mary Anu was one of the beneficiaries of the business grant initiative organised by YMR in partnership with Premium Trust Bank.',
-    full: 'Mary Anu was one of the beneficiaries of the business grant initiative organised by YMR in partnership with Premium Trust Bank. She received a ₦2 million grant, which she described as an unexpected but significant boost to her business. The support was intended to help her expand her operations, acquire better equipment and reach more customers. She expressed gratitude to P. Daniel Olawande and Premium Trust Bank for the opportunity.',
-    credit: 'Mary Anu · YMR 2025',
+    summary: 'A participant received support through YMR’s business grant initiative with Premium Trust Bank.',
+    full: 'A YMR participant received a ₦2 million grant through the business support initiative organised by YMR in partnership with Premium Trust Bank. The grant was intended to help expand the participant’s business, improve equipment and reach more customers. The recipient expressed gratitude for the opportunity.',
+    credit: 'Anonymous',
   },
 ];
 ---
@@ -346,7 +333,7 @@ Halleluyah!`,
     <section class="resource-hero section-wrap" id="top" aria-labelledby="testimonies-title">
       <span class="section-index">YMR TESTIMONIES</span>
       <div class="resource-hero__row">
-        <div><h1 id="testimonies-title">Lives changed.<br /><span>Be Inspired.</span></h1><p class="testimonies-page__scripture"><strong><em>For the testimony of Jesus is the spirit of prophecy.</em></strong> <strong>Rev. 19:10</strong> — Read about the testimonies recorded during the previous editions of YMR to stir up your faith as you receive yours.</p></div>
+        <div><h1 id="testimonies-title">Lives changed.<br /><span>Be Inspired.</span></h1><p class="testimonies-page__scripture"><strong><em>For the testimony of Jesus is the spirit of prophecy</em></strong> - Rev. 19:10 <br> Read about the testimonies recorded during the previous editions of YMR to stir up your faith as you receive yours.</p></div>
         <a class="button button--ember" href="#send-testimony"><Icon name="sparkles" size={17} />Send your testimony</a>
       </div>
     </section>
@@ -369,17 +356,17 @@ Halleluyah!`,
         ))}
       </div>
       <div class="testimonies-archive__empty" data-testimonies-empty hidden>
-        <Icon name="book" size={22} /><a class="text-link" href="#send-testimony">Send a testimony in this category</a>
+        <Icon name="book" size={22} /><a class="text-link" href="#send-testimony">Your testimony stirs up the faith of others</a>
       </div>
     </section>
 
     <section class="testimony-submit section-wrap" id="send-testimony" aria-labelledby="send-testimony-title">
-      <div class="testimony-submit__intro"><span class="section-index">YOUR STORY MATTERS</span><h2 id="send-testimony-title">Tell us what God has done.</h2><p>Send a testimony from your YMR experience.</p></div>
+      <div class="testimony-submit__intro"><span class="section-index">STRENGTHEN THE FAITH OF OTHERS</span><h2 id="send-testimony-title">Tell us what God has done.</h2><p>Testimonies are proofs of God's ability to answer prayers and pointers to what He will still do.</p></div>
       <form class="testimony-form" data-testimony-form data-endpoint={supabaseUrl ? `${supabaseUrl}/rest/v1/testimony_submissions` : ''} data-api-key={supabaseKey}>
         <div class="testimony-form__field"><label for="testimony-name">Your name</label><input id="testimony-name" name="name" autocomplete="name" maxlength="100" required /></div>
         <div class="testimony-form__field"><label for="testimony-category">Testimony category</label><select id="testimony-category" name="category" required><option value="" selected disabled>Choose a category</option>{categories.map((category) => <option value={category}>{category}</option>)}</select></div>
-        <div class="testimony-form__field testimony-form__field--full"><label for="testimony-story">Your testimony</label><textarea id="testimony-story" name="testimony" rows="7" minlength="20" maxlength="2500" required placeholder="Share your testimony."></textarea></div>
-        <p class="form-privacy-note">Your story is reviewed before any publication. <a href="/privacy">Read our privacy information</a>.</p>
+        <div class="testimony-form__field testimony-form__field--full"><label for="testimony-story">Your testimony</label><textarea id="testimony-story" name="testimony" rows="7" minlength="20" maxlength="2500" required placeholder="What are you grateful for?"></textarea></div>
+        <p class="form-privacy-note">Your identity remains anonymous. <a href="/privacy">Privacy Policy</a>.</p>
         <input type="hidden" name="_subject" value="New YMR testimony submission" />
         <label class="testimony-form__honeypot" aria-hidden="true">Leave this field empty<input name="_gotcha" tabindex="-1" autocomplete="off" /></label>
         <div class="testimony-form__submit"><button class="button button--ember" type="submit"><Icon name="sparkles" size={17} />Send testimony</button><p data-testimony-status role="status" aria-live="polite"></p></div>
@@ -459,7 +446,7 @@ Halleluyah!`,
         });
         if (!response.ok) throw new Error('Submission failed');
         testimonyForm.reset();
-        if (formStatus) formStatus.textContent = 'Thank you. Your testimony has been sent for review.';
+        if (formStatus) formStatus.textContent = 'Thank you. Your testimony has been recorded.';
       } catch {
         if (formStatus) formStatus.textContent = 'We could not send that right now. Please try again later.';
       } finally {

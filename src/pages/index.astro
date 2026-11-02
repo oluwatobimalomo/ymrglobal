@@ -5,12 +5,13 @@ import EditionCard from '../components/EditionCard.astro';
 import Icon from '../components/Icon.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { galleryPhotos } from '../data/gallery';
+import { editionPhotosByYear } from '../data/edition-gallery';
 import '../styles/global.css';
 
 const galleryHighlights = [1, 6, 11, 25, 54, 66].map((id) => galleryPhotos.find((photo) => photo.id === id)!);
 
 const initiatives = [
-  { number: '01', name: 'Youth Aflame Conference', short: 'YAC', detail: 'A YMR expression for young professionals and those preparing to excel in their careers.', image: '/images/initiatives/youth-aflame.jpg', alt: 'Youth Aflame Conference panel on stage', href: '/initiatives#youth-aflame' },
+  { number: '01', name: 'Youth Aflame Conference', short: 'YAC', detail: 'YMR expression for young professionals and those preparing to excel in their careers.', image: '/images/initiatives/youth-aflame.jpg', alt: 'Youth Aflame Conference panel on stage', href: '/initiatives#youth-aflame' },
   { number: '02', name: 'RCCG The Envoys', short: 'THE ENVOYS', detail: 'A young people church expression of RCCG, raising kingdom ambassadors.', image: '/images/initiatives/envoys.jpg', alt: 'A minister speaking with The Envoys congregation', href: 'https://rccgtheenvoys.org/', external: true },
   { number: '03', name: 'City to City Fire Conference', short: 'CITY TO CITY', detail: 'A YMR initiative that carries revival fire into cities and territories beyond the main retreat.', image: '/images/initiatives/city-to-city.jpg', alt: 'A worshipper responding at a City to City Fire Conference', href: '/initiatives#city-to-city' },
   { number: '04', name: 'YMR Samaritan', short: 'SAMARITAN', detail: 'Supporting YMR participants through education, empowerment, and health initiatives.', image: '/images/initiatives/samaritan.jpg', alt: 'Schoolchildren writing in their notebooks', href: '/initiatives#samaritan' },
@@ -19,7 +20,7 @@ const initiatives = [
 const expectations = [
   { icon: 'music', title: 'Passionate Worship', detail: 'Join vibrant worship that ignites your spirit and releases God’s fire.', image: 'expect-worship.jpg', alt: 'A worship leader singing and lifting his hands during YMR' },
   { icon: 'book', title: 'Bible Study', detail: 'Engage in in-depth studies that reveal fresh insights from God’s Word.', image: 'expect-bible-study.jpg', alt: 'Young people listening during a YMR Bible teaching session' },
-  { icon: 'hands', title: 'Intensive Prayer', detail: 'Participate in prayer sessions that spark revival and release divine fire.', image: 'expect-prayer.jpg', alt: 'A young woman praying during a YMR retreat' },
+  { icon: 'hands', title: 'Intensive Prayer', detail: 'Participate in prayer sessions that spark revival and release divine fire.', image: 'expect-prayer.jpg', alt: 'A young woman praying during YMR' },
   { icon: 'flame', title: 'Release of Fire', detail: 'Encounter God’s fire, igniting your passion and empowering your service.', image: 'expect-fire.jpg', alt: 'A young man worshipping with his hands raised' },
 ];
 
@@ -50,7 +51,7 @@ const testimonyStories = [
     category: 'Business Breakthrough',
     icon: 'sparkles',
     title: 'A ₦2 Million Business Grant',
-    detail: 'Mary Anu was one of the beneficiaries of the business grant initiative organised by YMR in partnership with Premium Trust Bank.',
+    detail: 'One participant was among the beneficiaries of the business grant initiative organised by YMR in partnership with Premium Trust Bank.',
   },
 ];
 
@@ -70,12 +71,12 @@ The Seed: A Personal End-of-Year Tradition (December 2017)
 The foundational roots of YMR trace back to December 2017. The convener, Pastor Daniel Olawande (“PDaniel”), had a personal habit of spending the last three days of every year at the Redemption Camp to fast, pray, and seek direction for the upcoming year. Having just transitioned into full-time ministry, he decided not to do his usual retreat alone. He asked his wife and a few colleagues join him.
 
 The simple flyer they designed went viral, and what should have been a small, intimate circle of ministers and friends outgrew their intended small eatery venue before the event even began. By late December 2017, between 700 and 1,000 young people from over 24 different denominations converged at the camp under the inaugural theme, “Fire for Needed Impact.” The overwhelming spiritual hunger of that first crowd proved that there was a massive vacuum for revival among the youth.`, youtube: 'https://www.youtube.com/@PDanielOlawande/search?query=YMR%202017', youtubeLabel: 'Find YMR 2017 sessions on YouTube', sessionSummary: '', highlights: [
-    { value: '721', label: 'On-site participants', note: 'At Teens Auditorium, RCCG Camp.' },
-    { value: '1,800+', label: 'Online participants', note: 'Joined the 2017 retreat online.' },
-    { value: '9', label: 'Speakers', note: 'Teaching on ministry and the Christian life.' },
-    { value: '37%', label: 'From outside Lagos', note: 'Participants travelled from other locations.' },
-    { value: '54% / 46%', label: 'Male / female participants', note: 'Participant breakdown.' },
-    { value: '72 hours', label: 'Prayer and fasting', note: 'The retreat included a 3-day dry fast.' },
+    { value: '721', label: 'On-site participants', note: 'At Teens Auditorium, RCCG Camp.', icon: 'users' },
+    { value: '1,800+', label: 'Online participants', note: 'Joined the 2017 retreat online.', icon: 'globe' },
+    { value: '9', label: 'Speakers', note: 'Teaching on ministry and the Christian life.', icon: 'book' },
+    { value: '37%', label: 'From outside Lagos', note: 'Participants travelled from other locations.', icon: 'mapPin' },
+    { value: '54% / 46%', label: 'Male / female participants', note: 'Participant breakdown.', icon: 'users' },
+    { value: '72 hours', label: 'Prayer and fasting', note: 'The retreat included a 3-day dry fast.', icon: 'flame' },
   ], flyer: '/images/editions/ymr-2017-fire-needed-impact.jpg' },
   { year: '2018', theme: 'Explosive Exploits', overview: `Following a profound vision in Dubai where Pastor Daniel Olawande saw giant spiritual figures emerging from fire, the event shifted from a casual meeting of friends to an intentional training camp. Over 4,000 youth attended for 72 hours of uninterrupted fasting and prayer under the banner of "Explosive Exploits".
 
@@ -97,14 +98,7 @@ The retreat emphasised that taking a city requires preparing people who are read
 
 The theme emphasised the need for believers to recognise the strength and empowerment God has given them and step forward to fulfil their divine assignments. It was a call to move beyond spiritual preparation into action, trusting God to equip them for the work ahead.
 
-Sermons and Guest Ministers
-The retreat featured several ministers who delivered teachings on spiritual empowerment, divine guidance, kingdom service, and practical Christian living.
-• P. Daniel Olawande: In What Might
-P. Daniel preached on In What Might, addressing the question of the strength in which believers are expected to fulfil their assignments. The message connected with the retreat’s central theme of recognising God’s empowerment and responding to His call.
-• Pastor Chingtok Ishaku: Go in This Thy Might
-Pastor Chingtok delivered a two-part teaching titled Go in This Thy Might. His message explored the theme of the retreat and the call to step forward in the strength God provides.
-• Apostle Michael Orokpo: The Might of concentration
-Apostle Michael Orokpo challenged young ministers to examine the depth of their consecration and the condition of their private lives with God. He emphasised that true spiritual power is not built on public recognition or charisma, but through prayer, holiness, sacrifice, and total surrender to God. He called them to die to self, abandon the pride that can accompany ministry, and return to the secret place, reminding them that the strength to influence territories begins with a life fully yielded to God.
+Teachings by P. Daniel Olawande (“In What Might”), Pastor Chingtok Ishaku (“Go in This Thy Might”), and Apostle Michael Orokpo (“The Might of Concentration”) called attendees to fulfil their assignments in God’s strength. Orokpo emphasised consecration through prayer, holiness, sacrifice, and a life yielded to God.
 
 Spiritual Emphasis and Expected Encounters
 The retreat focused on spiritual empowerment, wisdom, divine direction, the work of the Holy Spirit, and the practical application of faith. Participants were encouraged to develop the spiritual capacity and understanding necessary to fulfil their God-given assignments. The teachings also addressed practical areas of life, including financial wisdom, family, and responding to God’s leading.`, youtube: 'https://www.youtube.com/watch?v=QPSInlH0ETo', youtubeLabel: 'Watch YMR 2020 on YouTube', sessionSummary: '', flyer: '/images/editions/ymr-2020-go-in-this-thy-might.jpeg' },
@@ -175,6 +169,11 @@ The 2024 edition carried a message that went beyond receiving an encounter at a 
   ] },
   { year: '2026', theme: 'City Takers', overview: 'The tenth-anniversary retreat is set for December 26–30, 2026, at Redemption City. City Takers is the theme for this upcoming edition.', youtube: 'https://www.youtube.com/@PDanielOlawande/search?query=YMR%202026%20City%20Takers', upcoming: true, flyer: '/images/brand/ymr-2026-city-takers-flyer.jpg' },
 ];
+
+const editionsWithPhotos = editions.map((edition) => ({
+  ...edition,
+  photos: edition.photos ?? editionPhotosByYear[edition.year] ?? [],
+}));
 
 const regions = [
   { id: 'canada', title: 'YMR Canada', location: 'Canada', href: '/nations#canada', image: 'https://i.ytimg.com/vi/n8wkl0ziroc/hqdefault.jpg', alt: 'A moment from the YMR Canada edition', summary: 'A Canadian expression of YMR, bringing young ministers together for worship, prayer, and teaching while strengthening Christian leadership.' },
@@ -436,7 +435,7 @@ const regions = [
           <p class="hero__event-venue"><strong>Old Auditorium</strong><span>Redemption City of God</span></p>
           <a class="hero__event-guide-link" href="#plan-your-visit">Plan your visit <span aria-hidden="true">↓</span></a>
         </aside>
-        <div class="hero__bottom"><span>ROOTED IN THE WORD</span><span class="hero__bottom-mark" aria-hidden="true">✳</span><span>READY FOR THE WORLD</span></div>
+        <div class="hero__bottom"><span>ROOTED IN THE WORD</span><span class="hero__bottom-mark" aria-hidden="true"></span><span>READY FOR THE WORLD</span></div>
       </section>
 
 
@@ -495,7 +494,12 @@ const regions = [
       </section>
 
       <section class="who section-wrap" id="who-we-are" aria-labelledby="who-title">
-        <div class="who__copy"><span class="section-index">THE YMR MANDATE</span><h2 id="who-title">Raising a generation<br />on fire for Jesus.</h2><p>YMR helps young believers grow in faith and carry the message of Jesus into their churches, communities, and the Mountains of Influence.</p><div class="who__pillars"><span>Raising Kingdom Leaders</span><span>Igniting Revival Fire</span><span>Discipleship &amp; Mentorship</span><span>Activating Purpose</span></div></div>
+        <div class="who__copy"><span class="section-index">THE YMR MANDATE</span><h2 id="who-title">Setting men<br />on fire for Jesus.</h2><p>YMR helps young believers grow in faith and carry the message of Jesus into their churches, communities, and the Mountains of Influence.</p><ul class="who__pillars" aria-label="How YMR carries out its mandate">
+          <li><span class="who__pillar-icon"><Icon name="users" size={18} /></span><h3>Raising Kingdom Leaders</h3></li>
+          <li><span class="who__pillar-icon"><Icon name="flame" size={18} /></span><h3>Igniting Revival Fire</h3></li>
+          <li><span class="who__pillar-icon"><Icon name="book" size={18} /></span><h3>Discipleship &amp; Mentorship</h3></li>
+          <li><span class="who__pillar-icon"><Icon name="compass" size={18} /></span><h3>Activating Purpose</h3></li>
+        </ul></div>
         <div class="who__gallery" aria-label="YMR retreat moments">
           <figure data-motion><img src="/images/current-site/who-1.jpg" alt="Young ministers attending YMR 2024" loading="lazy" decoding="async" /></figure>
           <figure data-motion><img src="/images/current-site/who-2.jpg" alt="A large crowd worshipping at YMR" loading="lazy" decoding="async" /></figure>
@@ -529,7 +533,7 @@ const regions = [
       </section>
 
       <section class="expect section-wrap" id="experience" aria-labelledby="experience-title">
-        <div class="expect__heading"><span class="section-index">WHAT TO EXPECT</span><h2 id="experience-title">Experience God’s Presence, Power, Word, and Fire</h2><p>Every YMR retreat is designed to awaken your spirit and align your heart with God’s purpose. Through deep worship, rich teaching, fervent prayer, and encounters with His fire, lives are transformed and destinies are activated.</p></div>
+        <div class="expect__heading"><span class="section-index">WHAT TO EXPECT</span><h2 id="experience-title">Experience God’s Presence, Power, Word, and Fire</h2><p>Every YMR editions is designed to awaken your spirit and align your heart with God’s purpose. Through deep worship, rich teaching, fervent prayer, and encounters with His fire, lives are transformed and destinies are activated.</p></div>
         <div class="expect__grid" data-pretext-group>
           {expectations.map((item) => <article class="expect-card" data-motion><img src={`/images/current-site/${item.image}`} alt={item.alt} loading="lazy" decoding="async" /><div class="expect-card__copy"><Icon name={item.icon} size={21} class="expect-card__icon" /><h3 data-pretext>{item.title}</h3><p>{item.detail}</p></div></article>)}
         </div>
@@ -543,7 +547,7 @@ const regions = [
       <section class="photo-story" id="gallery" aria-labelledby="archive-title">
         <div class="photo-story__heading section-wrap"><div><span class="section-index">YMR GALLERY</span><h2 id="archive-title">Moments from<br /><span>the retreat.</span></h2></div><p>Experience past YMR editions in pictures...</p></div>
         <div class="photo-grid section-wrap">{galleryHighlights.map((item, index) => <figure class:list={["photo-card", `photo-card--feature-${index + 1}`]} data-motion><img src={item.src} alt={item.alt} loading="lazy" decoding="async" /><figcaption><span>{item.caption === 'Prayer walk through Redemption City' ? item.caption : 'YMR in Pictures'}</span></figcaption></figure>)}</div>
-        <div class="photo-story__action section-wrap"><a class="button button--dark" href="/gallery">Explore more photos <Icon name="arrowRight" size={16} /></a><span>Browse 12 photos at a time</span></div>
+        <div class="photo-story__action section-wrap"><a class="button button--dark" href="/gallery">Explore YMR Gallery<Icon name="arrowRight" size={16} /></a><span>Browse 12 photos at a time</span></div>
       </section>
 
       <section class="testimonies section-wrap" id="testimonies" aria-labelledby="testimonies-title">
@@ -569,7 +573,7 @@ const regions = [
       <section class="edition-archive section-wrap" id="editions" aria-labelledby="editions-title">
         <div class="edition-archive__heading"><div><span class="section-index">TEN YEARS · ONE STORY</span><h2 id="editions-title">YMR@10 <span>through the years.</span></h2></div><div class="edition-archive__guide"><p>Explore YMR through the years...</p><nav class="edition-archive__controls" aria-label="Browse YMR editions"><button type="button" data-edition-scroll="previous" aria-label="Scroll to earlier editions" aria-controls="edition-timeline" disabled><span aria-hidden="true">←</span></button><button type="button" data-edition-scroll="next" aria-label="Scroll to later editions" aria-controls="edition-timeline"><span aria-hidden="true">→</span></button></nav></div></div>
         <ol class="edition-timeline" id="edition-timeline" tabindex="0" aria-label="YMR editions from 2017 to 2026">
-          {editions.map((edition) => <EditionCard edition={edition} />)}
+          {editionsWithPhotos.map((edition) => <EditionCard edition={edition} />)}
         </ol>
       </section>
 
@@ -659,7 +663,7 @@ const regions = [
       </section>
 
       <section class="closing" aria-labelledby="closing-title">
-        <div class="closing__copy"><span class="section-index">DECEMBER 26–30, 2026</span><h2 id="closing-title">Join us at <span>YMR 2026.</span></h2><p>Worship, teaching, prayer, and spiritual renewal at Redemption City.</p></div>
+        <div class="closing__copy"><span class="section-index">DECEMBER 26–30, 2026</span><h2 id="closing-title">Join us at <span>YMR 2026.</span></h2><p>Come and experience worship, the word, prayer, and spiritual renewal at YMR.</p></div>
         <a class="button button--ember" href="https://register.ymrglobal.org/">Register for YMR 2026</a>
       </section>
 
@@ -720,6 +724,13 @@ const regions = [
       const mixlrLink = editionModal?.querySelector('[data-mixlr-link]');
       const mixlrLabel = editionModal?.querySelector('[data-mixlr-label]');
       const telegramLink = editionModal?.querySelector('[data-telegram-link]');
+      const highlightIconPaths = {
+        users: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z', 'M22 21v-2a4 4 0 0 0-3-3.87', 'M16 3.13a4 4 0 0 1 0 7.75'],
+        globe: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z', 'M2 12h20', 'M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z'],
+        book: ['M12 7v14', 'M3 18V5a2 2 0 0 1 2-2h3a4 4 0 0 1 4 4 4 4 0 0 1 4-4h3a2 2 0 0 1 2 2v13a1 1 0 0 1-1 1h-4a4 4 0 0 0-4 2 4 4 0 0 0-4-2H4a1 1 0 0 1-1-1Z'],
+        mapPin: ['M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z', 'M12 10a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z'],
+        flame: ['M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.5 1-3 3.5-3 5.5a5 5 0 0 0 10 0c0-2.8-1.5-5-2-6-.7-1-1.3-2-1.5-4-1 1-2 2-2 4 0 1.4.5 2.5 1 3.5'],
+      };
 
       const renderEditionGallery = (year, photos) => {
         if (!(galleryPhotos instanceof HTMLElement)) return;
@@ -857,9 +868,31 @@ const regions = [
           highlightsGrid.replaceChildren();
           highlightsSection.hidden = !highlights.length;
           if (highlights.length) {
-            highlights.forEach(({ value, label, note }) => {
+            highlights.forEach(({ value, label, note, icon }) => {
               const card = document.createElement('article');
               card.className = 'edition-highlight';
+              const iconPaths = highlightIconPaths[icon];
+              if (Array.isArray(iconPaths)) {
+                const iconElement = document.createElement('span');
+                iconElement.className = 'edition-highlight__icon';
+                iconElement.setAttribute('aria-hidden', 'true');
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('viewBox', '0 0 24 24');
+                svg.setAttribute('width', '14');
+                svg.setAttribute('height', '14');
+                svg.setAttribute('fill', 'none');
+                svg.setAttribute('stroke', 'currentColor');
+                svg.setAttribute('stroke-width', '1.8');
+                svg.setAttribute('stroke-linecap', 'round');
+                svg.setAttribute('stroke-linejoin', 'round');
+                iconPaths.forEach((path) => {
+                  const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                  pathElement.setAttribute('d', path);
+                  svg.append(pathElement);
+                });
+                iconElement.append(svg);
+                card.append(iconElement);
+              }
               const number = document.createElement('strong');
               number.textContent = value;
               const title = document.createElement('span');

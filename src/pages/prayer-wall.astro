@@ -83,8 +83,8 @@ const scriptures = [
     <section class="prayer-wall__submit section-wrap" id="send-prayer" aria-labelledby="send-prayer-title">
       <div class="prayer-wall__submit-copy">
         <span class="section-index">SHARE YOUR REQUEST</span>
-        <h2 id="send-prayer-title">You don’t have to carry it alone.</h2>
-        <p>Tell us what you would like prayer for. The YMR team will receive your request and stand with you in prayer.</p>
+        <h2 id="send-prayer-title">This is a mountain of answered prayers.</h2>
+        <p>"What things soever ye desire, when ye pray, believe that ye receive them, and ye shall have them" - Mark 11:24</p>
         <div class="prayer-wall__callout"><Icon name="book" size={20} /><p><strong>“Ask, and it shall be given you; seek, and ye shall find.”</strong><span>Matthew 7:7</span></p></div>
       </div>
 
@@ -92,8 +92,8 @@ const scriptures = [
         <div class="prayer-request-form__field"><label for="prayer-name">Your name <span>Optional</span></label><input id="prayer-name" name="name" autocomplete="name" maxlength="100" /></div>
         <div class="prayer-request-form__field"><label for="prayer-email">Email <span>Optional</span></label><input id="prayer-email" name="email" type="email" autocomplete="email" maxlength="200" /></div>
         <div class="prayer-request-form__field prayer-request-form__field--full"><label for="prayer-focus">Prayer focus</label><select id="prayer-focus" name="prayer_focus" required><option value="" selected disabled>Select a focus</option>{prayerFocuses.map((focus) => <option value={focus}>{focus}</option>)}</select></div>
-        <div class="prayer-request-form__field prayer-request-form__field--full"><label for="prayer-request">Prayer request</label><textarea id="prayer-request" name="prayer_request" rows="6" minlength="10" maxlength="2500" required placeholder="Share what you would like us to pray for."></textarea></div>
-        <p class="form-privacy-note">Share only what you are comfortable sending. <a href="/privacy">Read our privacy information</a>.</p>
+        <div class="prayer-request-form__field prayer-request-form__field--full"><label for="prayer-request">Prayer request</label><textarea id="prayer-request" name="prayer_request" rows="6" minlength="10" maxlength="2500" required placeholder="What are you trusting the Lord for?"></textarea></div>
+        <p class="form-privacy-note">Write out your prayer requests. <a href="/privacy">Privacy Policy</a>.</p>
         <input type="hidden" name="_subject" value="New YMR Prayer Wall request" />
         <label class="prayer-request-form__honeypot" aria-hidden="true">Leave this field empty<input name="_gotcha" tabindex="-1" autocomplete="off" /></label>
         <div class="prayer-request-form__submit"><button class="button button--ember" type="submit"><Icon name="hands" size={18} />Send request</button><p data-prayer-status role="status" aria-live="polite"></p></div>
