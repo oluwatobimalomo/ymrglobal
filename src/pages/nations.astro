@@ -13,7 +13,7 @@ const upcomingEditions = [
     flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
     place: 'Glasgow',
     date: 'March 20, 2027',
-    flyer: '/images/nations/ymr-scotland-2027-flyer-a.png',
+    flyer: '/images/nations/ymr-scotland-2027-flyer-a.webp',
     href: 'https://access.ymrglobal.org/events/ymr-uk-glasgow',
   },
   {
@@ -22,7 +22,7 @@ const upcomingEditions = [
     flag: '🇺🇸',
     place: 'New York',
     date: 'April 17, 2027',
-    flyer: '/images/nations/ymr-usa-new-york-2027-flyer.png',
+    flyer: '/images/nations/ymr-usa-new-york-2027-flyer.webp',
     href: 'https://access.ymrglobal.org/events/ymr-usa-new-york',
   },
   {
@@ -31,7 +31,7 @@ const upcomingEditions = [
     flag: '🇺🇸',
     place: 'Minnesota',
     date: 'July 10, 2027',
-    flyer: '/images/nations/ymr-usa-minnesota-2027-flyer.png',
+    flyer: '/images/nations/ymr-usa-minnesota-2027-flyer.webp',
     href: 'https://access.ymrglobal.org/events/ymr-usa-minnesota',
   },
   {
@@ -74,25 +74,28 @@ const upcomingEditions = [
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="YMR Global" />
     <meta property="og:url" content="https://ymrglobal.org/nations" />
-    <meta property="og:title" content="YMR Across Nations — YMR Global" />
+    <meta property="og:title" content="YMR Across Nations | Canada, UK & USA" />
     <meta property="og:description" content="YMR retreats across nations, plus upcoming international editions in 2027." />
-    <meta property="og:image" content="https://ymrglobal.org/images/nations/ymr-scotland-2027-flyer-a.png" />
+    <meta property="og:image" content="https://ymrglobal.org/images/nations/ymr-scotland-2027-flyer-a.webp" />
+    <meta property="og:image:alt" content="Flyer announcing an upcoming Young Ministers Retreat international edition" />
+    <meta property="og:image:width" content="399" />
+    <meta property="og:image:height" content="501" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="YMR Across Nations — YMR Global" />
+    <meta name="twitter:title" content="YMR Across Nations | Canada, UK & USA" />
     <meta name="twitter:description" content="YMR retreats across nations, plus upcoming international editions in 2027." />
-    <meta name="twitter:image" content="https://ymrglobal.org/images/nations/ymr-scotland-2027-flyer-a.png" />
-    <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: 'Young Ministers Retreat Global', alternateName: 'YMR Global', url: 'https://ymrglobal.org/', logo: 'https://ymrglobal.org/images/brand/ymr-high-quality-logo.png', sameAs: ['https://www.facebook.com/ymrglobal', 'https://x.com/ymrglobal', 'https://www.instagram.com/ymrglobal/', 'https://www.youtube.com/@PDanielOlawande'] })} />
+    <meta name="twitter:image" content="https://ymrglobal.org/images/nations/ymr-scotland-2027-flyer-a.webp" />
+    <meta name="twitter:image:alt" content="Flyer announcing an upcoming Young Ministers Retreat international edition" />
     <link rel="icon" type="image/png" sizes="64x64" href="/images/brand/ymr-favicon-64.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400..700&display=swap" rel="stylesheet" />
-    <title>Nations — Young Ministers Retreat Global</title>
+    <title>YMR Across Nations | Canada, UK & USA</title>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <a class="brand" href="/" aria-label="Young Ministers Retreat home">
-        <img class="brand__logo brand__logo--light" src="/images/brand/ymr-high-quality-logo.png" alt="Young Ministers Retreat, YMR" width="1600" height="858" />
+        <img class="brand__logo brand__logo--light" src="/images/brand/ymr-high-quality-logo.webp" alt="Young Ministers Retreat, YMR" width="1600" height="858" />
         <img class="brand__logo brand__logo--dark" src="/images/brand/ymr-site-logo.png" alt="" aria-hidden="true" width="2560" height="1374" />
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
@@ -189,7 +192,7 @@ const upcomingEditions = [
                   <span class="edition-card__image">
                     {edition.flyer ? <><img class="edition-card__backdrop" src={edition.flyer} alt="" aria-hidden="true" loading="lazy" decoding="async" /><img class="edition-card__poster" src={edition.flyer} alt={`Official ${edition.name} ${edition.place} 2027 flyer`} loading="lazy" decoding="async" /></> : <span class="edition-flyer-placeholder" role="img" aria-label={`${edition.name} ${edition.place} 2027 details coming soon`}><span class="edition-flyer-placeholder__label">YMR · {edition.year}</span><span class="edition-flyer-placeholder__theme">{edition.place}</span><span class="edition-flyer-placeholder__note">{edition.date}</span></span>}
                     <span class="edition-card__flag" aria-hidden="true">{edition.flag}</span>
-                    <span class="edition-card__year">{edition.year}</span><span class="edition-card__hint">Register <span aria-hidden="true">↗</span></span>
+                    <span class="edition-card__year">{edition.year}</span><span class="edition-card__hint">Register</span>
                   </span>
                   <span class="edition-card__copy"><span class="edition-card__theme">{edition.name} · {edition.place}</span><span class="nations-upcoming__date">{edition.date}</span></span>
                 </a>
@@ -207,12 +210,12 @@ const upcomingEditions = [
 
     <footer class="site-footer">
       <div class="footer-main footer-main--nations">
-        <div class="footer-brand"><a class="brand brand--footer" href="/" aria-label="Young Ministers Retreat home"><img class="brand__logo brand__logo--light" src="/images/brand/ymr-high-quality-logo.png" alt="Young Ministers Retreat, YMR" width="1600" height="858" /><img class="brand__logo brand__logo--dark" src="/images/brand/ymr-site-logo.png" alt="" aria-hidden="true" width="2560" height="1374" /></a><p>Raising a burning generation...</p></div>
+        <div class="footer-brand"><a class="brand brand--footer" href="/" aria-label="Young Ministers Retreat home"><img class="brand__logo brand__logo--light" src="/images/brand/ymr-high-quality-logo.webp" alt="Young Ministers Retreat, YMR" width="1600" height="858" /><img class="brand__logo brand__logo--dark" src="/images/brand/ymr-site-logo.png" alt="" aria-hidden="true" width="2560" height="1374" /></a><p>Raising a burning generation...</p></div>
         <nav class="footer-column" aria-label="Quick links"><h2>Explore</h2><a href="/#about">About YMR</a><a href="/nations">Nations</a><a href="/delegates">International delegates</a><a href="/initiatives">Initiatives</a><a href="/testimonies">Testimonies</a><a href="/prayer-wall">Prayer Wall</a><a href="/giving">Giving</a></nav>
         <div class="footer-column footer-contact"><h2>Contact</h2><a href="mailto:info@ymrglobal.org">info@ymrglobal.org</a><a href="tel:+2347048782063">+234 704 878 2063</a><a href="tel:+447881155846">+44 7881 155846</a></div>
         <div class="footer-column footer-social"><h2>Follow YMR</h2><SocialLinks /></div>
       </div>
-      <div class="footer-bottom"><span>© 2026 Young Ministers Retreat</span><span>Young Ministers Retreat Global</span><a href="/privacy">Privacy</a><a href="#top">Back to top ↑</a></div>
+      <div class="footer-bottom"><span>© 2026 Young Ministers Retreat</span><span>Young Ministers Retreat Global</span><a href="/privacy">Privacy</a><a href="#top">Back to top</a></div>
     </footer>
 
 

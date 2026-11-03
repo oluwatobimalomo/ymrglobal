@@ -2557,10 +2557,8 @@ html[data-theme="light"] .delegate-form :is(input, textarea) { color-scheme: lig
 .faq-search input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink); font: inherit; font-size: 13px; }
 .faq-search input::placeholder { color: var(--muted); opacity: .8; }
 .faq-search:focus-within { border-color: var(--brand-orange); outline: 2px solid color-mix(in srgb, var(--brand-orange) 24%, transparent); outline-offset: 2px; }
-.faq-topics { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
-.faq-topics a { display: inline-flex; min-height: 40px; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); font-size: 11px; font-weight: 700; transition: border-color .18s ease, color .18s ease, background-color .18s ease; }
-.faq-topics a:hover { border-color: var(--brand-orange); background: color-mix(in srgb, var(--brand-orange) 8%, var(--surface)); color: var(--ember-ink); }
-.faq-topics a span { color: var(--ember-ink); }
+.faq-topics { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.faq-topics .about-overview__link { min-height: 38px; margin: 0; padding-inline: 12px; background: var(--surface); font-size: 12px; text-decoration: none; }
 .faq-results { margin: 17px 0 8px; color: var(--muted); font-size: 11px; }
 .faq-empty { margin: 0 0 24px; padding: 22px; border: 1px dashed var(--line); border-radius: var(--radius-card); color: var(--muted); text-align: center; }
 .faq-groups { display: grid; gap: 18px; }
@@ -2597,8 +2595,8 @@ html[data-theme="light"] .delegate-form :is(input, textarea) { color-scheme: lig
   .faq-hero { padding-block: 30px 25px; }
   .faq-back { margin-bottom: 25px; }
   .faq-hero h1 { font-size: clamp(2.8rem, 13vw, 4rem); }
-  .faq-topics { gap: 6px; }
-  .faq-topics a { min-height: 42px; padding-inline: 10px; font-size: 10px; }
+  .faq-topics { gap: 7px; }
+  .faq-topics .about-overview__link { min-height: 38px; padding-inline: 10px; }
   .faq-group { padding: 18px 16px; }
   .faq-item summary { font-size: 13px; }
   .faq-item__answer { margin-right: 0; font-size: 12px; }

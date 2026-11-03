@@ -55,7 +55,7 @@ const faqGroups = [
   <main id="main" class="resource-page faq-page">
     <section class="faq-hero section-wrap" id="top" aria-labelledby="faq-title">
       <div class="faq-hero__copy">
-        <a class="faq-back" href="/#plan-your-visit"><span aria-hidden="true">←</span> Back to YMR 2026</a>
+        <a class="faq-back" href="/#plan-your-visit">Back to YMR 2026</a>
         <span class="section-index">YMR GLOBAL FESTIVAL · 2026</span>
         <h1 id="faq-title">Frequently asked<br /><span>questions.</span></h1>
         <p>Everything you need to know before you join us at Redemption City.</p>
@@ -80,7 +80,7 @@ const faqGroups = [
       <div class="faq-tools">
         <label class="faq-search"><span class="faq-search__icon" aria-hidden="true">⌕</span><span class="visually-hidden">Search frequently asked questions</span><input type="search" data-faq-search placeholder="Search your question…" autocomplete="off" /></label>
         <nav class="faq-topics" aria-label="FAQ topics">
-          {faqGroups.map((group) => <a href={`#${group.id}`}>{group.label}<span aria-hidden="true">↘</span></a>)}
+          {faqGroups.map((group) => <a class="about-overview__link" href={`#${group.id}`}>{group.label}</a>)}
         </nav>
       </div>
       <p class="faq-empty" data-faq-empty hidden>No answers match that search. Try a different word or browse a topic above.</p>
@@ -106,7 +106,7 @@ const faqGroups = [
       <aside class="faq-contact">
         <span class="section-index">NEED MORE HELP?</span>
         <div><h2>We’re happy to help.</h2><p>Call the YMR admin line if you have a question that isn’t answered here.</p></div>
-        <a class="button button--ember" href="tel:+2347048782063">Call +234 704 878 2063 <span aria-hidden="true">↗</span></a>
+        <a class="button button--ember" href="tel:+2347048782063">Call +234 704 878 2063</a>
       </aside>
     </section>
   </main>
