@@ -2088,7 +2088,7 @@ html[data-theme="dark"] :is(.impact-card, .principle-card,
 .giving-hero__actions .button { min-height: 44px; justify-content: center; padding-inline: 16px; }
 .giving-hero__actions .button--dark { border: 1px solid var(--line); background: transparent; color: var(--ink); }
 .giving-hero__actions .button--dark:hover { border-color: var(--ember-ink); background: var(--surface); }
-.giving-hero__visual { position: relative; display: flex; min-height: 290px; flex-direction: column; align-items: flex-start; gap: 23px; overflow: hidden; padding: clamp(23px, 3vw, 34px); border: 1px solid color-mix(in srgb, var(--brand-orange) 50%, var(--line)); border-radius: 22px; background: radial-gradient(circle at 86% 12%, rgba(255,255,255,.36), transparent 30%), linear-gradient(138deg, var(--brand-orange-highlight), var(--brand-orange)); color: #1b1713; isolation: isolate; }
+.giving-hero__visual { position: relative; display: flex; min-height: 0; flex-direction: column; align-items: flex-start; gap: 23px; overflow: hidden; padding: clamp(23px, 3vw, 34px); border: 1px solid color-mix(in srgb, var(--brand-orange) 50%, var(--line)); border-radius: 22px; background: radial-gradient(circle at 86% 12%, rgba(255,255,255,.36), transparent 30%), linear-gradient(138deg, var(--brand-orange-highlight), var(--brand-orange)); color: #1b1713; isolation: isolate; }
 .giving-hero__visual::after { position: absolute; z-index: -1; right: -40px; bottom: -133px; width: 260px; aspect-ratio: 1; border: 1px solid rgba(27,23,19,.19); border-radius: 50%; box-shadow: 0 0 0 20px rgba(27,23,19,.045), 0 0 0 42px rgba(27,23,19,.035); content: ''; }
 .giving-hero__visual-label { font-size: 10px; font-weight: 850; letter-spacing: .14em; }
 .giving-hero__visual-content { display: grid; width: 100%; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: clamp(16px, 2vw, 28px); }
@@ -2133,7 +2133,7 @@ html[data-theme="dark"] :is(.impact-card, .principle-card,
 }
 @media (max-width: 680px) {
   .giving-hero { grid-template-columns: minmax(0, 1fr); gap: 26px; }
-  .giving-hero__visual { min-height: 270px; }
+  .giving-hero__visual { min-height: 0; gap: 16px; }
   .giving-hero__visual-content { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 15px; }
   .giving-hero__visual-word { font-size: clamp(1.7rem, 5vw, 2.35rem); }
   .giving-hero__verse { padding-right: 6px; padding-left: 12px; font-size: clamp(.72rem, 2.5vw, .86rem); }
@@ -2141,7 +2141,7 @@ html[data-theme="dark"] :is(.impact-card, .principle-card,
   .giving-section-heading > p { max-width: 620px; }
 }
 @media (max-width: 390px) {
-  .giving-hero__visual { min-height: 320px; }
+  .giving-hero__visual { min-height: 0; }
   .giving-hero__visual-content { grid-template-columns: 1fr; align-content: center; gap: 14px; }
   .giving-hero__verse { padding: 0 24px 0 0; border-left: 0; }
 }
