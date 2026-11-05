@@ -186,16 +186,16 @@ const regions = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#121416" />
+    <meta name="theme-color" content="#ffffff" />
     <script is:inline>
       (() => {
         try {
           const saved = localStorage.getItem('ymr-theme');
-          const theme = saved || 'dark';
+          const theme = saved || 'light';
           document.documentElement.dataset.theme = theme;
-          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#121416' : '#ffffff');
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#141618' : '#ffffff');
         } catch {
-          document.documentElement.dataset.theme = 'dark';
+          document.documentElement.dataset.theme = 'light';
         }
       })();
     </script>
@@ -475,11 +475,10 @@ const regions = [
             <span class="history-card__index">01 · THE BEGINNING · 2017</span>
             <p>What started as a retreat focused on young ministers has grown into a broader movement committed to raising, building, and equipping believers to become Kingdom ambassadors in every sphere of human influence.</p>
             <div class="history-card__metrics">
-              <div><strong>700+</strong><span>participants at the first retreat</span></div>
-              <div><strong>24+</strong><span>denominations represented</span></div>
-              <div><strong>9</strong><span>speakers</span></div>
-              <div><strong>1,800+</strong><span>online participants</span></div>
-              <div><strong>72 hours</strong><span>of prayer and fasting</span></div>
+              <div><Icon name="users" size={18} /><strong>700+</strong><span>participants at the first retreat</span></div>
+              <div><Icon name="globe" size={18} /><strong>24+</strong><span>denominations represented</span></div>
+              <div><Icon name="sparkles" size={18} /><strong>1,800+</strong><span>online participants</span></div>
+              <div><Icon name="flame" size={18} /><strong>72 hours</strong><span>of prayer and fasting</span></div>
             </div>
           </article>
           <article class="history-card history-card--vision" data-motion>
@@ -700,7 +699,7 @@ const regions = [
         <div class="footer-column footer-contact"><h2>Contact</h2><a href="mailto:info@ymrglobal.org">info@ymrglobal.org</a><a href="tel:+2347048782063">+234 704 878 2063</a><a href="tel:+447881155846">+44 7881 155846</a></div>
         <div class="footer-column footer-social"><h2>Follow YMR</h2><SocialLinks /></div>
       </div>
-      <div class="footer-bottom"><span>© 2026 Young Ministers Retreat</span><span>Young Ministers Retreat Global</span><a href="/privacy">Privacy</a><a href="#top">Back to top</a></div>
+      <div class="footer-bottom"><span>© 2026 Young Ministers Retreat Global</span><a href="/privacy">Privacy</a><a href="#top">Back to top</a></div>
     </footer>
     <script>
       import { gsap } from 'gsap';

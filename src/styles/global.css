@@ -841,17 +841,20 @@ html[data-theme="dark"] .theme-toggle [data-theme-sun] { display: grid; }
   .nations-hero__visual figcaption { font-size: 7px; }
   .nation-feature__media { aspect-ratio: 1.45; }
   .nation-feature h3 { font-size: 1.8rem; }
-  .nation-feature__actions { align-items: stretch; flex-direction: column; width: 100%; }
-  .nation-feature__actions a { justify-content: flex-start; padding-inline: 12px; }
+  .nation-feature__actions { align-items: center; flex-direction: row; flex-wrap: nowrap; width: auto; }
+  .nation-feature__actions .nation-feature__explore { flex: 0 0 auto; width: auto; min-height: 42px; padding: 8px 12px; white-space: nowrap; }
+  .nation-feature__actions .nation-feature__instagram { flex: 0 0 42px; }
+  .nation-feature__actions a { justify-content: center; padding-inline: 10px; }
   .scotland-2027 { padding: 20px 15px; }
   .scotland-2027__flyers { grid-template-columns: 1fr; width: min(100%, 370px); margin-inline: auto; }
   .nations-coming__badge { font-size: 9px; }
   .footer-main--nations { grid-template-columns: 1fr; }
   .closing h2 { font-size: clamp(1.7rem, 8vw, 2.3rem); }
   .photo-card figcaption { flex-direction: column; gap: 3px; padding: 28px 9px 9px; font-size: 7px; }
-  .footer-bottom { display: grid; grid-template-columns: 1fr auto; font-size: 8px; }
-  .footer-bottom > span:nth-child(2) { grid-column: 1; grid-row: 2; }
-  .footer-bottom a { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+  .footer-bottom { display: grid; grid-template-columns: minmax(0, 1fr) auto; font-size: 8px; }
+  .footer-bottom > span:first-child { grid-column: 1; grid-row: 1; }
+  .footer-bottom a[href="/privacy"] { grid-column: 1; grid-row: 2; justify-self: start; }
+  .footer-bottom a[href="#top"] { grid-column: 2; grid-row: 1 / 3; justify-self: end; align-self: center; white-space: nowrap; }
   .footer-column > a, .social-links a { min-height: 12px; }
   .social-links { grid-auto-rows: 12px; }
 }
@@ -2621,4 +2624,309 @@ html[data-theme="light"] .delegate-form :is(input, textarea) { color-scheme: lig
 }
 @media (max-width: 480px) {
   .about-overview__history-stats { gap: 8px; }
+}
+
+/* Airtable-inspired editorial system adapted to YMR's orange brand. */
+:root {
+  color-scheme: light;
+  --ink: #181d26;
+  --paper: #ffffff;
+  --surface: #f8fafc;
+  --deep-surface: #181d26;
+  --cream: #ffffff;
+  --muted: #41454d;
+  --line: #dddddd;
+  --brand-orange: #f68b1e;
+  --brand-orange-highlight: #f4d35e;
+  --brand-orange-display: #f68b1e;
+  --brand-orange-text: #f68b1e;
+  --ember: var(--brand-orange);
+  --ember-ink: var(--brand-orange-display);
+  --gold: var(--brand-orange-highlight);
+  --signature-coral: #f68b1e;
+  --signature-forest: #0a2e0e;
+  --signature-cream: #f5e9d4;
+  --signature-peach: #fcab79;
+  --signature-mint: #a8d8c4;
+  --signature-yellow: #f4d35e;
+  --signature-mustard: #d9a441;
+  --link: #1b61c9;
+  --link-active: #1a3866;
+  --page-gutter: clamp(20px, 5vw, 72px);
+  --section-space: clamp(32px, 4.2vw, 60px);
+  --radius-card: 12px;
+  --radius-control: 6px;
+  --type-display: clamp(2rem, 3.7vw, 3.25rem);
+  --type-display-xl: clamp(3rem, 6.2vw, 5rem);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #f4f2ee;
+  --paper: #141618;
+  --surface: #1d1f25;
+  --deep-surface: #090b0d;
+  --cream: #f4f2ee;
+  --muted: #c1c4c8;
+  --line: rgba(255, 255, 255, .16);
+  --brand-orange-display: #f68b1e;
+  --brand-orange-text: #f68b1e;
+  --ember-ink: #f68b1e;
+}
+
+body, main, .section-wrap, .photo-story, .closing, .site-footer, .nations-hero {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+.site-header {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--paper) 96%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.site-header .brand,
+.site-header .brand:hover {
+  border-color: transparent;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.button--dark {
+  border-color: var(--ink);
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.button--dark:hover { border-color: color-mix(in srgb, var(--ink) 88%, var(--paper)); background: color-mix(in srgb, var(--ink) 88%, var(--paper)); }
+html[data-theme="dark"] .button--dark { border-color: #f4f2ee; background: #f4f2ee; color: #181d26; }
+html[data-theme="dark"] .button--dark:hover { background: #e0e2e6; }
+
+.button--ember {
+  border-radius: 12px;
+  background: var(--brand-orange);
+  color: #181d26;
+}
+html[data-theme="dark"] .button--ember { color: #181d26; }
+
+.about-overview__link,
+.faq-hero__directions {
+  border-radius: 12px;
+  background: var(--paper);
+}
+
+:is(.impact-card, .principle-card, .history-card, .initiative-card,
+    .expect-card, .photo-card, .edition-card, .region-card, .nation-feature,
+    .giving-account, .faq-group, .faq-tools, .faq-hero__event,
+    .delegate-journey, .delegate-info__card, .initiative-directory__card,
+    .resource-note, .prayer-wall__hero-card) {
+  border-radius: 12px;
+}
+
+:is(.impact-card, .history-card, .initiative-card, .expect-card, .photo-card,
+    .edition-card, .region-card, .nation-feature, .giving-account,
+    .faq-group, .faq-tools, .delegate-info__card, .initiative-directory__card,
+    .resource-note) {
+  border-color: var(--line);
+  background-color: var(--surface);
+}
+
+.principles-section {
+  background: var(--signature-forest);
+  color: #ffffff;
+}
+html[data-theme="dark"] .principles-section {
+  background: var(--signature-forest);
+  color: #ffffff;
+}
+.principles-section__heading h2,
+.principle-card h3 { color: #ffffff; }
+.principle-card p { color: #e2e8e2; }
+html[data-theme="dark"] .principles-section__heading h2,
+html[data-theme="dark"] .principle-card h3 { color: #ffffff; }
+html[data-theme="dark"] .principle-card p { color: #e2e8e2; }
+
+/* Keep the principles section readable in both themes. */
+.principles-section {
+  background: var(--paper);
+  color: var(--ink);
+}
+.principles-section__heading .section-index { color: var(--muted); }
+.principles-section__heading h2,
+.principle-card h3 { color: var(--ink); }
+.principle-card p { color: var(--muted); }
+.principles {
+  border-color: var(--line);
+  background: var(--surface);
+}
+.principle-card { border-color: var(--line); }
+.principles-section__art { opacity: .07; }
+
+html[data-theme="dark"] .principles-section__heading h2,
+html[data-theme="dark"] .principle-card h3 { color: var(--ink); }
+html[data-theme="dark"] .principle-card p { color: var(--muted); }
+
+/* Keep all four origin metrics the same width, including the prayer and fasting card. */
+.history-card--genesis .history-card__metrics > div:last-child { grid-column: auto; }
+
+@media (max-width: 760px) {
+  .footer-bottom { row-gap: 6px; }
+}
+
+.history-card--genesis {
+  border-color: var(--line);
+  border-top: 3px solid var(--brand-orange);
+  background: var(--surface);
+  color: var(--ink);
+}
+.history-card--genesis > p,
+.history-card--genesis blockquote { color: var(--muted); }
+.history-card--genesis .history-card__index { color: var(--brand-orange-text); }
+html[data-theme="dark"] .history-card--genesis {
+  border-color: var(--line);
+  border-top-color: var(--brand-orange);
+  background: var(--surface);
+  color: var(--ink);
+}
+html[data-theme="dark"] .history-card--genesis > p,
+html[data-theme="dark"] .history-card--genesis blockquote { color: var(--muted); }
+
+.history-card--genesis .history-card__metrics {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+.history-card--genesis .history-card__metrics > div {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-content: center;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 3px;
+  min-height: 76px;
+  padding: 12px 13px;
+  border: 1px solid color-mix(in srgb, var(--brand-orange) 24%, var(--line));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--brand-orange) 7%, var(--paper));
+}
+.history-card--genesis .history-card__metrics svg {
+  grid-row: 1 / 3;
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--brand-orange) 16%, transparent);
+  color: var(--brand-orange-text);
+  stroke-width: 1.8;
+}
+.history-card--genesis .history-card__metrics strong {
+  color: var(--ink);
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  line-height: 1.05;
+  letter-spacing: -.045em;
+}
+.history-card--genesis .history-card__metrics span {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+.history-card--genesis .history-card__metrics > div:last-child strong { white-space: nowrap; }
+
+@media (max-width: 480px) {
+  .history-card--genesis .history-card__metrics { gap: 8px; }
+  .history-card--genesis .history-card__metrics > div {
+    grid-template-columns: 24px minmax(0, 1fr);
+    column-gap: 7px;
+    min-height: 70px;
+    padding: 10px;
+  }
+  .history-card--genesis .history-card__metrics svg {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+  }
+  .history-card--genesis .history-card__metrics strong { font-size: clamp(1rem, 4.3vw, 1.3rem); }
+  .history-card--genesis .history-card__metrics span { font-size: 9px; }
+}
+
+:is(.hero h1, .history__heading h2, .impact__heading h2,
+    .about-overview__heading h2, .who h2, .convener__content h2,
+    .expect__heading h2, .resource-hero h1, .testimonies__heading h2,
+    .testimonies-archive__heading h2, .testimony-submit__intro h2,
+    .initiative-directory h1, .initiative-directory__card h2,
+    .giving-hero h1, .giving-section-heading h2, .prayer-wall__hero h1,
+    .prayer-wall__section-heading h2, .prayer-wall__submit-copy h2,
+    .delegate-hero h1, .delegate-info__heading h2, .faq-hero h1) {
+  font-weight: 500;
+  letter-spacing: -.035em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+:is(.button, .about-overview__link, .faq-hero__directions) {
+  font-weight: 500;
+  transition-duration: .2s;
+}
+
+a:focus-visible, button:focus-visible, summary:focus-visible,
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline-color: var(--brand-orange-display);
+}
+
+@media (max-width: 760px) {
+  :root { --section-space: 34px; }
+}
+
+/* Keep initiative content comfortably inset from the newly surfaced cards. */
+.initiatives-page .initiative-directory {
+  display: grid;
+  gap: 14px;
+}
+
+.initiatives-page .initiative-directory__card {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: clamp(20px, 3vw, 42px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.initiatives-page .initiative-directory__card > * {
+  min-width: 0;
+}
+
+.initiatives-page .initiative-directory__card h2 {
+  max-width: 100%;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+.initiatives-page .initiative-directory__card p {
+  max-width: 60ch;
+  overflow-wrap: break-word;
+}
+
+.initiatives-page .initiative-directory__read {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* Preserve the delegates contact panel's dark, high-contrast treatment. */
+.delegate-contact {
+  background: var(--deep-surface);
+  color: var(--cream);
+  border-radius: 0;
+}
+
+.delegate-contact .section-index { color: #c6bbb0; }
+.delegate-contact__intro h2,
+.delegate-contact__links strong { color: var(--cream); }
+.delegate-contact__intro p,
+.delegate-contact__links small { color: #c6bbb0; }
+
+@media (max-width: 520px) {
+  .initiatives-page .initiative-directory { gap: 12px; }
+  .initiatives-page .initiative-directory__card { padding: 18px; }
 }

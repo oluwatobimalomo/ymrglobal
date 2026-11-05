@@ -71,6 +71,71 @@ const setupCarousel = ({ root, image, caption, count, previous, next, slides, in
   };
 };
 let activeCarouselStops = [];
+let nationYoutubePlayer;
+let nationYoutubeApiPromise;
+let nationYoutubeOpenToken = 0;
+const loadNationYoutubeApi = () => {
+  if (window.YT?.Player) return Promise.resolve(window.YT);
+  if (nationYoutubeApiPromise) return nationYoutubeApiPromise;
+  nationYoutubeApiPromise = new Promise((resolve, reject) => {
+    const previousReady = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      if (typeof previousReady === 'function') {
+        try { previousReady(); } catch (error) { console.warn(error); }
+      }
+      resolve(window.YT);
+    };
+    let script = document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+    if (!script) {
+      script = document.createElement('script');
+      script.src = 'https://www.youtube.com/iframe_api';
+      script.async = true;
+      script.onerror = () => reject(new Error('YouTube Player API could not be loaded.'));
+      document.head.append(script);
+    }
+  });
+  return nationYoutubeApiPromise;
+};
+const stopNationYoutube = () => {
+  nationYoutubeOpenToken += 1;
+  nationYoutubePlayer?.destroy();
+  nationYoutubePlayer = undefined;
+};
+const playNationYoutubeAtSixtyPercent = (container, videoId, nextVideoId, token) => {
+  loadNationYoutubeApi().then((YT) => {
+    if (!nationModal?.open || token !== nationYoutubeOpenToken || !container.isConnected) return;
+    nationYoutubePlayer = new YT.Player(container.id, {
+      videoId,
+      playerVars: {
+        autoplay: 0,
+        controls: 1,
+        enablejsapi: 1,
+        playsinline: 1,
+        rel: 0,
+        origin: window.location.origin,
+        ...(nextVideoId ? { playlist: `${videoId},${nextVideoId}` } : {}),
+      },
+      events: {
+        onReady: ({ target }) => {
+          let attempts = 0;
+          target.mute();
+          target.playVideo();
+          const seekAndPlay = () => {
+            if (!nationModal?.open || token !== nationYoutubeOpenToken) return;
+            const duration = target.getDuration();
+            if (duration > 0) {
+              target.seekTo(duration * 0.6, true);
+              target.playVideo();
+              return;
+            }
+            if (attempts++ < 80) window.setTimeout(seekAndPlay, 250);
+          };
+          seekAndPlay();
+        },
+      },
+    });
+  }).catch((error) => console.warn(error));
+};
 const openNationModal = (opener) => {
   if (!(nationModal instanceof HTMLDialogElement) || nationModal.open) return;
   const { title = 'YMR retreat', eyebrow = 'YMR ACROSS NATIONS', country = '', location = '', summary = '', extended: extendedJson = '[]', gallery: galleryJson = '[]', ministers: ministersJson = '[]', youtubeId = '', youtubeNextId = '', instagram = '', registerUrl = '', mapUrl = '' } = opener.dataset;
@@ -153,11 +218,10 @@ const openNationModal = (opener) => {
     modalYoutube.setAttribute('aria-label', label);
     modalYoutube.title = label;
   }
-  if (modalVideo instanceof HTMLIFrameElement) {
-    const parameters = new URLSearchParams({ autoplay: motionAllowed ? '1' : '0', mute: '1', controls: '1', playsinline: '1', rel: '0' });
-    if (youtubeNextId) parameters.set('playlist', `${youtubeId},${youtubeNextId}`);
-    modalVideo.src = youtubeId ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(youtubeId)}?${parameters}` : '';
-    modalVideo.title = `${title} sessions on YouTube`;
+  if (modalVideo instanceof HTMLElement) {
+    stopNationYoutube();
+    modalVideo.replaceChildren();
+    modalVideo.setAttribute('aria-label', `${title} sessions on YouTube`);
     modalVideo.closest('.nation-modal__video')?.toggleAttribute('hidden', !youtubeId);
   }
   sessionsSection?.toggleAttribute('hidden', !youtubeId);
@@ -167,6 +231,10 @@ const openNationModal = (opener) => {
   const scroll = nationModal.querySelector('.edition-modal__scroll');
   if (scroll instanceof HTMLElement) scroll.scrollTop = 0;
   nationModal.showModal();
+  if (youtubeId && modalVideo instanceof HTMLElement) {
+    const token = nationYoutubeOpenToken;
+    playNationYoutubeAtSixtyPercent(modalVideo, youtubeId, youtubeNextId, token);
+  }
   if (motionAllowed) gsap.fromTo(nationModal.querySelectorAll('.edition-modal__overview, .edition-modal__sessions, .edition-modal__gallery, .nation-modal__ministers, .nation-modal__full-gallery'),
     { y: 12, autoAlpha: 0 },
     { y: 0, autoAlpha: 1, duration: .38, stagger: .07, ease: 'power2.out', clearProps: 'transform,opacity,visibility' });
@@ -175,8 +243,9 @@ nationOpeners.forEach((opener) => opener.addEventListener('click', () => openNat
 nationModal?.querySelector('[data-close-nation]')?.addEventListener('click', () => { if (nationModal instanceof HTMLDialogElement) nationModal.close(); });
 nationModal?.addEventListener('click', (event) => { if (event.target === nationModal && nationModal instanceof HTMLDialogElement) nationModal.close(); });
 nationModal?.addEventListener('close', () => {
+  stopNationYoutube();
   const video = nationModal.querySelector('[data-nation-video]');
-  if (video instanceof HTMLIFrameElement) video.src = '';
+  if (video instanceof HTMLElement) video.replaceChildren();
   activeCarouselStops.forEach((stop) => stop());
   activeCarouselStops = [];
 });

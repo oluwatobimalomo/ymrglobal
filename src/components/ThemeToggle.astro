@@ -23,7 +23,7 @@ import Icon from './Icon.astro';
     button.querySelector('[data-theme-moon]')?.toggleAttribute('hidden', !dark);
     button.querySelector('[data-theme-sun]')?.toggleAttribute('hidden', dark);
     const themeColor = document.querySelector('meta[name="theme-color"]');
-    themeColor?.setAttribute('content', dark ? '#ffffff' : '#121416');
+    themeColor?.setAttribute('content', dark ? '#ffffff' : '#141618');
 
     void document.documentElement.offsetHeight;
     requestAnimationFrame(() => document.documentElement.classList.remove('theme-switching'));
