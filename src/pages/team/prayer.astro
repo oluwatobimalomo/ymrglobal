@@ -1,0 +1,60 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+const supabaseUrl = (import.meta.env.PUBLIC_SUPABASE_URL || '').trim().replace(/\/$/, '');
+const supabaseKey = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || '').trim();
+---
+
+<SiteLayout title="Prayer Team Inbox" description="Private YMR prayer team inbox." current="">
+  <Fragment slot="head"><meta name="robots" content="noindex, nofollow, noarchive" /></Fragment>
+  <main id="main" class="team-inbox" data-team-inbox data-team="prayer" data-endpoint={supabaseUrl} data-api-key={supabaseKey} data-table="prayer_requests" data-fields="id,created_at,name,email,prayer_focus,prayer_request">
+    <section class="team-inbox__hero">
+      <span class="section-index">PRIVATE TEAM ACCESS</span>
+      <h1>Prayer requests<br /><span>for the prayer team.</span></h1>
+      <p>Sign in with your YMR team account to review requests and download a CSV for follow-up.</p>
+    </section>
+    <section class="team-inbox__panel" aria-labelledby="team-inbox-title">
+      <div class="team-inbox__panel-heading"><div><span class="section-index">PRAYER TEAM</span><h2 id="team-inbox-title">Prayer request inbox</h2></div><button class="button button--outline" type="button" data-logout hidden>Sign out</button></div>
+      <form class="team-inbox__login" data-login>
+        <label>Email<input type="email" name="email" autocomplete="username" required /></label>
+        <label>Password<input type="password" name="password" autocomplete="current-password" required /></label>
+        <button class="button button--ember" type="submit">Sign in</button>
+      </form>
+      <p class="team-inbox__status" data-status role="status" aria-live="polite">Sign in with an account assigned to the prayer team.</p>
+      <div class="team-inbox__records" data-records hidden>
+        <div class="team-inbox__toolbar"><p data-count></p><button class="button button--ember" type="button" data-download>Download all as CSV</button></div>
+        <div class="team-inbox__table-wrap"><table><thead><tr><th>Received</th><th>Name</th><th>Email</th><th>Focus</th><th>Request</th></tr></thead><tbody data-rows></tbody></table></div>
+      </div>
+    </section>
+  </main>
+</SiteLayout>
+
+<script src="../../scripts/team-inbox.js"></script>
+
+<style>
+  .team-inbox { width: min(1280px, calc(100% - 48px)); margin: 0 auto; padding: clamp(54px, 8vw, 110px) 0 96px; }
+  .team-inbox__hero { max-width: 850px; margin-bottom: 48px; }
+  .team-inbox h1 { margin: 16px 0; font-size: clamp(3rem, 8vw, 6.8rem); line-height: .96; letter-spacing: -.075em; }
+  .team-inbox h1 span { color: var(--ember-ink); }
+  .team-inbox__hero > p { max-width: 650px; color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.25rem); line-height: 1.6; }
+  .team-inbox__panel { padding: clamp(20px, 4vw, 44px); border: 1px solid var(--line); border-radius: 22px; background: var(--surface); }
+  .team-inbox__panel-heading, .team-inbox__toolbar { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+  .team-inbox__panel h2 { margin: 8px 0 0; font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: -.05em; }
+  .team-inbox__login { display: grid; max-width: 520px; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
+  .team-inbox__login label { display: grid; gap: 8px; color: var(--ink); font-weight: 650; }
+  .team-inbox__login input { width: 100%; min-height: 48px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); font: inherit; }
+  .team-inbox__login button { grid-column: 1 / -1; justify-self: start; }
+  .team-inbox__status { margin: 18px 0 0; color: var(--muted); }
+  .team-inbox__status[data-kind="error"] { color: #b42318; }
+  .team-inbox__status[data-kind="success"] { color: #247044; }
+  .team-inbox__records { margin-top: 28px; }
+  .team-inbox__toolbar { margin-bottom: 16px; }
+  .team-inbox__toolbar p { color: var(--muted); }
+  .team-inbox__table-wrap { overflow: auto; border: 1px solid var(--line); border-radius: 12px; }
+  .team-inbox table { width: 100%; border-collapse: collapse; text-align: left; }
+  .team-inbox th, .team-inbox td { min-width: 110px; padding: 13px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .team-inbox th { background: var(--paper); font-size: .8rem; }
+  .team-inbox td:last-child { min-width: 280px; white-space: pre-wrap; }
+  .team-inbox tbody tr:last-child td { border-bottom: 0; }
+  @media (max-width: 620px) { .team-inbox { width: min(100% - 32px, 1280px); } .team-inbox__login { grid-template-columns: 1fr; } .team-inbox__login button { grid-column: auto; } .team-inbox__panel-heading, .team-inbox__toolbar { align-items: flex-start; flex-direction: column; } }
+</style>
