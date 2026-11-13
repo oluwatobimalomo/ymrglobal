@@ -1431,7 +1431,6 @@ body, main, .section-wrap, .photo-story, .closing, .site-footer, .nations-hero {
 .opening-sequence__mark-stage > .opening-sequence__orbit { top: 50%; left: 50%; width: 100%; transform: translate(-50%, -50%) rotate(-24deg) scaleY(.9); }
 .opening-sequence__mark-stage > .opening-sequence__orbit--inner { width: 80%; transform: translate(-50%, -50%) rotate(23deg) scaleY(.92); }
 .opening-sequence__mark-stage > .opening-sequence__orbit-line { width: 110%; }
-.opening-sequence__mark-stage > .opening-sequence__spark--one { top: 15%; left: 7%; }
 .opening-sequence__mark-stage > .opening-sequence__spark--two { right: 2%; bottom: 18%; }
 .opening-sequence__logo { position: relative; z-index: 2; display: grid; width: 88%; aspect-ratio: 1.293; place-items: center; }
 .opening-sequence__logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
