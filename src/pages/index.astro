@@ -207,14 +207,14 @@ const regions = [
     <meta property="og:url" content="https://ymrglobal.org/" />
     <meta property="og:title" content="Young Ministers Retreat (YMR) | YMR Global 2026" />
     <meta property="og:description" content="Join Young Ministers Retreat (YMR) in Redemption City, Nigeria, December 26–30, 2026, for worship, prayer, biblical teaching, and spiritual renewal." />
-    <meta property="og:image" content="https://new.ymrglobal.org/images/brand/ymr-social-preview.png" />
+    <meta property="og:image" content="https://ymrglobal.org/images/brand/ymr-social-preview.png" />
     <meta property="og:image:alt" content="Young Ministers Retreat Global logo and event branding" />
-    <meta property="og:image:width" content="2400" />
-    <meta property="og:image:height" content="1260" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Young Ministers Retreat (YMR) | YMR Global 2026" />
     <meta name="twitter:description" content="Join Young Ministers Retreat (YMR) in Redemption City, Nigeria, December 26–30, 2026, for worship, prayer, biblical teaching, and spiritual renewal." />
-    <meta name="twitter:image" content="https://new.ymrglobal.org/images/brand/ymr-social-preview.png" />
+    <meta name="twitter:image" content="https://ymrglobal.org/images/brand/ymr-social-preview.png" />
     <meta name="twitter:image:alt" content="Young Ministers Retreat Global logo and event branding" />
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
@@ -236,6 +236,34 @@ const regions = [
           publisher: { '@id': 'https://ymrglobal.org/#organization' },
           inLanguage: 'en',
         },
+        {
+          '@type': 'Event',
+          '@id': 'https://ymrglobal.org/#ymr-global-festival-2026',
+          name: 'YMR Global Festival 2026',
+          description: 'Young Ministers Retreat Global brings young believers together for worship, prayer, biblical teaching, and spiritual renewal.',
+          url: 'https://ymrglobal.org/',
+          image: 'https://ymrglobal.org/images/brand/ymr-social-preview.png',
+          startDate: '2026-12-26',
+          endDate: '2026-12-30',
+          eventStatus: 'https://schema.org/EventScheduled',
+          location: {
+            '@type': 'Place',
+            name: 'Old Auditorium, Redemption City of God',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'KM 46, Lagos–Ibadan Expressway',
+              addressLocality: 'Redemption City',
+              addressRegion: 'Ogun State',
+              addressCountry: 'NG',
+            },
+          },
+          organizer: { '@id': 'https://ymrglobal.org/#organization' },
+          offers: {
+            '@type': 'Offer',
+            url: 'https://register.ymrglobal.org/',
+            availability: 'https://schema.org/InStock',
+          },
+        },
       ],
     })} />
     <link rel="icon" type="image/png" sizes="64x64" href="/images/brand/ymr-favicon-64.png" />
@@ -245,17 +273,15 @@ const regions = [
     <title>Young Ministers Retreat (YMR) | YMR Global 2026</title>
     <script is:inline>
       (() => {
-        let shouldShowIntro = true;
-        try {
-          shouldShowIntro = localStorage.getItem('ymr-intro-seen') !== 'true';
-          if (shouldShowIntro) localStorage.setItem('ymr-intro-seen', 'true');
-        } catch {}
-        if (!shouldShowIntro) return;
-
         try {
           document.documentElement.classList.add('has-opening-sequence');
           window.ymrIntroFailsafeTimer = window.setTimeout(() => {
             document.documentElement.classList.remove('has-opening-sequence');
+            const audio = document.querySelector('[data-opening-audio]');
+            if (audio instanceof HTMLAudioElement) {
+              audio.pause();
+              audio.currentTime = 0;
+            }
             const intro = document.querySelector('[data-opening-sequence]');
             if (intro instanceof HTMLElement) {
               intro.hidden = true;
@@ -269,7 +295,7 @@ const regions = [
               handoff.hidden = true;
             }
             window.dispatchEvent(new Event('ymr:intro-complete'));
-          }, 10000);
+          }, 75000);
         } catch {}
       })();
     </script>
@@ -299,7 +325,9 @@ const regions = [
           <div class="opening-sequence__countdown"><span class="opening-sequence__countdown-label">THE REVIVAL BEGINS IN</span><Countdown /></div>
           <p class="opening-sequence__event">DECEMBER 26—30, 2026 <span>·</span> REDEMPTION CITY</p>
         </div>
-        <button class="opening-sequence__skip" type="button" data-skip-opening>Skip intro</button>
+        <audio data-opening-audio src="/audio/ymr-vision-intro.mp3" preload="auto" playsinline></audio>
+        <button class="opening-sequence__play" type="button" data-play-opening-audio hidden>Play intro audio</button>
+        <button class="opening-sequence__skip" type="button" data-skip-opening>Skip Intro</button>
       </div>
     </div>
     <div class="opening-sequence__handoff" data-opening-handoff aria-hidden="true" hidden></div>
@@ -307,6 +335,8 @@ const regions = [
       (() => {
         const intro = document.querySelector('[data-opening-sequence]');
         const skip = document.querySelector('[data-skip-opening]');
+        const audio = document.querySelector('[data-opening-audio]');
+        const playAudio = document.querySelector('[data-play-opening-audio]');
         const handoff = document.querySelector('[data-opening-handoff]');
         if (!(intro instanceof HTMLElement)) return;
         if (!document.documentElement.classList.contains('has-opening-sequence')) {
@@ -315,19 +345,22 @@ const regions = [
         }
 
         let completed = false;
-        let timer;
         const hideIntro = () => {
           intro.hidden = true;
           intro.style.removeProperty('display');
           intro.style.removeProperty('clip-path');
           intro.style.removeProperty('transform');
         };
-        const finishIntro = () => {
+        const finishIntro = ({ stopAudio = true } = {}) => {
           if (completed) return;
           completed = true;
-          window.clearTimeout(timer);
           window.clearTimeout(window.ymrIntroFailsafeTimer);
           window.ymrIntroFailsafeTimer = undefined;
+          if (audio instanceof HTMLAudioElement && stopAudio) {
+            audio.pause();
+            audio.currentTime = 0;
+          }
+          if (playAudio instanceof HTMLButtonElement) playAudio.hidden = true;
           document.documentElement.classList.remove('has-opening-sequence');
           window.dispatchEvent(new Event('ymr:intro-complete'));
 
@@ -361,15 +394,21 @@ const regions = [
           }, 1550);
         };
 
-        const handleSkip = (event) => {
-          const target = event.target;
-          if (!(target instanceof Element) || !target.closest('[data-skip-opening]')) return;
-          event.preventDefault();
-          finishIntro();
-        };
-        document.addEventListener('click', handleSkip, true);
         skip?.addEventListener('click', finishIntro);
-        timer = window.setTimeout(finishIntro, 6000);
+        if (audio instanceof HTMLAudioElement) {
+          audio.volume = 1;
+          audio.addEventListener('ended', () => finishIntro({ stopAudio: false }), { once: true });
+          audio.addEventListener('play', () => {
+            if (playAudio instanceof HTMLButtonElement) playAudio.hidden = true;
+          });
+          const showAudioFallback = () => {
+            if (!completed && playAudio instanceof HTMLButtonElement) playAudio.hidden = false;
+          };
+          audio.play().catch(showAudioFallback);
+          playAudio?.addEventListener('click', () => {
+            audio.play().catch(showAudioFallback);
+          });
+        }
 
         // Visual polish must never prevent Skip or the timed handoff from being ready.
         try {

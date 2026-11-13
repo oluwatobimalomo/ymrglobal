@@ -5,7 +5,7 @@ export const prerender = true;
 export function GET() {
   const site = 'https://ymrglobal.org';
   const routes = [
-    '/', '/nations', '/initiatives', '/delegates', '/accommodation', '/faq',
+    '/', '/nations', '/initiatives', '/delegates', '/faq',
     '/testimonies', '/prayer-wall', '/giving', '/partner', '/counselling', '/privacy',
     '/gallery',
     ...Array.from({ length: Math.ceil(galleryPhotos.length / 12) - 1 }, (_, index) => `/gallery/${index + 2}`),

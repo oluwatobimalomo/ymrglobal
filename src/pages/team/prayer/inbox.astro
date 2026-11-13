@@ -1,0 +1,12 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import TeamPortal from '../../../components/team/TeamPortal.astro';
+
+const endpoint = (import.meta.env.PUBLIC_SUPABASE_URL || '').trim().replace(/\/$/, '');
+const apiKey = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || '').trim();
+---
+
+<SiteLayout title="Prayer Request Inbox" description="YMR Prayer Box." current="">
+  <Fragment slot="head"><meta name="robots" content="noindex, nofollow, noarchive" /></Fragment>
+  <TeamPortal team="prayer" view="inbox" endpoint={endpoint} apiKey={apiKey} />
+</SiteLayout>

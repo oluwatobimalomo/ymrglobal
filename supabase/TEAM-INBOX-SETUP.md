@@ -27,6 +27,8 @@ where user_id = '00000000-0000-0000-0000-000000000001';
 
 ## Using the inboxes
 
-Team members sign in with their assigned email and password. They can review the latest 100 submissions in the page and use **Download all as CSV** to export every record they are authorized to see. Sign out when finished, especially on a shared device.
+Team members sign in with their assigned email and password. Each inbox loads all records that account is authorized to view, then supports text search, category and date filters, and (for testimonies) status filters. Staff can select individual visible records, select all records matching the current filters, download the selected records as CSV, or download all records matching the current filters. Search and filtering happen in the browser after the authorized records have been fetched; exports use the current loaded records and do not trigger a second database download.
+
+Do not use a shared fixed username and password. Create an individual Supabase Auth account for each team member and assign its UUID only to the appropriate team. This allows access to be removed for one person without changing everyone else's credentials. Sign out when finished, especially on a shared device. If a session expires, the inbox clears its loaded records and asks the user to sign in again.
 
 The pages include `noindex` metadata, but that only discourages search indexing. The actual protection is Supabase Auth plus row-level security. Keep the `team_access` table limited to authorized administrators; do not grant staff write access to it or to the submission tables.

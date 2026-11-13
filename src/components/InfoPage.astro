@@ -2,10 +2,10 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 import Icon from './Icon.astro';
 
-const { title, eyebrow, description, noteTitle = 'Get in touch with YMR.', note, actionLabel = 'Contact YMR', actionHref = 'mailto:info@ymrglobal.org' } = Astro.props;
+const { title, eyebrow, description, noteTitle = 'Get in touch with YMR.', note, actionLabel = 'Contact YMR', actionHref = 'mailto:info@ymrglobal.org', robots = '' } = Astro.props;
 ---
 
-<SiteLayout title={title} description={description}>
+<SiteLayout title={title} description={description} robots={robots}>
   <main id="main" class="resource-page info-page">
     <section class="resource-hero section-wrap" id="top" aria-labelledby="resource-title">
       <span class="section-index">{eyebrow}</span>

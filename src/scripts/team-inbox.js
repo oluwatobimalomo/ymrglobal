@@ -4,6 +4,9 @@ if (root instanceof HTMLElement) {
   const baseUrl = (root.dataset.endpoint || '').replace(/\/$/, '');
   const apiKey = root.dataset.apiKey || '';
   const team = root.dataset.team || '';
+  const view = root.dataset.view || 'login';
+  const loginPath = root.dataset.loginPath || `/team/${team}`;
+  const inboxPath = root.dataset.inboxPath || `${loginPath}/inbox`;
   const table = root.dataset.table || '';
   const fields = root.dataset.fields || '';
   const storageKey = `ymr-team-session-${team}`;
@@ -14,7 +17,16 @@ if (root instanceof HTMLElement) {
   const rows = root.querySelector('[data-rows]');
   const count = root.querySelector('[data-count]');
   const downloadButton = root.querySelector('[data-download]');
+  const selectedDownloadButton = root.querySelector('[data-download-selected]');
+  const selectAll = root.querySelector('[data-select-all]');
+  const dateFrom = root.querySelector('[data-date-from]');
+  const dateTo = root.querySelector('[data-date-to]');
+  const categoryFilter = root.querySelector('[data-category]');
+  const statusFilter = root.querySelector('[data-status-filter]');
+  const searchFilter = root.querySelector('[data-search]');
   let activeSession = null;
+  let allItems = [];
+  const selectedIds = new Set();
 
   const announce = (message, kind = '') => {
     if (!status) return;
@@ -76,12 +88,64 @@ if (root instanceof HTMLElement) {
     return td;
   };
 
-  const renderRows = (items) => {
+  const filteredItems = () => {
+    const from = dateFrom?.value || '';
+    const to = dateTo?.value || '';
+    const category = categoryFilter?.value || '';
+    const state = statusFilter?.value || '';
+    const search = (searchFilter?.value || '').trim().toLocaleLowerCase();
+    return allItems.filter((item) => {
+      const createdAt = item.created_at ? new Date(item.created_at) : null;
+      const date = createdAt && !Number.isNaN(createdAt.valueOf())
+        ? `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(createdAt.getDate()).padStart(2, '0')}`
+        : '';
+      if (from && (!date || date < from)) return false;
+      if (to && (!date || date > to)) return false;
+      if (category && (team === 'prayer' ? item.prayer_focus : item.category) !== category) return false;
+      if (state && item.status !== state) return false;
+      if (search) {
+        const searchableText = team === 'prayer'
+          ? [item.name, item.email, item.prayer_focus, item.prayer_request]
+          : [item.name, item.category, item.status, item.testimony];
+        if (!searchableText.some((value) => String(value || '').toLocaleLowerCase().includes(search))) return false;
+      }
+      return true;
+    });
+  };
+
+  const updateSelectionControls = (visibleItems = filteredItems()) => {
+    const visibleIds = visibleItems.map((item) => String(item.id));
+    if (selectAll instanceof HTMLInputElement) {
+      const selectedVisible = visibleIds.filter((id) => selectedIds.has(id)).length;
+      selectAll.checked = visibleIds.length > 0 && selectedVisible === visibleIds.length;
+      selectAll.indeterminate = selectedVisible > 0 && selectedVisible < visibleIds.length;
+    }
+    if (selectedDownloadButton instanceof HTMLButtonElement) {
+      selectedDownloadButton.disabled = selectedIds.size === 0;
+      selectedDownloadButton.textContent = selectedIds.size ? `Download selected (${selectedIds.size})` : 'Download selected';
+    }
+  };
+
+  const renderRows = () => {
     if (!(rows instanceof HTMLElement)) return;
+    const items = filteredItems();
     rows.replaceChildren();
     for (const item of items) {
       const tr = document.createElement('tr');
       const date = item.created_at ? new Date(item.created_at).toLocaleString() : '';
+      const selectCell = document.createElement('td');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.setAttribute('aria-label', `Select ${team === 'prayer' ? 'request' : 'testimony'} received ${date || 'on unknown date'}`);
+      checkbox.checked = selectedIds.has(String(item.id));
+      checkbox.addEventListener('change', () => {
+        if (checkbox.checked) selectedIds.add(String(item.id));
+        else selectedIds.delete(String(item.id));
+        if (count) count.textContent = `Showing ${items.length} of ${allItems.length} ${team === 'prayer' ? 'requests' : 'submissions'} · ${selectedIds.size} selected`;
+        updateSelectionControls(items);
+      });
+      selectCell.append(checkbox);
+      tr.append(selectCell);
       if (team === 'prayer') {
         tr.append(cell(date), cell(item.name || 'Not provided'), cell(item.email || 'Not provided'), cell(item.prayer_focus), cell(item.prayer_request));
       } else {
@@ -89,19 +153,37 @@ if (root instanceof HTMLElement) {
       }
       rows.append(tr);
     }
-    if (count) count.textContent = `${items.length} recent ${team === 'prayer' ? 'requests' : 'submissions'}`;
+    if (!items.length) {
+      const tr = document.createElement('tr');
+      const td = cell(allItems.length ? 'No submissions match these filters.' : 'No submissions have been received yet.');
+      td.colSpan = 6;
+      tr.append(td);
+      rows.append(tr);
+    }
+    if (count) count.textContent = `Showing ${items.length} of ${allItems.length} ${team === 'prayer' ? 'requests' : 'submissions'} · ${selectedIds.size} selected`;
+    updateSelectionControls(items);
+  };
+
+  const fetchAllRows = async () => {
+    const selectedFields = fields.split(',').map(encodeURIComponent).join(',');
+    const result = [];
+    const pageSize = 500;
+    for (let offset = 0; ; offset += pageSize) {
+      const batch = await request(`/rest/v1/${table}?select=${selectedFields}&order=created_at.desc&limit=${pageSize}&offset=${offset}`);
+      result.push(...batch);
+      if (batch.length < pageSize) break;
+    }
+    return result;
   };
 
   const loadInbox = async () => {
     const membership = await request(`/rest/v1/team_access?select=team&team=eq.${encodeURIComponent(team)}&limit=1`);
     if (!membership.length) throw new Error('This account is not assigned to this team. Contact the YMR site administrator.');
-    const selectedFields = fields.split(',').map(encodeURIComponent).join(',');
-    const recent = await request(`/rest/v1/${table}?select=${selectedFields}&order=created_at.desc&limit=100`);
-    renderRows(recent);
-    if (form) form.hidden = true;
+    allItems = await fetchAllRows();
+    renderRows();
     if (records) records.hidden = false;
     if (logoutButton) logoutButton.hidden = false;
-    announce('Inbox loaded. Submissions are visible only to authorized team accounts.', 'success');
+    announce('Inbox loaded!', 'success');
   };
 
   const login = async (email, password) => {
@@ -114,7 +196,7 @@ if (root instanceof HTMLElement) {
     const payload = await response.json().catch(() => ({}));
     if (!response.ok || !payload.access_token) throw new Error('Sign-in failed. Check your details or contact the YMR site administrator.');
     storeSession({ access_token: payload.access_token, refresh_token: payload.refresh_token, expires_at: Date.now() + (payload.expires_in || 3600) * 1000 });
-    await loadInbox();
+    window.location.replace(inboxPath);
   };
 
   const csvValue = (value) => {
@@ -123,36 +205,27 @@ if (root instanceof HTMLElement) {
     const safeText = /^[\s\u0000-\u001f]*[=+\-@]/.test(text) ? `'${text}` : text;
     return `"${safeText.replaceAll('"', '""')}"`;
   };
-  const downloadCsv = async () => {
+  const downloadCsv = async (items, label) => {
     if (!activeSession?.access_token) return;
-    downloadButton?.setAttribute('disabled', '');
-    announce('Preparing the complete CSV…');
     try {
-      const selectedFields = fields.split(',').map(encodeURIComponent).join(',');
-      const allRows = [];
-      const pageSize = 500;
-      for (let offset = 0; ; offset += pageSize) {
-        const batch = await request(`/rest/v1/${table}?select=${selectedFields}&order=created_at.desc&limit=${pageSize}&offset=${offset}`);
-        allRows.push(...batch);
-        if (batch.length < pageSize) break;
-      }
-      if (!allRows.length) throw new Error('There are no submissions to download yet.');
+      if (!items.length) throw new Error(label === 'selected' ? 'Select at least one record to download.' : 'No matching submissions to download.');
       const headers = fields.split(',');
-      const csv = [headers.map(csvValue).join(','), ...allRows.map((item) => headers.map((key) => csvValue(item[key])).join(','))].join('\r\n');
+      const csv = [headers.map(csvValue).join(','), ...items.map((item) => headers.map((key) => csvValue(item[key])).join(','))].join('\r\n');
       const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' });
       const href = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = href;
-      anchor.download = `ymr-${team}-${new Date().toISOString().slice(0, 10)}.csv`;
+      anchor.download = `ymr-${team}-${label}-${new Date().toISOString().slice(0, 10)}.csv`;
       anchor.click();
-      URL.revokeObjectURL(href);
-      announce(`Downloaded ${allRows.length} ${team === 'prayer' ? 'requests' : 'testimonies'}.`, 'success');
+      window.setTimeout(() => URL.revokeObjectURL(href), 1000);
+      announce(`Downloaded ${items.length} ${team === 'prayer' ? 'requests' : 'testimonies'}.`, 'success');
     } catch (error) {
       announce(error instanceof Error ? error.message : 'The CSV could not be prepared.', 'error');
-    } finally {
-      downloadButton?.removeAttribute('disabled');
     }
   };
+
+  const downloadMatching = () => downloadCsv(filteredItems(), 'matching');
+  const downloadSelected = () => downloadCsv(allItems.filter((item) => selectedIds.has(String(item.id))), 'selected');
 
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -175,11 +248,6 @@ if (root instanceof HTMLElement) {
     const accessToken = activeSession?.access_token;
     activeSession = null;
     sessionStorage.removeItem(storageKey);
-    if (form) form.hidden = false;
-    if (records) records.hidden = true;
-    if (logoutButton) logoutButton.hidden = true;
-    if (rows) rows.replaceChildren();
-    announce('You have signed out.');
     if (accessToken && baseUrl && apiKey) {
       try {
         await fetch(`${baseUrl}/auth/v1/logout`, {
@@ -190,12 +258,31 @@ if (root instanceof HTMLElement) {
         // The local session is already cleared, so sign-out still completes offline.
       }
     }
+    window.location.replace(loginPath);
   });
 
-  downloadButton?.addEventListener('click', downloadCsv);
+  downloadButton?.addEventListener('click', downloadMatching);
+  selectedDownloadButton?.addEventListener('click', downloadSelected);
+  [dateFrom, dateTo, categoryFilter, statusFilter].forEach((filter) => filter?.addEventListener('change', renderRows));
+  searchFilter?.addEventListener('input', renderRows);
+  selectAll?.addEventListener('change', () => {
+    for (const item of filteredItems()) {
+      if (selectAll.checked) selectedIds.add(String(item.id));
+      else selectedIds.delete(String(item.id));
+    }
+    renderRows();
+  });
 
   const saved = sessionStorage.getItem(storageKey);
-  if (saved) {
+  if (view === 'login') {
+    if (saved) window.location.replace(inboxPath);
+    else {
+      const reason = new URLSearchParams(window.location.search).get('reason');
+      if (reason) announce(reason, 'error');
+    }
+  } else if (!saved) {
+    window.location.replace(loginPath);
+  } else {
     try {
       const session = JSON.parse(saved);
       if (session.refresh_token && session.access_token) {
@@ -203,16 +290,16 @@ if (root instanceof HTMLElement) {
         loadInbox().catch((error) => {
           activeSession = null;
           sessionStorage.removeItem(storageKey);
-          if (form) form.hidden = false;
-          if (records) records.hidden = true;
-          if (logoutButton) logoutButton.hidden = true;
-          announce(error instanceof Error ? error.message : 'Please sign in again.', 'error');
+          const reason = encodeURIComponent(error instanceof Error ? error.message : 'Please sign in again.');
+          window.location.replace(`${loginPath}?reason=${reason}`);
         });
       } else {
         sessionStorage.removeItem(storageKey);
+        window.location.replace(loginPath);
       }
     } catch {
       sessionStorage.removeItem(storageKey);
+      window.location.replace(loginPath);
     }
   }
 }
