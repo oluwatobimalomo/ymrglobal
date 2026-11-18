@@ -67,7 +67,7 @@ const socialImage = new URL('/images/brand/ymr-social-preview.png', Astro.site);
         <summary><Icon name="menu" size={18} /><span>Menu</span></summary>
         <nav aria-label="Mobile navigation"><a href="/#about">About</a><a href="/#experience">Meetings</a><a href="/nations">Nations</a><a href="/initiatives">Initiatives</a><a href="/delegates" aria-current={current === 'delegates' ? 'page' : undefined}>Delegates</a><a href="/testimonies">Testimonies</a><a href="/prayer-wall" aria-current={current === 'prayer-wall' ? 'page' : undefined}>Prayer Wall</a><a href="/giving" aria-current={current === 'giving' ? 'page' : undefined}>Giving</a></nav>
       </details>
-      <div class="header-actions"><ThemeToggle /><a class="button button--small button--dark" href="https://register.ymrglobal.org/"><Icon name="calendar" size={16} />Register</a></div>
+      <div class="header-actions"><ThemeToggle /><a class="button button--small button--dark" href="/register"><Icon name="calendar" size={16} />Register</a></div>
     </header>
 
     <slot />

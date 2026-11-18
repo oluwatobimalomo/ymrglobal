@@ -5,7 +5,7 @@ const { edition } = Astro.props;
 ---
 <li class:list={["edition-card", edition.upcoming && "edition-card--upcoming", edition.landscape && "edition-card--wide"]} data-motion>
   {edition.upcoming ? (
-    <a class="edition-card__open edition-card__open--link" href="https://register.ymrglobal.org/" aria-label="Register now for YMR 2026: City Takers">
+    <a class="edition-card__open edition-card__open--link" href="/register" aria-label="Register now for YMR 2026: City Takers">
       <EditionCardContent edition={edition} />
     </a>
   ) : (

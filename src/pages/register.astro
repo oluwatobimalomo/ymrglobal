@@ -1,0 +1,231 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const supabaseUrl = (import.meta.env.PUBLIC_SUPABASE_URL || '').trim().replace(/\/$/, '');
+const supabaseKey = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || '').trim();
+const campusEndpoint = supabaseUrl ? `${supabaseUrl}/rest/v1/campus_leader_registrations` : '';
+const pastorsEndpoint = supabaseUrl ? `${supabaseUrl}/rest/v1/pastor_registrations` : '';
+
+const options = [
+  { title: 'Attendee & Volunteer Registration', description: 'Join us at YMR 2026 or serve as a volunteer. Continue to the official attendee registration portal.', icon: 'users', kind: 'external', href: 'https://register.ymrglobal.org/', label: 'Continue to registration' },
+  { title: 'Campus Fellowship Leaders', description: 'Share your campus and fellowship details so we can connect with your ministry.', icon: 'book', kind: 'campus', label: 'Register as a campus leader' },
+  { title: 'Pastors & Ministry Heads', description: 'Tell us about your visit and any hospitality or logistics support you may need.', icon: 'hands', kind: 'pastors', label: 'Register as a ministry leader' },
+];
+---
+
+<SiteLayout title="Registration" description="Choose a registration option for YMR 2026 attendees, volunteers, campus fellowship leaders, pastors, and ministry heads.">
+  <main id="main" class="resource-page registration-page">
+    <section class="registration-hero section-wrap" id="top" aria-labelledby="registration-title">
+      <div class="registration-hero__copy">
+        <span class="section-index">YMR GLOBAL · DECEMBER 26–30, 2026</span>
+        <h1 id="registration-title">Find your place<br /><span>at YMR 2026.</span></h1>
+        <p>Choose the registration path that fits you. We look forward to welcoming you to Redemption City.</p>
+      </div>
+      <aside class="registration-anniversary" aria-label="YMR celebrates ten years">
+        <span>CELEBRATING TEN YEARS</span>
+        <img src="/images/brand/ymr-at-10-logo.webp" alt="Young Ministers Retreat ten-year anniversary logo" width="1600" height="1238" />
+      </aside>
+    </section>
+
+    <section class="registration-options section-wrap" aria-label="Registration options">
+      {options.map((option, index) => option.kind === 'external' ? (
+        <a class="registration-option" href={option.href} target="_blank" rel="noopener noreferrer">
+          <span class="registration-option__top"><span class="registration-option__icon"><Icon name={option.icon} size={23} /></span><span class="registration-option__index">0{index + 1}</span></span>
+          <span class="registration-option__copy"><strong>{option.title}</strong><span>{option.description}</span></span>
+          <span class="registration-option__action">{option.label}<Icon name="arrowRight" size={17} /></span>
+        </a>
+      ) : (
+        <button class="registration-option" type="button" data-open-registration={option.kind} aria-controls="registration-form-panel" aria-expanded="false">
+          <span class="registration-option__top"><span class="registration-option__icon"><Icon name={option.icon} size={23} /></span><span class="registration-option__index">0{index + 1}</span></span>
+          <span class="registration-option__copy"><strong>{option.title}</strong><span>{option.description}</span></span>
+          <span class="registration-option__action">{option.label}<Icon name="arrowRight" size={17} /></span>
+        </button>
+      ))}
+    </section>
+
+    <dialog class="registration-form-panel" id="registration-form-panel" data-registration-panel aria-labelledby="registration-dialog-title" aria-describedby="registration-dialog-description">
+      <div class="registration-form-panel__heading">
+        <div><span class="section-index" data-registration-eyebrow>YMR 2026 REGISTRATION</span><h2 id="registration-dialog-title" data-registration-title>Registration form</h2></div>
+        <button class="registration-close" type="button" data-registration-close aria-label="Close registration form">×</button>
+      </div>
+      <p class="registration-form-panel__description" id="registration-dialog-description" data-registration-description></p>
+
+      <form class="ymr-registration-form" data-registration-form="campus" data-endpoint={campusEndpoint} data-api-key={supabaseKey} hidden>
+        <div class="registration-fields">
+          <div class="registration-field"><label for="campus-name">Full name <span>*</span></label><input id="campus-name" name="full_name" autocomplete="name" required maxlength="120" /></div>
+          <div class="registration-field"><label for="campus-phone">Phone number <span>*</span></label><div class="registration-phone-row"><input id="campus-phone" name="phone_number" data-international-phone type="tel" autocomplete="tel" required maxlength="40" /></div></div>
+          <div class="registration-field"><label for="campus-email">Email address <span>*</span></label><input id="campus-email" name="email" type="email" autocomplete="email" required maxlength="200" /></div>
+          <div class="registration-field"><label for="campus-school">Name of school <span>*</span></label><input id="campus-school" name="school_name" required maxlength="180" /></div>
+          <div class="registration-field registration-field--full"><label for="campus-fellowship">Name of campus fellowship <span>*</span></label><input id="campus-fellowship" name="fellowship_name" required maxlength="180" /></div>
+        </div>
+        <label class="registration-honeypot" aria-hidden="true">Leave this field empty<input name="website" tabindex="-1" autocomplete="off" /></label>
+        <div class="registration-submit"><button class="button button--ember" type="submit"><Icon name="arrowRight" size={17} />Submit registration</button><p data-registration-status role="status" aria-live="polite">Fields marked * are required.</p></div>
+      </form>
+
+      <form class="ymr-registration-form" data-registration-form="pastors" data-endpoint={pastorsEndpoint} data-api-key={supabaseKey} hidden>
+        <div class="registration-fields registration-fields--pastors">
+          <div class="registration-field registration-field--name"><label for="pastor-name">Full name <span>*</span></label><input id="pastor-name" name="full_name" autocomplete="name" required maxlength="120" /></div>
+          <div class="registration-field registration-field--email"><label for="pastor-email">Email Address <span>*</span></label><input id="pastor-email" name="email" type="email" autocomplete="email" required maxlength="200" /></div>
+          <div class="registration-field registration-field--person"><label for="pastor-contact-person">Contact person</label><input id="pastor-contact-person" name="contact_person" autocomplete="name" maxlength="120" /></div>
+          <div class="registration-field registration-field--denomination"><label for="pastor-church">Denomination (name of church) <span>*</span></label><input id="pastor-church" name="denomination_church" required maxlength="180" /></div>
+          <div class="registration-field registration-field--phone"><label for="pastor-contact">Contact information <span>*</span></label><div class="registration-phone-row"><input id="pastor-contact" name="contact_information" data-international-phone type="tel" autocomplete="tel" required maxlength="40" /></div></div>
+          <div class="registration-field registration-field--date registration-field--arrival"><label for="pastor-arrival">Date of arrival <span>*</span></label><input id="pastor-arrival" name="arrival_date" type="date" required /></div>
+          <div class="registration-field registration-field--date registration-field--departure"><label for="pastor-departure">Date of departure <span>*</span></label><input id="pastor-departure" name="departure_date" type="date" required /></div>
+          <fieldset class="registration-choice registration-choice--compact registration-field--full"><legend>Would you like assistance securing a space in the Pastor’s quarters for YMR 2026 for a fee? <span>*</span></legend><div class="registration-choice__options"><label><input type="radio" name="quarters_assistance" value="Yes" required /><span>Yes</span></label><label><input type="radio" name="quarters_assistance" value="No" /><span>No</span></label><label><input type="radio" name="quarters_assistance" value="Maybe" /><span>Maybe</span></label></div></fieldset>
+          <div class="registration-field registration-field--count registration-field--nights"><label for="pastor-nights">How many nights will you be staying? <span>*</span></label><input id="pastor-nights" name="nights" type="number" min="0" max="30" required /></div>
+          <div class="registration-field registration-field--count registration-field--people"><label for="pastor-guests">People accompanying you <span>*</span></label><input id="pastor-guests" name="accompanying_people" type="number" min="0" max="100" required /></div>
+          <div class="registration-field registration-field--full registration-field--comments"><label for="pastor-comments">Additional comments or special requests</label><textarea id="pastor-comments" name="comments" rows="4" maxlength="2000"></textarea></div>
+        </div>
+        <label class="registration-honeypot" aria-hidden="true">Leave this field empty<input name="website" tabindex="-1" autocomplete="off" /></label>
+        <div class="registration-submit"><button class="button button--ember" type="submit"><Icon name="arrowRight" size={17} />Submit registration</button><p data-registration-status role="status" aria-live="polite">Fields marked * are required.</p></div>
+      </form>
+      <p class="registration-privacy">Your details are collected to coordinate YMR 2026 registration and hospitality. Read our <a href="/privacy">Privacy Policy</a>.</p>
+    </dialog>
+  </main>
+
+  <script>
+    import intlTelInput from 'intl-tel-input';
+    import 'intl-tel-input/styles';
+
+    const panel = document.querySelector('[data-registration-panel]');
+    const campusForm = document.querySelector('[data-registration-form="campus"]');
+    const pastorsForm = document.querySelector('[data-registration-form="pastors"]');
+    const formTitle = panel?.querySelector('[data-registration-title]');
+    const formEyebrow = panel?.querySelector('[data-registration-eyebrow]');
+    const formDescription = panel?.querySelector('[data-registration-description]');
+    const phoneControls = new WeakMap();
+
+    const enhancePhoneInput = (input) => {
+      const instance = intlTelInput(input, {
+        initialCountry: 'ng',
+        separateDialCode: true,
+        countrySearch: true,
+        dropdownParent: panel instanceof HTMLElement ? panel : undefined,
+        fullscreenParent: panel instanceof HTMLElement ? panel : undefined,
+        loadUtils: () => import('intl-tel-input/utils'),
+      });
+      phoneControls.set(input, instance);
+      input.addEventListener('input', () => input.setCustomValidity(''));
+    };
+
+    const initializePhoneInput = (form) => {
+      const input = form.querySelector('[data-international-phone]');
+      if (input instanceof HTMLInputElement && !phoneControls.has(input)) enhancePhoneInput(input);
+    };
+    const registrationCopy = {
+      campus: {
+        title: 'Campus Fellowship Leaders',
+        eyebrow: 'CAMPUS LEADER DETAILS',
+        description: 'Share your details and the fellowship you serve so our team can connect with your campus.',
+      },
+      pastors: {
+        title: 'Pastors & Ministry Heads',
+        eyebrow: 'PASTOR & MINISTRY LEADER DETAILS',
+        description: 'Dear Pastors! Thank you for your support and interest in attending YMR 2026 physically. Kindly provide accurate details, confirm your availability, and specify any accommodation or logistics needs to help our team plan for your arrival and hospitality appropriately.',
+      },
+    };
+
+    document.querySelectorAll('[data-open-registration]').forEach((button) => button.addEventListener('click', () => {
+      const kind = button.getAttribute('data-open-registration');
+      const form = kind === 'campus' ? campusForm : kind === 'pastors' ? pastorsForm : null;
+      const copy = registrationCopy[kind];
+      if (!(panel instanceof HTMLElement) || !(form instanceof HTMLFormElement) || !copy) return;
+      if (formTitle) formTitle.textContent = copy.title;
+      if (formEyebrow) formEyebrow.textContent = copy.eyebrow;
+      if (formDescription) formDescription.textContent = copy.description;
+      if (campusForm instanceof HTMLFormElement) campusForm.hidden = campusForm !== form;
+      if (pastorsForm instanceof HTMLFormElement) pastorsForm.hidden = pastorsForm !== form;
+      document.querySelectorAll('[data-open-registration]').forEach((choice) => choice.setAttribute('aria-expanded', String(choice === button)));
+      if (panel instanceof HTMLDialogElement && !panel.open) panel.showModal();
+      if (kind === 'pastors' || kind === 'campus') initializePhoneInput(form);
+      form.querySelector('input:not([type="radio"]), textarea')?.focus({ preventScroll: true });
+    }));
+
+    panel?.querySelector('[data-registration-close]')?.addEventListener('click', () => {
+      if (panel instanceof HTMLDialogElement) panel.close();
+    });
+
+    panel?.addEventListener('click', (event) => {
+      if (event.target === panel && panel instanceof HTMLDialogElement) panel.close();
+    });
+    panel?.addEventListener('close', () => {
+      document.querySelectorAll('[data-open-registration]').forEach((choice) => choice.setAttribute('aria-expanded', 'false'));
+    });
+
+    document.querySelectorAll('[data-registration-form]').forEach((form) => {
+      if (!(form instanceof HTMLFormElement)) return;
+      const status = form.querySelector('[data-registration-status]');
+      const arrival = form.querySelector('input[name="arrival_date"]');
+      const departure = form.querySelector('input[name="departure_date"]');
+      const honeypot = form.querySelector('input[name="website"]');
+
+      if (arrival instanceof HTMLInputElement && departure instanceof HTMLInputElement) {
+        arrival.addEventListener('change', () => {
+          departure.min = arrival.value;
+          if (departure.value && departure.value < arrival.value) departure.value = '';
+        });
+        departure.addEventListener('input', () => departure.setCustomValidity(''));
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (honeypot instanceof HTMLInputElement && honeypot.value.trim()) return;
+        if (arrival instanceof HTMLInputElement && departure instanceof HTMLInputElement && arrival.value && departure.value && departure.value < arrival.value) {
+          departure.setCustomValidity('Departure date must be on or after your arrival date.');
+          departure.reportValidity();
+          return;
+        }
+        if (departure instanceof HTMLInputElement) departure.setCustomValidity('');
+        let phoneFieldName = '';
+        let phoneValue = '';
+        const phoneInput = form.querySelector('[data-international-phone]');
+        if (phoneInput instanceof HTMLInputElement) {
+          initializePhoneInput(form);
+          const phoneInstance = phoneControls.get(phoneInput);
+          if (phoneInstance) {
+            await phoneInstance.promise;
+            if (!phoneInstance.isValidNumber()) {
+              phoneInput.setCustomValidity('Enter a valid phone number for the selected country.');
+              phoneInput.reportValidity();
+              return;
+            }
+            phoneInput.setCustomValidity('');
+            phoneFieldName = phoneInput.name;
+            phoneValue = phoneInstance.getNumber();
+          }
+        }
+        const endpoint = form.getAttribute('data-endpoint') || '';
+        const apiKey = form.getAttribute('data-api-key') || '';
+        const submit = form.querySelector('button[type="submit"]');
+        if (submit instanceof HTMLButtonElement) submit.disabled = true;
+        if (!endpoint || !apiKey) {
+          if (status) status.textContent = 'Online submissions are being set up. Please try again later.';
+          if (submit instanceof HTMLButtonElement) submit.disabled = false;
+          return;
+        }
+
+        if (status) status.textContent = 'Sending your registration…';
+        const data = new FormData(form);
+        const entries = [...data.entries()];
+        const fields = Object.fromEntries(entries.filter(([key]) => key !== 'website' && key !== phoneFieldName));
+        if (phoneFieldName && phoneValue) fields[phoneFieldName] = phoneValue;
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { apikey: apiKey, Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+            body: JSON.stringify(fields),
+          });
+          if (!response.ok) throw new Error('Registration submission failed');
+          form.reset();
+          if (departure instanceof HTMLInputElement) departure.min = '';
+          if (status) status.textContent = 'Thank you. Your registration has been received.';
+        } catch {
+          if (status) status.textContent = 'We could not send your registration just now. Please try again later or contact info@ymrglobal.org.';
+        } finally {
+          if (submit instanceof HTMLButtonElement) submit.disabled = false;
+        }
+      });
+    });
+  </script>
+</SiteLayout>

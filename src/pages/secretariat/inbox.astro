@@ -1,0 +1,12 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import SecretariatPortal from '../../components/team/SecretariatPortal.astro';
+
+const endpoint = (import.meta.env.PUBLIC_SUPABASE_URL || '').trim().replace(/\/$/, '');
+const apiKey = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || '').trim();
+---
+
+<SiteLayout title="Secretariat Registration Inbox" description="Private YMR Secretariat registration response inbox." current="">
+  <Fragment slot="head"><meta name="robots" content="noindex, nofollow, noarchive" /></Fragment>
+  <SecretariatPortal view="inbox" endpoint={endpoint} apiKey={apiKey} />
+</SiteLayout>

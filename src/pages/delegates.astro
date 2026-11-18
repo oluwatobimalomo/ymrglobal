@@ -1,6 +1,10 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
 import Icon from '../components/Icon.astro';
+
+const supabaseUrl = (import.meta.env.PUBLIC_SUPABASE_URL || '').trim().replace(/\/$/, '');
+const supabaseKey = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || '').trim();
+const delegatesEndpoint = supabaseUrl ? `${supabaseUrl}/rest/v1/delegate_registrations` : '';
 ---
 
 <SiteLayout
@@ -14,7 +18,7 @@ import Icon from '../components/Icon.astro';
         <span class="section-index"><Icon name="globe" size={15} /> YMR GLOBAL · INTERNATIONAL DELEGATES</span>
         <h1 id="delegate-title">Travel well.<br /><span>Arrive welcomed.</span></h1>
         <p>Travelling to YMR from another nation? <br>Notify us of your travel plans so our Foreign Delegates team can prepare for your arrival.</p>
-        <a class="button button--ember" href="https://docs.google.com/forms/d/e/1FAIpQLSeoxqFQLAy59PnbameIz30g5ZzyvpAbkd_96T2NALrgq219EA/viewform?usp=send_form" target="_blank" rel="noopener noreferrer"><Icon name="plane" size={18} />Register as a delegate</a>
+        <button class="button button--ember" type="button" data-open-delegate-registration aria-controls="delegate-registration-panel" aria-expanded="false"><Icon name="plane" size={18} />Register as a delegate</button>
       </div>
       <div class="delegate-journey" aria-label="Personalized support for your journey to YMR">
         <img class="delegate-journey__watermark delegate-journey__watermark--light" src="/images/brand/ymr-at-10-logo-light.webp" alt="" aria-hidden="true" />
@@ -83,4 +87,119 @@ import Icon from '../components/Icon.astro';
     </section>
 
   </main>
+
+  <dialog class="registration-form-panel" id="delegate-registration-panel" data-delegate-panel aria-labelledby="delegate-registration-title" aria-describedby="delegate-registration-description">
+    <div class="registration-form-panel__heading">
+      <div><span class="section-index">YMR GLOBAL · INTERNATIONAL DELEGATES</span><h2 id="delegate-registration-title">Delegate registration</h2></div>
+      <button class="registration-close" type="button" data-delegate-close aria-label="Close delegate registration form">×</button>
+    </div>
+    <p class="registration-form-panel__description" id="delegate-registration-description">Share your travel and accommodation plans so our Foreign Delegates team can help you prepare for YMR 2026.</p>
+    <form class="ymr-registration-form" data-delegate-form data-endpoint={delegatesEndpoint} data-api-key={supabaseKey}>
+      <div class="registration-fields registration-fields--delegate">
+        <div class="registration-field"><label for="delegate-name">Full name <span>*</span></label><input id="delegate-name" name="full_name" autocomplete="name" required maxlength="120" /></div>
+        <div class="registration-field"><label for="delegate-email">Email address <span>*</span></label><input id="delegate-email" name="email" type="email" autocomplete="email" required maxlength="200" /></div>
+        <div class="registration-field"><label for="delegate-phone">Phone number <span>*</span></label><div class="registration-phone-row"><input id="delegate-phone" name="phone_number" data-delegate-phone type="tel" autocomplete="tel" required maxlength="40" /></div></div>
+        <div class="registration-field"><label for="delegate-origin">Location/city (where are you travelling from?) <span>*</span></label><input id="delegate-origin" name="origin_city" autocomplete="address-level2" required maxlength="180" /></div>
+        <div class="registration-field"><label for="delegate-arrival-date">Date of arrival <span>*</span></label><input id="delegate-arrival-date" name="arrival_date" type="date" required /></div>
+        <div class="registration-field"><label for="delegate-arrival-time">Time scheduled for arrival <span>*</span></label><input id="delegate-arrival-time" name="arrival_time" type="time" required /></div>
+        <fieldset class="registration-choice registration-choice--delegate"><legend>Airport pick-up options <span>*</span></legend><div class="registration-choice__options"><label><input type="radio" name="airport_pickup" value="Yes, I need transportation recommendations" required /><span>Yes, I need recommendations</span></label><label><input type="radio" name="airport_pickup" value="No, I will arrange my own transportation" /><span>No, I’ll arrange my own</span></label></div></fieldset>
+        <div class="registration-field registration-field--full"><label for="delegate-departure">Date and time of departure <span>*</span></label><input id="delegate-departure" name="departure_at" type="datetime-local" required /></div>
+        <fieldset class="registration-choice registration-choice--delegate"><legend>Will logistics be required for airport drop-off? <span>*</span></legend><div class="registration-choice__options"><label><input type="radio" name="airport_dropoff" value="Yes, I need transportation recommendations" required /><span>Yes, I need recommendations</span></label><label><input type="radio" name="airport_dropoff" value="No, I will arrange my own transportation" /><span>No, I’ll arrange my own</span></label></div></fieldset>
+        <fieldset class="registration-choice registration-choice--delegate"><legend>Accommodation preference <span>*</span></legend><div class="registration-choice__options"><label><input type="radio" name="accommodation_preference" value="Yes, I would like to use the discounted accommodation option" required /><span>Yes, discounted option</span></label><label><input type="radio" name="accommodation_preference" value="No, I will arrange my own accommodation" /><span>No, I’ll arrange my own</span></label></div></fieldset>
+        <div class="registration-field"><label for="delegate-next-of-kin">Name of next of kin <span>*</span></label><input id="delegate-next-of-kin" name="next_of_kin_name" autocomplete="off" required maxlength="120" /></div>
+        <div class="registration-field"><label for="delegate-next-of-kin-phone">Phone number of next of kin <span>*</span></label><div class="registration-phone-row"><input id="delegate-next-of-kin-phone" name="next_of_kin_phone" data-delegate-phone type="tel" autocomplete="off" required maxlength="40" /></div></div>
+        <div class="registration-field registration-field--full"><label for="delegate-comments">Additional comments or special requests</label><textarea id="delegate-comments" name="comments" rows="4" maxlength="2000"></textarea></div>
+      </div>
+      <label class="registration-honeypot" aria-hidden="true">Leave this field empty<input name="website" tabindex="-1" autocomplete="off" /></label>
+      <div class="registration-submit"><button class="button button--ember" type="submit"><Icon name="arrowRight" size={17} />Submit registration</button><p data-delegate-status role="status" aria-live="polite">Fields marked * are required.</p></div>
+    </form>
+    <p class="registration-privacy">Your details are collected to coordinate delegate arrival and hospitality. Read our <a href="/privacy">Privacy Policy</a>.</p>
+  </dialog>
+
+  <script>
+    import intlTelInput from 'intl-tel-input';
+    import 'intl-tel-input/styles';
+
+    const panel = document.querySelector('[data-delegate-panel]');
+    const form = panel?.querySelector('[data-delegate-form]');
+    const phoneControls = new WeakMap();
+
+    const initializePhoneInputs = () => {
+      if (!(panel instanceof HTMLElement) || !(form instanceof HTMLFormElement)) return;
+      form.querySelectorAll('[data-delegate-phone]').forEach((input) => {
+        if (!(input instanceof HTMLInputElement) || phoneControls.has(input)) return;
+        const instance = intlTelInput(input, {
+          initialCountry: 'ng', separateDialCode: true, countrySearch: true,
+          dropdownParent: panel, fullscreenParent: panel,
+          loadUtils: () => import('intl-tel-input/utils'),
+        });
+        phoneControls.set(input, instance);
+        input.addEventListener('input', () => input.setCustomValidity(''));
+      });
+    };
+
+    document.querySelector('[data-open-delegate-registration]')?.addEventListener('click', () => {
+      if (!(panel instanceof HTMLDialogElement)) return;
+      initializePhoneInputs();
+      if (!panel.open) panel.showModal();
+      form?.querySelector('input:not([type="radio"])')?.focus({ preventScroll: true });
+      document.querySelector('[data-open-delegate-registration]')?.setAttribute('aria-expanded', 'true');
+    });
+    panel?.querySelector('[data-delegate-close]')?.addEventListener('click', () => {
+      if (panel instanceof HTMLDialogElement) panel.close();
+    });
+    panel?.addEventListener('click', (event) => {
+      if (event.target === panel && panel instanceof HTMLDialogElement) panel.close();
+    });
+    panel?.addEventListener('close', () => document.querySelector('[data-open-delegate-registration]')?.setAttribute('aria-expanded', 'false'));
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(form instanceof HTMLFormElement)) return;
+      const honeypot = form.querySelector('[name="website"]');
+      if (honeypot instanceof HTMLInputElement && honeypot.value.trim()) return;
+      const phones = [...form.querySelectorAll('[data-delegate-phone]')].filter((input) => input instanceof HTMLInputElement);
+      const normalizedPhones = {};
+      for (const input of phones) {
+        const instance = phoneControls.get(input);
+        if (!instance) continue;
+        await instance.promise;
+        if (!instance.isValidNumber()) {
+          input.setCustomValidity('Enter a valid phone number for the selected country.');
+          input.reportValidity();
+          return;
+        }
+        input.setCustomValidity('');
+        normalizedPhones[input.name] = instance.getNumber();
+      }
+      const status = form.querySelector('[data-delegate-status]');
+      const submit = form.querySelector('button[type="submit"]');
+      const endpoint = form.dataset.endpoint || '';
+      const apiKey = form.dataset.apiKey || '';
+      if (submit instanceof HTMLButtonElement) submit.disabled = true;
+      if (!endpoint || !apiKey) {
+        if (status) status.textContent = 'Online submissions are being set up. Please try again later.';
+        if (submit instanceof HTMLButtonElement) submit.disabled = false;
+        return;
+      }
+      if (status) status.textContent = 'Sending your registration…';
+      const data = new FormData(form);
+      const fields = Object.fromEntries([...data.entries()].filter(([key]) => key !== 'website' && !(key in normalizedPhones)));
+      Object.assign(fields, normalizedPhones);
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { apikey: apiKey, Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+          body: JSON.stringify(fields),
+        });
+        if (!response.ok) throw new Error('Registration submission failed');
+        form.reset();
+        if (status) status.textContent = 'Thank you. Your delegate registration has been received.';
+      } catch {
+        if (status) status.textContent = 'We could not send your registration just now. Please try again later or contact info@ymrglobal.org.';
+      } finally {
+        if (submit instanceof HTMLButtonElement) submit.disabled = false;
+      }
+    });
+  </script>
 </SiteLayout>
