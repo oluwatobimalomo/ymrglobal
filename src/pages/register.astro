@@ -8,9 +8,9 @@ const campusEndpoint = supabaseUrl ? `${supabaseUrl}/rest/v1/campus_leader_regis
 const pastorsEndpoint = supabaseUrl ? `${supabaseUrl}/rest/v1/pastor_registrations` : '';
 
 const options = [
-  { title: 'Attendee & Volunteer Registration', description: 'Join us at YMR 2026 or serve as a volunteer. Continue to the official attendee registration portal.', icon: 'users', kind: 'external', href: 'https://register.ymrglobal.org/', label: 'Continue to registration' },
-  { title: 'Campus Fellowship Leaders', description: 'Share your campus and fellowship details so we can connect with your ministry.', icon: 'book', kind: 'campus', label: 'Register as a campus leader' },
-  { title: 'Pastors & Ministry Heads', description: 'Tell us about your visit and any hospitality or logistics support you may need.', icon: 'hands', kind: 'pastors', label: 'Register as a ministry leader' },
+  { title: 'Attendee & Volunteer Registration', audience: 'ATTENDING OR SERVING', description: 'Join us at YMR 2026 or serve as a volunteer. Continue to the official attendee portal.', icon: 'users', kind: 'external', href: 'https://register.ymrglobal.org/', label: 'Open attendee portal' },
+  { title: 'Campus Fellowship Leaders', audience: 'CAMPUS MINISTRY', description: 'Share your campus and fellowship details so we can connect with your ministry.', icon: 'book', kind: 'campus', label: 'Register as a campus leader' },
+  { title: 'Pastors & Ministry Heads', audience: 'CHURCH LEADERSHIP', description: 'Tell us about your visit and any hospitality or logistics support you may need.', icon: 'hands', kind: 'pastors', label: 'Register as a ministry leader' },
 ];
 ---
 
@@ -19,8 +19,12 @@ const options = [
     <section class="registration-hero section-wrap" id="top" aria-labelledby="registration-title">
       <div class="registration-hero__copy">
         <span class="section-index">YMR GLOBAL · DECEMBER 26–30, 2026</span>
-        <h1 id="registration-title">Find your place<br /><span>at YMR 2026.</span></h1>
-        <p>Choose the registration path that fits you. We look forward to welcoming you to Redemption City.</p>
+        <h1 id="registration-title">Register<br /><span>for YMR 2026.</span></h1>
+        <p>Select a registration path. We look forward to welcoming you to YMR 2026.</p>
+        <div class="registration-facts" aria-label="Event details">
+          <span><Icon name="calendar" size={16} />December 26–30, 2026</span>
+          <span><Icon name="mapPin" size={16} />Redemption City, Nigeria</span>
+        </div>
       </div>
       <aside class="registration-anniversary" aria-label="YMR celebrates ten years">
         <span>CELEBRATING TEN YEARS</span>
@@ -32,13 +36,13 @@ const options = [
       {options.map((option, index) => option.kind === 'external' ? (
         <a class="registration-option" href={option.href} target="_blank" rel="noopener noreferrer">
           <span class="registration-option__top"><span class="registration-option__icon"><Icon name={option.icon} size={23} /></span><span class="registration-option__index">0{index + 1}</span></span>
-          <span class="registration-option__copy"><strong>{option.title}</strong><span>{option.description}</span></span>
+          <span class="registration-option__copy"><span class="registration-option__audience">{option.audience}</span><strong>{option.title}</strong><span>{option.description}</span></span>
           <span class="registration-option__action">{option.label}<Icon name="arrowRight" size={17} /></span>
         </a>
       ) : (
         <button class="registration-option" type="button" data-open-registration={option.kind} aria-controls="registration-form-panel" aria-expanded="false">
           <span class="registration-option__top"><span class="registration-option__icon"><Icon name={option.icon} size={23} /></span><span class="registration-option__index">0{index + 1}</span></span>
-          <span class="registration-option__copy"><strong>{option.title}</strong><span>{option.description}</span></span>
+          <span class="registration-option__copy"><span class="registration-option__audience">{option.audience}</span><strong>{option.title}</strong><span>{option.description}</span></span>
           <span class="registration-option__action">{option.label}<Icon name="arrowRight" size={17} /></span>
         </button>
       ))}

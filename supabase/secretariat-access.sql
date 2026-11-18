@@ -42,7 +42,7 @@ create policy "Secretariat can read campus registrations"
 drop policy if exists "Restrict campus registrations to Secretariat" on public.campus_leader_registrations;
 create policy "Restrict campus registrations to Secretariat"
   on public.campus_leader_registrations as restrictive for select to authenticated
-  using (exists (
+  using (exists (impl
     select 1 from public.team_access
     where team_access.user_id = (select auth.uid()) and team_access.team = 'secretariat'
   ));
