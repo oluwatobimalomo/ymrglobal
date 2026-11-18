@@ -99,11 +99,12 @@ const delegatesEndpoint = supabaseUrl ? `${supabaseUrl}/rest/v1/delegate_registr
         <div class="registration-field"><label for="delegate-name">Full name <span>*</span></label><input id="delegate-name" name="full_name" autocomplete="name" required maxlength="120" /></div>
         <div class="registration-field"><label for="delegate-email">Email address <span>*</span></label><input id="delegate-email" name="email" type="email" autocomplete="email" required maxlength="200" /></div>
         <div class="registration-field"><label for="delegate-phone">Phone number <span>*</span></label><div class="registration-phone-row"><input id="delegate-phone" name="phone_number" data-delegate-phone type="tel" autocomplete="tel" required maxlength="40" /></div></div>
-        <div class="registration-field"><label for="delegate-origin">Location/city (where are you travelling from?) <span>*</span></label><input id="delegate-origin" name="origin_city" autocomplete="address-level2" required maxlength="180" /></div>
-        <div class="registration-field"><label for="delegate-arrival-date">Date of arrival <span>*</span></label><input id="delegate-arrival-date" name="arrival_date" type="date" required /></div>
-        <div class="registration-field"><label for="delegate-arrival-time">Time scheduled for arrival <span>*</span></label><input id="delegate-arrival-time" name="arrival_time" type="time" required /></div>
+        <div class="registration-field registration-field--full registration-field--location"><label for="delegate-origin-country">Your Location <span>*</span></label><div class="registration-location"><select id="delegate-origin-country" data-origin-country required aria-label="Country"></select><input id="delegate-origin-city" data-origin-city autocomplete="address-level2" placeholder="City" required maxlength="120" /></div><input type="hidden" name="origin_city" data-origin-value /></div>
+        <div class="registration-field registration-field--arrival-date"><label for="delegate-arrival-date">Date of arrival <span>*</span></label><input id="delegate-arrival-date" name="arrival_date" type="date" required /></div>
+        <div class="registration-field registration-field--arrival-time"><label for="delegate-arrival-time">Project Arrival Time <span>*</span></label><input id="delegate-arrival-time" name="arrival_time" type="time" required /></div>
         <fieldset class="registration-choice registration-choice--delegate"><legend>Airport pick-up options <span>*</span></legend><div class="registration-choice__options"><label><input type="radio" name="airport_pickup" value="Yes, I need transportation recommendations" required /><span>Yes, I need recommendations</span></label><label><input type="radio" name="airport_pickup" value="No, I will arrange my own transportation" /><span>No, I’ll arrange my own</span></label></div></fieldset>
-        <div class="registration-field registration-field--full"><label for="delegate-departure">Date and time of departure <span>*</span></label><input id="delegate-departure" name="departure_at" type="datetime-local" required /></div>
+        <div class="registration-field registration-field--departure-date"><label for="delegate-departure-date">Date of departure <span>*</span></label><input id="delegate-departure-date" name="departure_date_part" type="date" required /></div>
+        <div class="registration-field registration-field--departure-time"><label for="delegate-departure-time">Projected Departure Time <span>*</span></label><input id="delegate-departure-time" name="departure_time_part" type="time" required /></div>
         <fieldset class="registration-choice registration-choice--delegate"><legend>Will logistics be required for airport drop-off? <span>*</span></legend><div class="registration-choice__options"><label><input type="radio" name="airport_dropoff" value="Yes, I need transportation recommendations" required /><span>Yes, I need recommendations</span></label><label><input type="radio" name="airport_dropoff" value="No, I will arrange my own transportation" /><span>No, I’ll arrange my own</span></label></div></fieldset>
         <fieldset class="registration-choice registration-choice--delegate"><legend>Accommodation preference <span>*</span></legend><div class="registration-choice__options"><label><input type="radio" name="accommodation_preference" value="Yes, I would like to use the discounted accommodation option" required /><span>Yes, discounted option</span></label><label><input type="radio" name="accommodation_preference" value="No, I will arrange my own accommodation" /><span>No, I’ll arrange my own</span></label></div></fieldset>
         <div class="registration-field"><label for="delegate-next-of-kin">Name of next of kin <span>*</span></label><input id="delegate-next-of-kin" name="next_of_kin_name" autocomplete="off" required maxlength="120" /></div>
@@ -123,6 +124,15 @@ const delegatesEndpoint = supabaseUrl ? `${supabaseUrl}/rest/v1/delegate_registr
     const panel = document.querySelector('[data-delegate-panel]');
     const form = panel?.querySelector('[data-delegate-form]');
     const phoneControls = new WeakMap();
+
+    const originCountry = form?.querySelector('[data-origin-country]');
+    if (originCountry instanceof HTMLSelectElement) {
+      originCountry.add(new Option('Select country', ''));
+      intlTelInput.getCountryData().forEach(({ iso2, name }) => {
+        const flag = [...iso2.toUpperCase()].map((char) => String.fromCodePoint(127397 + char.charCodeAt(0))).join('');
+        originCountry.add(new Option(`${flag} ${name}`, name));
+      });
+    }
 
     const initializePhoneInputs = () => {
       if (!(panel instanceof HTMLElement) || !(form instanceof HTMLFormElement)) return;
@@ -184,7 +194,13 @@ const delegatesEndpoint = supabaseUrl ? `${supabaseUrl}/rest/v1/delegate_registr
       }
       if (status) status.textContent = 'Sending your registration…';
       const data = new FormData(form);
-      const fields = Object.fromEntries([...data.entries()].filter(([key]) => key !== 'website' && !(key in normalizedPhones)));
+      const fields = Object.fromEntries([...data.entries()].filter(([key]) => key !== 'website' && key !== 'departure_date_part' && key !== 'departure_time_part' && key !== 'origin_city' && !(key in normalizedPhones)));
+      const departureDate = String(data.get('departure_date_part') || '');
+      const departureTime = String(data.get('departure_time_part') || '');
+      const city = String(form.querySelector('[data-origin-city]')?.value || '').trim();
+      const country = String(originCountry instanceof HTMLSelectElement ? originCountry.value : '').trim();
+      fields.departure_at = `${departureDate}T${departureTime}`;
+      fields.origin_city = `${city}, ${country}`;
       Object.assign(fields, normalizedPhones);
       try {
         const response = await fetch(endpoint, {
