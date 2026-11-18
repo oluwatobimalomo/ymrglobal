@@ -2450,28 +2450,32 @@ html:has(.registration-form-panel[open]) { overflow: hidden; }
 .registration-field { display: grid; min-width: 0; align-content: start; gap: 7px; }
 .registration-field--full { grid-column: 1 / -1; }
 .registration-fields--pastors .registration-field--name,
-.registration-fields--pastors .registration-field--email,
+.registration-fields--pastors .registration-field--email { grid-column: span 6; }
 .registration-fields--pastors .registration-field--person,
-.registration-fields--pastors .registration-field--denomination { grid-column: span 6; }
+.registration-fields--pastors .registration-field--denomination,
+.registration-fields--pastors .registration-field--phone { grid-column: span 4; }
 .registration-fields--pastors .registration-field--name { max-width: 430px; }
 .registration-fields--pastors .registration-field--email { max-width: 480px; }
 .registration-fields--pastors .registration-field--person { max-width: 380px; }
-.registration-fields--pastors .registration-field--phone { grid-column: span 5; max-width: 380px; }
+.registration-fields--pastors .registration-field--phone { max-width: 380px; }
 .registration-fields--pastors .registration-field--denomination { max-width: 480px; }
 .registration-fields--pastors .registration-field--date { max-width: 240px; }
 .registration-fields--pastors .registration-field--arrival,
-.registration-fields--pastors .registration-field--departure { grid-column: span 3; }
+.registration-fields--pastors .registration-field--departure,
+.registration-fields--pastors .registration-field--nights { grid-column: span 4; }
 .registration-fields--pastors .registration-choice { grid-column: 1 / -1; }
-.registration-fields--pastors .registration-field--nights,
 .registration-fields--pastors .registration-field--people { max-width: 220px; }
-.registration-fields--pastors .registration-field--nights,
 .registration-fields--pastors .registration-field--people { grid-column: span 3; }
 .registration-fields--pastors .registration-field--comments { grid-column: 1 / -1; }
-.registration-fields--pastors .registration-field--count > label { min-height: 3em; }
+.registration-fields--pastors .registration-field--arrival > label,
+.registration-fields--pastors .registration-field--departure > label,
+.registration-fields--pastors .registration-field--nights > label,
+.registration-fields--pastors .registration-field--people > label { min-height: 0; }
 .registration-field > label, .registration-choice legend { color: var(--ink); font-size: 11px; font-weight: 740; line-height: 1.5; }
 .registration-field > label span, .registration-choice legend span { color: var(--ember-ink); }
 .registration-field :is(input, textarea) { width: 100%; min-width: 0; min-height: 46px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); color: var(--ink); font: 500 13px/1.5 var(--display); }
 .registration-field textarea { min-height: 92px; resize: vertical; }
+.registration-field--comments textarea { min-height: 64px; }
 .registration-field > small { color: var(--muted); font-size: 10px; line-height: 1.5; }
 .registration-field :is(input, textarea):focus-visible { outline: 2px solid var(--ember-ink); outline-offset: 2px; }
 .registration-choice { min-width: 0; margin: 0; padding: 0; border: 0; }
@@ -2517,10 +2521,10 @@ html[data-theme="light"] .ymr-registration-form :is(input, textarea) { color-sch
   .registration-fields--pastors .registration-field--email,
   .registration-fields--pastors .registration-field--person,
   .registration-fields--pastors .registration-field--denomination,
-  .registration-fields--pastors .registration-field--arrival,
-  .registration-fields--pastors .registration-field--departure,
-  .registration-fields--pastors .registration-field--nights,
   .registration-fields--pastors .registration-field--people { grid-column: span 3; }
+  .registration-fields--pastors .registration-field--arrival,
+  .registration-fields--pastors .registration-field--departure { grid-column: span 3; }
+  .registration-fields--pastors .registration-field--nights { grid-column: 1 / -1; }
   .registration-fields--pastors .registration-field--phone,
   .registration-fields--pastors .registration-choice,
   .registration-fields--pastors .registration-field--comments { grid-column: 1 / -1; }
