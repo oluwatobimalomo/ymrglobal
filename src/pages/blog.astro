@@ -8,7 +8,7 @@ const initialPosts = await getPublishedBlogPosts();
 ---
 
 <SiteLayout title="Stories & Updates" description="Stories, reflections, and updates from Young Ministers Retreat Global." current="blog">
-  <main id="main" class="blog-page" data-blog-list data-endpoint={endpoint} data-api-key={apiKey}>
+  <main id="main" class="blog-page" data-blog-list data-endpoint={endpoint} data-api-key={apiKey} data-initial-posts={JSON.stringify(initialPosts.map(({ id, title, slug, excerpt, category, cover_image, published_at }) => ({ id, title, slug, excerpt, category, cover_image, published_at })))}>
     <section class="blog-masthead"><div class="blog-masthead__copy"><span class="section-index">THE YMR BLOG · STORIES &amp; UPDATES</span><h1>Faith in motion.<br /><span>Stories that stay.</span></h1><p>Reflections, testimonies, and notes from a generation being set on fire for Jesus.</p></div></section>
     <section class="blog-content"><div class="blog-section-heading"><div><span class="section-index">FRESH FROM THE BLOG</span><h2>Latest stories</h2></div><a class="blog-all-link" href="#stories">Explore all <span aria-hidden="true">↓</span></a></div><div class="blog-filters" data-categories aria-label="Filter articles"><button type="button" aria-pressed="true" data-category="All">All stories</button></div><div class="blog-grid" id="stories" data-posts aria-live="polite">{initialPosts.length ? initialPosts.map((post, index) => <a class="blog-card" href={`/blog/${encodeURIComponent(post.slug)}`}><div class="blog-card__image">{post.cover_image ? <img src={post.cover_image} alt="" loading={index === 0 ? 'eager' : 'lazy'} /> : <span class="blog-card__placeholder" aria-hidden="true">{(post.category || 'YMR').slice(0, 2).toUpperCase()}</span>}</div><div class="blog-card__meta"><span class="blog-card__category">{post.category || 'YMR Blog'}</span><time>{post.published_at ? new Date(post.published_at).toLocaleDateString('en', { year: 'numeric', month: 'short', day: 'numeric' }) : ''}</time></div><h3>{post.title}</h3><p>{post.excerpt}</p><span class="blog-card__read">Read story <span aria-hidden="true">→</span></span></a>) : <p class="blog-loading">The YMR Blog is getting ready. Check back soon for new stories and updates.</p>}</div><p class="blog-empty" data-empty hidden>No stories in this category yet. Check back soon.</p></section>
   </main>
@@ -25,6 +25,7 @@ const initialPosts = await getPublishedBlogPosts();
     const categoryNav = root.querySelector('[data-categories]');
     let posts = [];
     let category = 'All';
+    try { posts = JSON.parse(root.dataset.initialPosts || '[]'); } catch { posts = []; }
     const safe = (value) => String(value || '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
     const render = () => {
       const filtered = posts.filter((post) => category === 'All' || post.category === category);
@@ -33,16 +34,21 @@ const initialPosts = await getPublishedBlogPosts();
       grid.innerHTML = filtered.map((post) => `<a class="blog-card" href="/blog/${encodeURIComponent(post.slug)}"><div class="blog-card__image">${post.cover_image ? `<img src="${safe(post.cover_image)}" alt="" loading="lazy">` : `<span class="blog-card__placeholder" aria-hidden="true">${safe((post.category || 'YMR').slice(0,2).toUpperCase())}</span>`}</div><div class="blog-card__meta"><span class="blog-card__category">${safe(post.category || 'YMR Blog')}</span><time>${post.published_at ? new Date(post.published_at).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}) : ''}</time></div><h3>${safe(post.title)}</h3><p>${safe(post.excerpt)}</p><span class="blog-card__read">Read story <span aria-hidden="true">→</span></span></a>`).join('');
     };
     const load = async () => {
-      if (!endpoint || !key) { grid.innerHTML = '<p class="blog-loading">Stories will appear here soon.</p>'; return; }
+      if (!endpoint || !key) return;
       try {
         const response = await fetch(`${endpoint}?select=id,title,slug,excerpt,category,cover_image,published_at&status=eq.published&order=published_at.desc`, { headers: { apikey: key } });
         if (!response.ok) throw new Error('Unable to load stories');
-        posts = await response.json();
+        const livePosts = await response.json();
+        if (!Array.isArray(livePosts) || !livePosts.length) return;
+        const bySlug = new Map(posts.map((post) => [post.slug, post]));
+        for (const post of livePosts) bySlug.set(post.slug, { ...bySlug.get(post.slug), ...post });
+        posts = [...bySlug.values()].sort((a, b) => new Date(b.published_at || 0) - new Date(a.published_at || 0));
         const categories = [...new Set(posts.map((post) => post.category).filter(Boolean))];
+        categoryNav.querySelectorAll('[data-category]:not([data-category="All"])').forEach((button) => button.remove());
         categoryNav.insertAdjacentHTML('beforeend', categories.map((item) => `<button type="button" aria-pressed="false" data-category="${safe(item)}">${safe(item)}</button>`).join(''));
         categoryNav.addEventListener('click', (event) => { const button = event.target.closest('[data-category]'); if (!button) return; category = button.dataset.category; categoryNav.querySelectorAll('button').forEach((entry) => entry.setAttribute('aria-pressed', String(entry === button))); render(); });
         render();
-      } catch { grid.innerHTML = '<p class="blog-loading">Stories are taking a moment to load. Please refresh shortly.</p>'; }
+      } catch { /* Keep the statically rendered stories visible when the CMS is unavailable. */ }
     };
     load();
   }
