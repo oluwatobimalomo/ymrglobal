@@ -1040,6 +1040,7 @@ body { background: var(--paper); color: var(--ink); }
 .hero__event-panel {
   min-width: 0;
   padding: clamp(24px, 3.2vw, 40px);
+  padding-block-end: clamp(22px, 2.4vw, 30px);
   border: 1px solid var(--line);
   border-radius: 24px;
   background: var(--surface);
@@ -1057,9 +1058,6 @@ body { background: var(--paper); color: var(--ink); }
 .hero__event-panel .countdown__unit > span { color: var(--ink); font-size: clamp(2.1rem, 4vw, 3.3rem); letter-spacing: -.065em; }
 .hero__event-panel .countdown__unit small { color: var(--muted); font-size: 8px; letter-spacing: .1em; }
 .hero__event-panel .countdown__separator { padding-top: 2px; color: var(--ember); font-size: 22px; }
-.hero__event-venue { display: grid; gap: 4px; margin: 21px 0 0; padding-top: 17px; border-top: 1px solid var(--line); color: var(--ink); font-size: 13px; }
-.hero__event-venue strong { font-size: 15px; }
-.hero__event-venue span { color: var(--muted); }
 
 @media (prefers-reduced-motion: no-preference) {
   .hero__anniversary-mark img { animation: hero-anniversary-drift 7s ease-in-out infinite; }
@@ -1438,14 +1436,15 @@ body, main, .section-wrap, .photo-story, .closing, .site-footer, .nations-hero {
 .opening-sequence__theme-kicker,
 .hero__theme-caption {
   display: block;
-  margin: 10px 0 0;
+  margin: 0;
   color: var(--muted);
   font: 800 9px/1.18 'Google Sans Flex', Arial, sans-serif;
   letter-spacing: .08em;
   text-align: center;
 }
 .opening-sequence__theme-kicker { color: #eee2d4; }
-.opening-sequence__copy { margin-top: 2px; }
+.opening-sequence__theme-kicker { margin-top: 0; }
+.opening-sequence__copy { margin-top: clamp(14px, 2.8vh, 22px); }
 
 /* Keep the intro control above every part of the overlay on desktop and mobile. */
 .opening-sequence__skip {
@@ -1767,19 +1766,6 @@ html[data-theme="dark"] :is(.impact-card, .principle-card,
 .footer-social .social-links a { min-height: 25px; line-height: 25px; }
 
 /* Practical visitor guide and a keyboard-friendly edition carousel. */
-.hero__event-guide-link {
-  display: inline-flex;
-  min-height: 40px;
-  align-items: center;
-  gap: 9px;
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
-  transition: color .2s ease, gap .2s ease;
-}
-.hero__event-guide-link span { color: var(--brand-orange); font-size: 16px; }
-.hero__event-guide-link:hover { gap: 13px; color: var(--ember-ink); }
 .event-guide { padding-block: var(--section-space); border-top: 1px solid var(--line); }
 .event-guide__heading {
   display: grid;
@@ -2005,7 +1991,8 @@ html[data-theme="dark"] :is(.impact-card, .principle-card,
 .testimonies-filters button:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--brand-orange) 48%, var(--line)); }
 .testimonies-filters button[aria-pressed="true"] { border-color: var(--brand-orange); background: var(--brand-orange); color: #191511; }
 .testimonies-filters button[aria-pressed="true"] span { background: rgba(25,21,17,.12); color: #191511; }
-.testimonies-archive__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.testimonies-archive__grid { display: grid; max-height: min(70svh, 760px); grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; overflow-y: auto; padding: 4px 8px 8px 4px; overscroll-behavior: contain; scrollbar-gutter: stable; scroll-padding-block: 12px; }
+.testimonies-archive__grid:focus-visible { outline: 2px solid var(--ember-ink); outline-offset: 3px; }
 .testimony-entry { min-width: 0; }
 .testimony-entry[hidden] { display: none; }
 .testimony-entry__open { display: flex; width: 100%; min-height: 252px; flex-direction: column; align-items: stretch; padding: clamp(18px, 2.1vw, 24px); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface); color: var(--ink); text-align: left; cursor: pointer; box-shadow: 0 5px 18px rgba(33,29,26,.045); transition: translate .23s cubic-bezier(.2,0,0,1), border-color .2s ease, box-shadow .23s ease; }
@@ -2073,13 +2060,13 @@ html[data-theme="dark"] :is(.impact-card, .principle-card,
   .resource-hero h1 { font-size: clamp(3rem, 12vw, 5rem); }
   .testimonies-archive__heading { align-items: flex-start; flex-direction: column; gap: 9px; }
   .testimonies-archive__heading > p { max-width: 60ch; }
-  .testimonies-archive__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .testimonies-archive__grid { max-height: 68svh; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .testimony-submit { grid-template-columns: 1fr; gap: 22px; }
   .initiative-directory__card { gap: 20px; }
 }
 @media (max-width: 520px) {
   .testimonies-filters { margin-right: calc(-1 * var(--page-gutter)); padding-right: var(--page-gutter); }
-  .testimonies-archive__grid { grid-template-columns: 1fr; }
+  .testimonies-archive__grid { max-height: 64svh; grid-template-columns: 1fr; }
   .testimony-entry__open { min-height: 0; }
   .testimony-entry__copy { margin-top: 17px; }
   .testimony-form { grid-template-columns: 1fr; }

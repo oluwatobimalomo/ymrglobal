@@ -356,7 +356,8 @@ Halleluyah!`,
         <button type="button" data-category-filter="all" aria-pressed="true">All stories <span>{stories.length}</span></button>
         {categories.map((category) => <button type="button" data-category-filter={category} aria-pressed="false">{category} <span>{stories.filter((story) => story.category === category).length}</span></button>)}
       </div>
-      <div class="testimonies-archive__grid" data-testimonies-grid>
+      <div class="testimonies-archive__heading"><h2 id="story-list-title">All testimonies</h2><p>Scroll within the stories to explore the full archive.</p></div>
+      <div class="testimonies-archive__grid" data-testimonies-grid role="region" aria-label="Testimony stories" tabindex="0">
         {stories.map((story) => (
           <article class="testimony-entry" data-testimony-entry data-category={story.category}>
             <button class="testimony-entry__open" type="button" data-story-open data-story-title={story.title} data-story-category={story.category} data-story-edition={story.edition} data-story-credit={formatTestimonyCredit(story.credit)} data-story-full={story.full} aria-haspopup="dialog" aria-label={`Read full ${story.edition} testimony: ${story.title}`}>

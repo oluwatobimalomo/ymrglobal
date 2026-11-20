@@ -39,6 +39,12 @@ if (root instanceof HTMLElement) {
       columns: [['created_at', 'Received'], ['full_name', 'Full name'], ['phone_number', 'Phone'], ['email', 'Email'], ['origin_city', 'Travelling from'], ['arrival_date', 'Arrival date'], ['arrival_time', 'Arrival time'], ['airport_pickup', 'Airport pick-up'], ['departure_at', 'Departure date & time'], ['airport_dropoff', 'Airport drop-off'], ['accommodation_preference', 'Accommodation'], ['next_of_kin_name', 'Next of kin'], ['next_of_kin_phone', 'Next of kin phone'], ['comments', 'Comments']],
       displayColumns: [['full_name', 'Name'], ['phone_number', 'Phone number'], ['email', 'Email address']],
     },
+    viewing: {
+      label: 'Viewing Centre Hosts', table: 'viewing_centre_interests',
+      fields: ['id', 'created_at', 'host_name', 'contact', 'email', 'location_scope', 'country', 'geopolitical_zone', 'exact_address'],
+      columns: [['created_at', 'Received'], ['host_name', 'Host name'], ['contact', 'Contact'], ['email', 'Email'], ['location_scope', 'Location'], ['country', 'Country'], ['geopolitical_zone', 'Geopolitical zone'], ['exact_address', 'Exact address']],
+      displayColumns: [['host_name', 'Host name'], ['contact', 'Phone number'], ['email', 'Email address']],
+    },
   };
   let activeSession = null;
   let activeTab = 'pastors';

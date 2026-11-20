@@ -1,0 +1,71 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import BlogFooter from '../../components/BlogFooter.astro';
+import '../../styles/blog-article.css';
+const endpoint = `${(import.meta.env.PUBLIC_SUPABASE_URL || '').trim().replace(/\/$/, '')}/rest/v1/blog_posts`;
+const apiKey = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || '').trim();
+---
+<SiteLayout title="YMR Blog" description="Stories, reflections, and updates from Young Ministers Retreat Global.">
+  <Fragment slot="head"><meta name="robots" content="index, follow" /></Fragment>
+  <main id="main" class="article-page" data-blog-article data-endpoint={endpoint} data-api-key={apiKey}>
+    <a class="article-back" href="/blog">← All stories</a>
+    <article data-article-content aria-live="polite"><p class="article-loading">Loading this story…</p></article>
+  </main>
+  <BlogFooter />
+</SiteLayout>
+<script>
+  const root = document.querySelector('[data-blog-article]');
+  if (root instanceof HTMLElement) {
+    const article = root.querySelector('[data-article-content]');
+    const endpoint = root.dataset.endpoint || '';
+    const key = root.dataset.apiKey || '';
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug') || '';
+    const escapeHtml = (value) => String(value || '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+    const markdown = (source) => {
+      const lines = String(source || '').split(/\r?\n/);
+      let html = '';
+      let inList = false;
+      const safeUrl = (url) => /^(https?:\/\/|\/(?!\/))/.test(url) ? url : '';
+      const inline = (text) => escapeHtml(text).replace(/!\[([^\]]*)\]\(([^\s)]+)\)/g, (_, alt, url) => safeUrl(url) ? `<img src="${escapeHtml(safeUrl(url))}" alt="${alt}" loading="lazy">` : '').replace(/\[([^\]]+)\]\(([^\s)]+)\)/g, (_, label, url) => safeUrl(url) ? `<a href="${escapeHtml(safeUrl(url))}" rel="noopener noreferrer">${label}</a>` : label).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>');
+      for (const line of lines) {
+        const trimmed = line.trim().replace(/\[Register for (?:the 10th edition of YMR|YMR 2026)\]\(\/register\)(?:\s*·\s*)?/gi, '').trim();
+        if (/^Follow (?:the journey|YMR):/i.test(trimmed)) { if (inList) { html += '</ul>'; inList = false; } continue; }
+        if (/^[-*] /.test(trimmed)) { if (!inList) html += '<ul>'; inList = true; html += `<li>${inline(trimmed.slice(2))}</li>`; continue; }
+        if (inList) { html += '</ul>'; inList = false; }
+        if (!trimmed) continue;
+        if (trimmed.startsWith('### ')) html += `<h3>${inline(trimmed.slice(4))}</h3>`;
+        else if (trimmed.startsWith('## ')) html += `<h2>${inline(trimmed.slice(3))}</h2>`;
+        else if (trimmed.startsWith('# ')) html += `<h2>${inline(trimmed.slice(2))}</h2>`;
+        else if (/^https?:\/\/\S+\.(mp4|webm)(\?\S*)?$/i.test(trimmed)) html += `<video controls preload="metadata" src="${escapeHtml(trimmed)}"></video>`;
+        else html += `<p>${inline(trimmed)}</p>`;
+      }
+      if (inList) html += '</ul>';
+      return html;
+    };
+    const load = async () => {
+      if (!slug || !endpoint || !key) { article.innerHTML = '<p>This story is unavailable. <a href="/blog">Return to the blog</a>.</p>'; return; }
+      try {
+        const response = await fetch(`${endpoint}?select=title,slug,excerpt,category,body,cover_image,cover_alt,published_at&slug=eq.${encodeURIComponent(slug)}&status=eq.published&limit=1`, { headers: { apikey: key } });
+        const [post] = await response.json();
+        if (!response.ok || !post) throw new Error('Story not found');
+        const title = `${post.title} — YMR Global`;
+        const canonicalUrl = new URL(`/blog/${post.slug}`, window.location.origin).href;
+        document.title = title;
+        document.querySelector('meta[name="description"]')?.setAttribute('content', post.excerpt || 'Stories and updates from Young Ministers Retreat Global.');
+        document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+        document.querySelector('meta[property="og:description"]')?.setAttribute('content', post.excerpt || 'Stories and updates from Young Ministers Retreat Global.');
+        document.querySelector('meta[property="og:type"]')?.setAttribute('content', 'article');
+        document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonicalUrl);
+        if (post.cover_image) document.querySelector('meta[property="og:image"]')?.setAttribute('content', post.cover_image);
+        let canonicalLink = document.querySelector('link[rel="canonical"]');
+        if (!canonicalLink) { canonicalLink = document.createElement('link'); canonicalLink.rel = 'canonical'; document.head.append(canonicalLink); }
+        canonicalLink.href = canonicalUrl;
+        const date = post.published_at ? new Date(post.published_at).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}) : '';
+        article.innerHTML = `<header class="article-header"><span class="section-index">${escapeHtml(post.category || 'YMR BLOG')}</span><h1>${escapeHtml(post.title)}</h1><p>${escapeHtml(post.excerpt)}</p><time>${date}</time></header>${post.cover_image ? `<figure class="article-cover"><img src="${escapeHtml(post.cover_image)}" alt="${escapeHtml(post.cover_alt || '')}"></figure>` : ''}<div class="article-body">${markdown(post.body)}</div><a class="article-back article-back--bottom" href="/blog">← More stories</a>`;
+      } catch { article.innerHTML = '<p>This story could not be found. <a href="/blog">Return to the blog</a>.</p>'; }
+    };
+    load();
+  }
+</script>
+

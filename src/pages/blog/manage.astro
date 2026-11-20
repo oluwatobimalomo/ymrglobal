@@ -1,0 +1,118 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+const supabaseUrl = (import.meta.env.PUBLIC_SUPABASE_URL || '').trim().replace(/\/$/, '');
+const apiKey = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || '').trim();
+---
+
+<SiteLayout title="YMR Blog Studio" description="Private YMR editorial workspace." robots="noindex, nofollow, noarchive">
+  <main id="main" class="studio" data-studio data-endpoint={supabaseUrl} data-api-key={apiKey}>
+    <section class="studio-login" data-studio-login>
+      <span class="studio-kicker">YMR GLOBAL · EDITORIAL</span>
+      <div class="studio-login__mark" aria-hidden="true">Y</div>
+      <h1>Welcome to the studio.</h1>
+      <p>A calm place to shape stories, share updates, and keep the YMR community connected.</p>
+      <form data-login>
+        <label>Email address<input type="email" name="email" autocomplete="username" required placeholder="you@ymrglobal.org" /></label>
+        <label>Password<input type="password" name="password" autocomplete="current-password" required placeholder="Your password" /></label>
+        <button class="button button--ember" type="submit">Sign in to the studio</button>
+      </form>
+      <p class="studio-login__status" data-status role="status" aria-live="polite"></p>
+      <a class="studio-login__back" href="/blog">Back to the blog</a>
+    </section>
+
+    <section class="studio-app" data-studio-app hidden>
+      <div class="studio-topline"><a class="studio-wordmark" href="/blog"><span class="studio-wordmark__symbol">Y</span><span>YMR <b>STUDIO</b></span></a><div class="studio-header__actions"><a class="studio-quiet-link" href="/blog">View blog</a><button type="button" class="studio-signout" data-logout>Sign out</button></div></div>
+      <header class="studio-hero">
+        <div><span class="studio-kicker">EDITORIAL WORKSPACE</span><h1>Your stories,<br /><span>in good hands.</span></h1><p>Write, edit, and publish stories for the YMR community.</p></div>
+        <div class="studio-hero__action"><p class="studio-live"><span></span><span data-studio-status role="status" aria-live="polite">Loading stories…</span></p><button class="button button--ember" type="button" data-new><span aria-hidden="true">＋</span> Create a story</button></div>
+      </header>
+
+      <div class="studio-layout">
+        <section class="studio-library" aria-label="Your articles">
+          <div class="studio-section-heading"><div><span class="studio-kicker">YOUR LIBRARY</span><h2>All stories</h2></div><span class="studio-library__hint">Select a story to make changes</span></div>
+          <div class="studio-list" data-list aria-live="polite"><p class="studio-empty">Your stories will appear here.</p></div>
+        </section>
+
+        <form class="studio-editor" data-editor hidden>
+          <div class="studio-editor__top"><div><span class="studio-kicker" data-editor-mode>NEW STORY</span><h2 data-editor-title>Write a story</h2></div><button type="button" class="studio-icon-button" aria-label="Close editor" data-close>×</button></div>
+          <div class="studio-editor__intro"><span aria-hidden="true">✦</span><p>Start with the essentials, then write the story in your own voice.</p></div>
+          <label>Story title<input name="title" maxlength="180" required placeholder="A clear, compelling headline" /></label>
+          <label>Short introduction<textarea name="excerpt" rows="3" maxlength="300" required placeholder="A short summary for readers and search results" /></label>
+          <div class="studio-editor__row"><label>Category<input name="category" maxlength="60" required placeholder="Stories of Faith" /></label><label>Story URL<input name="slug" maxlength="180" required placeholder="your-story-title" /></label></div>
+          <section class="studio-cover-fields" aria-label="Cover image details"><div><h3>Cover image</h3><p>Choose an event photo. We’ll crop it consistently across the blog.</p></div><label>Image URL<input name="cover_image" type="url" placeholder="Paste an image URL or add a photo below" /></label><label>Image description<input name="cover_alt" maxlength="250" placeholder="Describe what is happening in the image" /><span class="studio-help">Shown to screen-reader users and search engines.</span></label><p class="studio-upload" data-upload-status aria-live="polite"></p></section>
+          <section class="studio-writing" aria-label="Story content">
+            <div class="studio-writing__heading"><div><h3>Story content</h3><p>Write directly on the page. Add a heading, format text, or drop in your media.</p></div>
+              <div class="studio-writing__tools" role="toolbar" aria-label="Story formatting">
+                <button type="button" data-command="formatBlock" data-value="h2" aria-label="Add a section heading" title="Heading">H2</button><button type="button" data-command="bold" aria-label="Bold" title="Bold"><strong>B</strong></button><button type="button" data-command="italic" aria-label="Italic" title="Italic"><em>I</em></button><button type="button" data-command="insertUnorderedList" aria-label="Bulleted list" title="Bulleted list">• List</button><button type="button" data-command="insertOrderedList" aria-label="Numbered list" title="Numbered list">1. List</button>
+                <label class="studio-writing__upload" title="Add images">＋ Photo<input type="file" accept="image/*" multiple data-image-upload hidden /></label><label class="studio-writing__upload" title="Add a video">＋ Video<input type="file" accept="video/mp4,video/webm" multiple data-video-upload hidden /></label>
+              </div>
+            </div>
+            <div class="studio-body" data-body-editor contenteditable="true" role="textbox" aria-multiline="true" aria-label="Story content" data-placeholder="Tell the story…"></div><textarea name="body" data-body-source hidden></textarea>
+            <p class="studio-drop-hint">You can also drag photos or videos into the story.</p>
+          </section>
+          <div class="studio-editor__actions"><button class="button button--ember" type="submit" data-save>Save draft</button><button class="button button--outline" type="button" data-publish>Publish story</button><button class="studio-delete" type="button" data-delete hidden>Delete story</button></div>
+          <p class="studio-editor__notice" data-editor-status role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+</SiteLayout>
+<script src="../../scripts/blog-studio.js"></script>
+
+<style is:global>
+  .studio{--studio-orange:#f58220;--studio-warm:color-mix(in srgb,var(--studio-orange) 7%,var(--paper));width:min(calc(100% - var(--page-gutter)*2),1440px);min-height:76vh;margin:0 auto;padding:clamp(24px,4vw,54px) 0 88px;color:var(--ink)}
+  .studio [hidden]{display:none!important}
+  .studio-login{position:relative;max-width:520px;margin:clamp(24px,7vh,80px) auto;padding:clamp(28px,5vw,54px);overflow:hidden;border:1px solid var(--line);border-radius:24px;background:var(--paper);box-shadow:0 24px 70px rgba(25,22,19,.08)}
+  .studio-login:before{position:absolute;inset:0 0 auto;height:5px;background:var(--studio-orange);content:""}
+  .studio-kicker{display:inline-block;color:var(--muted);font-size:.67rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+  .studio-login__mark,.studio-wordmark__symbol{display:grid;place-items:center;background:color-mix(in srgb,var(--studio-orange) 13%,var(--paper));color:var(--ember-ink);font-family:var(--display);font-weight:750}
+  .studio-login__mark{width:54px;height:54px;margin-top:30px;border-radius:17px;font-size:1.65rem}
+  .studio-login h1,.studio-hero h1{margin:18px 0 12px;font:650 clamp(2.7rem,5vw,4.6rem)/.94 var(--display);letter-spacing:-.075em;text-wrap:balance}
+  .studio-login>p,.studio-hero>div>p{color:var(--muted);font-size:1rem;line-height:1.6}
+  .studio-login form{display:grid;gap:17px;margin-top:28px}
+  .studio-login label,.studio-editor label{display:grid;gap:8px;color:var(--ink);font-size:.82rem;font-weight:700}
+  .studio input:not([type=file]),.studio textarea{width:100%;min-width:0;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font-family:inherit;font-size:.92rem;font-weight:400;line-height:1.5}
+  .studio input::placeholder,.studio textarea::placeholder{color:color-mix(in srgb,var(--muted) 75%,transparent)}
+  .studio input:focus-visible,.studio textarea:focus-visible,.studio-body:focus-visible{outline:3px solid color-mix(in srgb,var(--ember) 42%,transparent);outline-offset:2px}
+  .studio-login form button{justify-self:start;margin-top:5px}
+  .studio-login__status{min-height:1.3em;margin:14px 0 0;color:#b42318;font-size:.84rem}
+  .studio-login__back,.studio-quiet-link{color:var(--ember-ink);font-size:.82rem;font-weight:700;text-decoration:none}
+  .studio-login__back{display:inline-block;margin-top:10px}
+  .studio-topline{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .studio-wordmark{display:inline-flex;align-items:center;gap:9px;color:var(--ink);font-size:.78rem;font-weight:850;letter-spacing:.06em;text-decoration:none}
+  .studio-wordmark b{color:var(--ember-ink);font-size:.67rem;letter-spacing:.12em}
+  .studio-wordmark__symbol{width:32px;height:32px;border-radius:10px;font-size:1.15rem}
+  .studio-header__actions{display:flex;align-items:center;gap:22px}
+  .studio-signout{min-height:38px;padding:0 14px;border:1px solid var(--line);border-radius:9px;background:transparent;color:var(--ink);font-family:inherit;font-size:.78rem;font-weight:600;cursor:pointer}
+  .studio-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;padding:clamp(36px,6vw,76px) 0 44px}
+  .studio-hero h1{margin-bottom:15px}.studio-hero h1 span{color:var(--ember-ink)}
+  .studio-hero>div>p{margin:0}.studio-hero__action{display:grid;justify-items:end;gap:16px;padding-bottom:4px}
+  .studio-hero__action .button{min-height:48px}.studio-live{display:flex;align-items:center;gap:8px;margin:0;color:var(--muted);font-size:.78rem}
+  .studio-live>span:first-child{width:8px;height:8px;border-radius:50%;background:#3b9860;box-shadow:0 0 0 4px color-mix(in srgb,#3b9860 14%,transparent)}
+  .studio-layout{display:grid;grid-template-columns:minmax(300px,.82fr) minmax(0,1.5fr);align-items:start;gap:22px}
+  .studio-library,.studio-editor{min-width:0;border:1px solid var(--line);border-radius:18px;background:var(--paper)}
+  .studio-library{overflow:hidden}.studio-section-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--line);background:var(--studio-warm)}
+  .studio-section-heading h2{margin:5px 0 0;font:620 1.5rem/1.05 var(--display);letter-spacing:-.045em}
+  .studio-library__hint{color:var(--muted);font-size:.69rem;text-align:right}
+  .studio-list{display:grid;gap:0;padding:0 18px}.studio-empty{margin:0;padding:28px 4px;color:var(--muted);font-size:.88rem;line-height:1.6}
+  .studio-post{display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px;padding:17px 2px;border-bottom:1px solid var(--line)}.studio-post:last-child{border-bottom:0}
+  .studio-post__preview{display:grid;aspect-ratio:1;place-items:center;overflow:hidden;border-radius:10px;background:linear-gradient(140deg,color-mix(in srgb,var(--ember) 20%,var(--surface)),var(--surface));color:var(--ember-ink);font:700 1.4rem var(--display)}
+  .studio-post__preview img{width:100%;height:100%;object-fit:cover}
+  .studio-post__content{display:grid;align-content:start;gap:8px;min-width:0}.studio-post__meta{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .studio-post__status{padding:4px 8px;border-radius:99px;background:color-mix(in srgb,#388c5d 12%,var(--paper));color:#287247;font-size:.63rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+  .studio-post__status:empty{display:none}.studio-post__meta time{color:var(--muted);font-size:.68rem;white-space:nowrap}
+  .studio-post strong{font:620 1rem/1.2 var(--display);letter-spacing:-.025em;text-wrap:pretty}.studio-post__content>p{margin:0;color:var(--muted);font-size:.73rem;line-height:1.4}
+  .studio-post__actions{display:flex;gap:8px;margin-top:3px}.studio-post__actions button{min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);font-family:inherit;font-size:.71rem;font-weight:650;cursor:pointer}.studio-post__actions button:hover{border-color:var(--ember);color:var(--ember-ink)}.studio-post__actions [data-toggle]{border-color:transparent;background:var(--studio-warm);color:var(--ember-ink)}
+  .studio-editor{display:grid;gap:18px;padding:clamp(18px,2.5vw,28px)}.studio-editor__top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+  .studio-editor__top h2{margin:6px 0 0;font:620 1.8rem/1 var(--display);letter-spacing:-.055em}.studio-icon-button{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink);font-size:1.4rem;cursor:pointer}
+  .studio-editor__intro{display:flex;align-items:center;gap:11px;padding:12px 14px;border-radius:10px;background:var(--studio-warm)}.studio-editor__intro>span{color:var(--ember-ink)}.studio-editor__intro p{margin:0;color:var(--muted);font-size:.79rem;line-height:1.45}
+  .studio-editor__row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.studio-help{color:var(--muted);font-size:.72rem;font-weight:400;line-height:1.45}
+  .studio-cover-fields{display:grid;gap:13px;padding:16px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--surface) 55%,var(--paper))}.studio-cover-fields h3,.studio-writing__heading h3{margin:0;font:650 1rem/1.2 var(--display)}.studio-cover-fields>div>p,.studio-writing__heading p{margin:5px 0 0;color:var(--muted);font-size:.75rem;line-height:1.45}
+  .studio-writing{display:grid;gap:0;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--paper)}.studio-writing__heading{display:grid;gap:12px;padding:15px;border-bottom:1px solid var(--line);background:var(--surface)}
+  .studio-writing__tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.studio-writing__tools button,.studio-writing__upload{display:inline-flex;min-width:35px;height:34px;align-items:center;justify-content:center;gap:5px;padding:0 9px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-family:inherit;font-size:.74rem;font-weight:650;cursor:pointer}.studio-writing__tools button:hover,.studio-writing__upload:hover{border-color:var(--ember);color:var(--ember-ink)}
+  .studio-body{min-height:360px;padding:22px;font-family:var(--display);font-size:1rem;font-weight:400;line-height:1.7;outline:none}.studio-body:empty:before{color:var(--muted);content:attr(data-placeholder);pointer-events:none}.studio-body p{margin:0 0 1em}.studio-body h2,.studio-body h3{margin:1.3em 0 .5em;font-family:var(--display)}.studio-body img,.studio-body video{display:block;width:min(100%,680px);height:auto;margin:20px auto;border-radius:10px}.studio-drop-hint{margin:0;padding:0 15px 13px;color:var(--muted);font-size:.69rem}
+  .studio-upload{margin:0;color:var(--muted);font-size:.75rem}.studio-editor__actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-top:4px}.studio-delete{min-height:44px;margin-inline-start:auto;padding:0 13px;border:1px solid #e9c6c2;border-radius:9px;background:transparent;color:#aa342b;font-family:inherit;font-size:.79rem;font-weight:650;cursor:pointer}.studio-editor__notice{min-height:1.2em;margin:0;color:#b42318;font-size:.8rem}.studio-editor__notice[data-kind="success"]{color:#247044}
+  @media(max-width:980px){.studio-layout{grid-template-columns:1fr}.studio-library{order:2}.studio-editor{order:1}.studio-hero{padding-block:46px 32px}}
+  @media(max-width:620px){.studio{width:calc(100% - 32px);padding-top:18px}.studio-hero{align-items:flex-start;flex-direction:column;gap:22px}.studio-hero h1{font-size:clamp(2.75rem,13vw,4rem)}.studio-hero__action{width:100%;justify-items:start;grid-template-columns:1fr auto;align-items:center}.studio-layout{gap:16px}.studio-section-heading{align-items:flex-start;flex-direction:column}.studio-library__hint{text-align:left}.studio-post{grid-template-columns:68px minmax(0,1fr);gap:11px}.studio-post__actions{flex-wrap:wrap}.studio-editor__row{grid-template-columns:1fr}.studio-editor{padding:16px}.studio-body{min-height:300px;padding:17px}.studio-header__actions{gap:12px}}
+  @media(max-width:400px){.studio-topline{align-items:flex-start}.studio-header__actions{flex-direction:column;align-items:flex-end;gap:8px}.studio-hero__action{grid-template-columns:1fr}.studio-post__meta{align-items:flex-start;flex-direction:column;gap:5px}.studio-editor__actions .button{flex:1}.studio-delete{margin-inline-start:0}}
+</style>

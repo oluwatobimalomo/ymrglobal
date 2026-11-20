@@ -18,6 +18,12 @@ Stop the server with `Ctrl+C`. To create a production build locally, run `npm ru
 
 The prayer request and testimony forms submit to Supabase Postgres through its REST Data API. Create a Supabase project, run `supabase/schema.sql` in its SQL Editor, then set `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` in `.env` for local builds and in the production host's build environment. Rebuild and redeploy after setting the variables. The publishable key is intentionally public; never place a Supabase secret/service-role key in a `PUBLIC_` variable or browser code. RLS and the grants in the schema allow anonymous inserts only and deny public reads, updates, and deletes. Review records in the Supabase dashboard.
 
+## Viewing centres and YMR Global Blog
+
+Run `supabase/viewing-centre-and-blog.sql` after the existing registration, team inbox, and Secretariat migrations. Public visitors can submit viewing-centre interest; only Secretariat users can read those responses in the new **Viewing Centres** tab at `/secretariat/inbox`. Create writer accounts in Supabase Auth and add their IDs to `public.team_access` with the `writer` team to grant access to `/blog/manage`. Secretariat accounts can manage blog posts too. The migration creates the public `ymr-blog-media` bucket for uploaded article images, image sequences, and video. Never put a service-role key in the site.
+
+The blog reads published posts from Supabase immediately. The site is statically hosted, so each deployment also generates crawlable `/blog/{slug}` article pages and includes them in `sitemap.xml` from posts available during that build. The migration seeds the first three published articles. Published content will appear in the live blog right away; redeploy the site after publishing to create/update its static, SEO-indexable article page and sitemap entry.
+
 Prayer requests are stored in `public.prayer_requests`. Testimonies are stored in `public.testimony_submissions` with a `pending` review status and are not published automatically. Configure Supabase email/database backups and decide the retention period and access owners before launch. Public insert endpoints can receive spam; add a verification/rate-limiting layer (for example, a Supabase Edge Function with CAPTCHA verification) before promoting the live forms.
 
 ## Privacy and form submissions

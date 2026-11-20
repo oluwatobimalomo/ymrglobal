@@ -15,3 +15,15 @@ import Icon from '../components/Icon.astro';
     </section>
   </main>
 </SiteLayout>
+
+<script is:inline>
+  // Article routes are generated at build time. When a newer published post
+  // has not been included in that build, send its clean URL to the dynamic
+  // reader so it can load the post from the content store.
+  const articlePath = window.location.pathname.match(/^\/blog\/([^/]+)\/?$/);
+  const reservedBlogPaths = new Set(['read', 'manage']);
+
+  if (articlePath && !reservedBlogPaths.has(articlePath[1].toLowerCase())) {
+    window.location.replace(`/blog/read?slug=${encodeURIComponent(articlePath[1])}`);
+  }
+</script>

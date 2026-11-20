@@ -1,0 +1,86 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import BlogFooter from '../components/BlogFooter.astro';
+import { getPublishedBlogPosts } from '../data/blog-posts.js';
+const endpoint = `${(import.meta.env.PUBLIC_SUPABASE_URL || '').trim().replace(/\/$/, '')}/rest/v1/blog_posts`;
+const apiKey = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || '').trim();
+const initialPosts = await getPublishedBlogPosts();
+---
+
+<SiteLayout title="Stories & Updates" description="Stories, reflections, and updates from Young Ministers Retreat Global." current="blog">
+  <main id="main" class="blog-page" data-blog-list data-endpoint={endpoint} data-api-key={apiKey}>
+    <section class="blog-masthead"><div class="blog-masthead__copy"><span class="section-index">THE YMR BLOG · STORIES &amp; UPDATES</span><h1>Faith in motion.<br /><span>Stories that stay.</span></h1><p>Reflections, testimonies, and notes from a generation being set on fire for Jesus.</p></div></section>
+    <section class="blog-content"><div class="blog-section-heading"><div><span class="section-index">FRESH FROM THE BLOG</span><h2>Latest stories</h2></div><a class="blog-all-link" href="#stories">Explore all <span aria-hidden="true">↓</span></a></div><div class="blog-filters" data-categories aria-label="Filter articles"><button type="button" aria-pressed="true" data-category="All">All stories</button></div><div class="blog-grid" id="stories" data-posts aria-live="polite">{initialPosts.length ? initialPosts.map((post, index) => <a class="blog-card" href={`/blog/${encodeURIComponent(post.slug)}`}><div class="blog-card__image">{post.cover_image ? <img src={post.cover_image} alt="" loading={index === 0 ? 'eager' : 'lazy'} /> : <span class="blog-card__placeholder" aria-hidden="true">{(post.category || 'YMR').slice(0, 2).toUpperCase()}</span>}</div><div class="blog-card__meta"><span class="blog-card__category">{post.category || 'YMR Blog'}</span><time>{post.published_at ? new Date(post.published_at).toLocaleDateString('en', { year: 'numeric', month: 'short', day: 'numeric' }) : ''}</time></div><h3>{post.title}</h3><p>{post.excerpt}</p><span class="blog-card__read">Read story <span aria-hidden="true">→</span></span></a>) : <p class="blog-loading">The YMR Blog is getting ready. Check back soon for new stories and updates.</p>}</div><p class="blog-empty" data-empty hidden>No stories in this category yet. Check back soon.</p></section>
+  </main>
+  <BlogFooter />
+</SiteLayout>
+
+<script>
+  const root = document.querySelector('[data-blog-list]');
+  if (root instanceof HTMLElement) {
+    const endpoint = root.dataset.endpoint || '';
+    const key = root.dataset.apiKey || '';
+    const grid = root.querySelector('[data-posts]');
+    const empty = root.querySelector('[data-empty]');
+    const categoryNav = root.querySelector('[data-categories]');
+    let posts = [];
+    let category = 'All';
+    const safe = (value) => String(value || '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+    const render = () => {
+      const filtered = posts.filter((post) => category === 'All' || post.category === category);
+      empty.hidden = filtered.length > 0;
+      if (!filtered.length) { grid.innerHTML = ''; return; }
+      grid.innerHTML = filtered.map((post) => `<a class="blog-card" href="/blog/${encodeURIComponent(post.slug)}"><div class="blog-card__image">${post.cover_image ? `<img src="${safe(post.cover_image)}" alt="" loading="lazy">` : `<span class="blog-card__placeholder" aria-hidden="true">${safe((post.category || 'YMR').slice(0,2).toUpperCase())}</span>`}</div><div class="blog-card__meta"><span class="blog-card__category">${safe(post.category || 'YMR Blog')}</span><time>${post.published_at ? new Date(post.published_at).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}) : ''}</time></div><h3>${safe(post.title)}</h3><p>${safe(post.excerpt)}</p><span class="blog-card__read">Read story <span aria-hidden="true">→</span></span></a>`).join('');
+    };
+    const load = async () => {
+      if (!endpoint || !key) { grid.innerHTML = '<p class="blog-loading">Stories will appear here soon.</p>'; return; }
+      try {
+        const response = await fetch(`${endpoint}?select=id,title,slug,excerpt,category,cover_image,published_at&status=eq.published&order=published_at.desc`, { headers: { apikey: key } });
+        if (!response.ok) throw new Error('Unable to load stories');
+        posts = await response.json();
+        const categories = [...new Set(posts.map((post) => post.category).filter(Boolean))];
+        categoryNav.insertAdjacentHTML('beforeend', categories.map((item) => `<button type="button" aria-pressed="false" data-category="${safe(item)}">${safe(item)}</button>`).join(''));
+        categoryNav.addEventListener('click', (event) => { const button = event.target.closest('[data-category]'); if (!button) return; category = button.dataset.category; categoryNav.querySelectorAll('button').forEach((entry) => entry.setAttribute('aria-pressed', String(entry === button))); render(); });
+        render();
+      } catch { grid.innerHTML = '<p class="blog-loading">Stories are taking a moment to load. Please refresh shortly.</p>'; }
+    };
+    load();
+  }
+</script>
+
+<style is:global>
+  .blog-page{color:var(--ink)}
+  .blog-masthead{width:min(calc(100% - var(--page-gutter)*2),var(--content-width));margin:0 auto;padding:clamp(56px,8vw,104px) 0 clamp(48px,6vw,76px);border-bottom:1px solid var(--line)}
+  .blog-masthead__copy{max-width:860px}
+  .blog-masthead h1{margin:18px 0;font:650 clamp(3.4rem,8vw,7rem)/.9 var(--display);letter-spacing:-.08em;text-wrap:balance}
+  .blog-masthead h1 span{color:var(--ember-ink)}
+  .blog-masthead__copy>p{max-width:620px;color:var(--muted);font-size:clamp(1.05rem,1.8vw,1.35rem);line-height:1.6;text-wrap:pretty}
+  .blog-content{width:min(calc(100% - var(--page-gutter)*2),var(--content-width));margin:0 auto;padding:clamp(44px,6vw,72px) 0 48px}
+  .blog-section-heading{display:flex;align-items:end;justify-content:space-between;gap:20px}
+  .blog-section-heading h2{margin:8px 0 0;font:620 clamp(2rem,4vw,3rem)/1 var(--display);letter-spacing:-.06em}
+  .blog-all-link{display:inline-flex;gap:10px;align-items:center;color:var(--ember-ink);font-size:.86rem;font-weight:700}
+  .blog-filters{display:flex;gap:8px;overflow:auto;margin:24px 0 28px;padding:2px 0 6px;scrollbar-width:thin}
+  .blog-filters button{min-height:40px;padding:8px 15px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--muted);font-family:inherit;font-size:.84rem;font-weight:600;white-space:nowrap;cursor:pointer;transition:background-color .15s ease,color .15s ease,border-color .15s ease}
+  .blog-filters button:hover{border-color:var(--ink);color:var(--ink)}
+  .blog-filters button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+  .blog-filters button:focus-visible,.blog-card:focus-visible{outline:3px solid var(--ember);outline-offset:3px}
+  .blog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:24px}
+  .blog-card{display:flex;min-width:0;height:100%;flex-direction:column;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--paper);color:var(--ink);text-decoration:none;transition:transform .18s ease,border-color .18s ease}
+  .blog-card__image{position:relative;display:block;width:100%;aspect-ratio:16/10;overflow:hidden;background:var(--surface)}
+  .blog-card__image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .25s ease}
+  .blog-card:hover .blog-card__image img{transform:scale(1.025)}
+  .blog-card__placeholder{display:grid;width:100%;height:100%;place-items:center;background:linear-gradient(135deg,color-mix(in srgb,var(--ember) 26%,var(--surface)),var(--deep-surface));color:var(--cream);font:600 3rem var(--display)}
+  .blog-card__meta{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px 0;color:var(--muted);font-size:.75rem;line-height:1.35}
+  .blog-card__category{color:var(--ember-ink);font-size:.69rem;font-weight:750;letter-spacing:.07em;text-transform:uppercase}
+  .blog-card__meta time{flex:0 0 auto;white-space:nowrap}
+  .blog-card h3{margin:12px 20px 0;font:620 clamp(1.25rem,1.7vw,1.65rem)/1.14 var(--display);letter-spacing:-.035em;text-wrap:balance}
+  .blog-card>p{margin:10px 20px 0;color:var(--muted);font-size:.92rem;line-height:1.55;text-wrap:pretty}
+  .blog-card__read{display:flex;gap:8px;align-items:center;margin:auto 20px 18px;padding-top:22px;color:var(--ember-ink);font-size:.84rem;font-weight:700}
+  .blog-loading,.blog-empty{grid-column:1/-1;min-height:100px;color:var(--muted);line-height:1.6}
+  .blog-newsletter{display:grid;justify-items:center;padding:clamp(44px,8vw,84px) var(--page-gutter);background:var(--surface);text-align:center}
+  .blog-newsletter h2{margin:12px 0;font:620 clamp(2.2rem,5vw,4rem)/.98 var(--display);letter-spacing:-.07em}
+  .blog-newsletter p{max-width:480px;margin:0 0 22px;color:var(--muted);line-height:1.55}
+  @media(max-width:900px){.blog-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}
+  @media(max-width:580px){.blog-masthead{padding-block:46px}.blog-masthead h1{font-size:clamp(3rem,13vw,4.2rem)}.blog-section-heading{align-items:flex-start}.blog-all-link{padding-top:8px}.blog-grid{grid-template-columns:1fr;gap:16px}.blog-card h3{font-size:1.45rem}}
+  @media(prefers-reduced-motion:reduce){.blog-card,.blog-card__image img,.blog-filters button{transition:none}}
+</style>

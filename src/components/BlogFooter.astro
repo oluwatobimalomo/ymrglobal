@@ -1,0 +1,40 @@
+---
+import Countdown from './Countdown.astro';
+---
+
+<section class="blog-footer-cta" aria-labelledby="blog-footer-title">
+  <div class="blog-footer-cta__inner">
+    <div class="blog-footer-cta__copy">
+      <span class="section-index">A LITTLE GOOD NEWS, NOW AND THEN</span>
+      <h2 id="blog-footer-title">Keep the <span>fire</span> close.</h2>
+      <p>Follow YMR for announcements, testimonies, and stories from across the movement.</p>
+    </div>
+    <aside class="blog-footer-cta__event" aria-label="Register for the tenth edition of YMR">
+      <div class="blog-footer-cta__event-copy"><span class="blog-footer-cta__edition">CITY TAKERS · 10TH EDITION</span><h3>YMR Global Revival 2026</h3><p>December 26–30 · Redemption City</p></div>
+      <Countdown />
+      <a href="/register" class="blog-footer-cta__register">Register for YMR 2026</a>
+    </aside>
+  </div>
+</section>
+
+<style is:global>
+  .blog-footer-cta{border-top:1px solid var(--line);background:color-mix(in srgb,var(--ember) 5%,var(--surface));color:var(--ink)}
+  .blog-footer-cta__inner{display:grid;width:min(calc(100% - var(--page-gutter)*2),var(--content-width));grid-template-columns:minmax(0,1fr) fit-content(680px);align-items:center;gap:clamp(26px,6vw,84px);margin:0 auto;padding:clamp(38px,6vw,64px) 0}
+  .blog-footer-cta__copy h2{margin:12px 0 10px;font:620 clamp(2.2rem,4.5vw,3.8rem)/.98 var(--display);letter-spacing:-.07em;text-wrap:balance}
+  .blog-footer-cta__copy h2 span{color:var(--ember-ink)}
+  .blog-footer-cta__copy>p{max-width:480px;margin:0;color:var(--muted);font-size:clamp(.96rem,1.5vw,1.08rem);line-height:1.55;text-wrap:pretty}
+  .blog-footer-cta__event{display:grid;width:fit-content;max-width:100%;justify-self:end;grid-template-columns:minmax(0,1fr);align-items:center;gap:20px;padding:clamp(20px,3vw,30px);border:1px solid color-mix(in srgb,var(--ember) 24%,var(--line));border-radius:18px;background:var(--paper);box-shadow:0 12px 32px rgba(25,22,19,.05)}
+  .blog-footer-cta__edition{color:var(--ember-ink);font-size:.65rem;font-weight:850;letter-spacing:.13em}
+  .blog-footer-cta__event-copy h3{margin:7px 0 4px;font:650 clamp(1.25rem,2.1vw,1.7rem)/1.08 var(--display);letter-spacing:-.045em}
+  .blog-footer-cta__event-copy p{margin:0;color:var(--muted);font-size:.82rem}
+  .blog-footer-cta__event .countdown{grid-column:1/-1;justify-content:flex-start;gap:clamp(6px,1.2vw,14px);padding:15px 0 3px;border-top:1px solid var(--line)}
+  .blog-footer-cta__event .countdown__unit{min-width:clamp(42px,5vw,58px);gap:5px}
+  .blog-footer-cta__event .countdown__unit>span{color:var(--ink);font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.055em}
+  .blog-footer-cta__event .countdown__unit small{font-size:.6rem}
+  .blog-footer-cta__event .countdown__separator{color:var(--ember-ink);font-size:1.15rem}
+  .blog-footer-cta__register{display:inline-flex;width:max-content;max-width:100%;min-height:46px;align-items:center;justify-content:center;justify-self:start;grid-column:1/-1;padding:0 20px;border-radius:9px;background:var(--ember);color:#171411;font-size:.85rem;font-weight:750;text-decoration:none;white-space:nowrap;transition:background .16s ease,transform .16s ease}
+  .blog-footer-cta__register:hover{transform:translateY(-1px);background:var(--gold)}
+  @media(max-width:740px){.blog-footer-cta__inner{grid-template-columns:1fr;gap:22px}.blog-footer-cta__event{justify-self:start}}
+  @media(max-width:430px){.blog-footer-cta__event{grid-template-columns:1fr;gap:16px}.blog-footer-cta__event .countdown{grid-column:auto}.blog-footer-cta__register{grid-column:auto}}
+  @media(prefers-reduced-motion:reduce){.blog-footer-cta__register{transition:none}}
+</style>

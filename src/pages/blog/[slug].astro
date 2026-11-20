@@ -1,0 +1,20 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import BlogFooter from '../../components/BlogFooter.astro';
+import '../../styles/blog-article.css';
+import { getPublishedBlogPosts, renderBlogMarkdown } from '../../data/blog-posts.js';
+export async function getStaticPaths() {
+  const posts = await getPublishedBlogPosts();
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+const { post } = Astro.props;
+const canonicalUrl = new URL(`/blog/${post.slug}`, Astro.site);
+const imageUrl = post.cover_image ? new URL(post.cover_image, Astro.site) : new URL('/images/brand/ymr-social-preview.png', Astro.site);
+const articleData = { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: post.title, description: post.excerpt, datePublished: post.published_at, image: imageUrl.href, mainEntityOfPage: canonicalUrl.href, publisher: { '@type': 'Organization', name: 'YMR Global', url: Astro.site } };
+---
+<SiteLayout title={post.title} description={post.excerpt} canonical={canonicalUrl} ogImage={imageUrl} ogType="article">
+  <Fragment slot="head"><script type="application/ld+json" set:html={JSON.stringify(articleData).replaceAll('<', '\\u003c')} /></Fragment>
+  <main id="main" class="article-page article-page--static"><a class="article-back" href="/blog">← All stories</a><article><header class="article-header"><span class="section-index">{post.category}</span><h1>{post.title}</h1><p>{post.excerpt}</p><time datetime={post.published_at}>{new Date(post.published_at).toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' })}</time></header>{post.cover_image && <figure class="article-cover"><img src={post.cover_image} alt={post.cover_alt || ''} fetchpriority="high" /></figure>}<div class="article-body" set:html={renderBlogMarkdown(post.body)} /><a class="article-back article-back--bottom" href="/blog">← More stories</a></article></main>
+  <BlogFooter />
+</SiteLayout>
+
