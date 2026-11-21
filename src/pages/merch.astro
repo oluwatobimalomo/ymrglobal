@@ -1,0 +1,102 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const storeUrl = 'https://ymrglobalmerch.com/';
+const products = [
+  { name: 'City Takers Tracksuit', category: 'City Takers', image: '/images/merch/city-takers-tracksuit.webp', alt: 'Brown City Takers sweatshirt and matching joggers' },
+  { name: 'By the Spirit Tee', category: 'Statement Tees', image: '/images/merch/by-the-spirit-tee.webp', alt: 'Black washed YMR T-shirt with By the Spirit artwork on the back' },
+  { name: 'Every Nation Tee', category: 'Statement Tees', image: '/images/merch/every-nation-tee.webp', alt: 'Pink YMR T-shirt with Every Nation, Every Tribe, Every Tongue, Every People, Every Land for Jesus artwork' },
+  { name: 'YMR Revival Cap', category: 'Accessories', image: '/images/merch/ymr-revival-cap.webp', alt: 'Navy cap embroidered with the YMR Global Revival logo' },
+  { name: 'YMR Canvas Tote', category: 'Accessories', image: '/images/merch/ymr-canvas-tote.webp', alt: 'Black canvas tote printed with the YMR Global Revival logo' },
+  { name: 'Salvation Tee', category: 'Statement Tees', image: '/images/merch/salvation-tee.webp', alt: 'Blue YMR T-shirt with a cross and salvation message on the back' },
+  { name: 'Revival Bottles', category: 'Accessories', image: '/images/merch/ymr-revival-bottles.webp', alt: 'YMR Global Revival bottles in black, white, green, navy and gold' },
+  { name: 'City Takers Wristbands', category: 'City Takers', image: '/images/merch/city-takers-wristbands.webp', alt: 'Black wristbands printed with YMR 10 and City Takers' },
+  { name: 'City Takers Tee', category: 'City Takers', image: '/images/merch/city-takers-tee.webp', alt: 'Green washed City Takers T-shirt with matching front and back artwork' },
+  { name: 'Go Ye Tee', category: 'Statement Tees', image: '/images/merch/go-ye-tee.webp', alt: 'Black washed YMR T-shirt with Go Ye and Mark 16:15 artwork on the back' },
+];
+---
+
+<SiteLayout title="YMR Merch" description="Explore official YMR Global Revival and City Takers merchandise. Shop tees, accessories, and more at the YMR Merch store." current="merch">
+  <main id="main" class="merch-page">
+    <section class="merch-hero" aria-labelledby="merch-title">
+      <div class="merch-hero__copy">
+        <p class="merch-eyebrow"><span aria-hidden="true"></span> OFFICIAL YMR MERCHANDISE</p>
+        <h1 id="merch-title">Wear the <span>message.</span></h1>
+        <p class="merch-hero__intro">Carry the spirit of YMR with you. Explore the official collection, then order directly from the YMR Merch store.</p>
+        <a class="merch-order" href={storeUrl} target="_blank" rel="noopener noreferrer">Order Now</a>
+      </div>
+      <figure class="merch-hero__feature">
+        <img src="/images/merch/city-takers-tracksuit.webp" alt="Brown City Takers sweatshirt and matching joggers" width="640" height="698" fetchpriority="high" />
+        <figcaption><span>FEATURED COLLECTION</span><strong>City Takers · 2026</strong></figcaption>
+      </figure>
+      <span class="merch-hero__edition" aria-hidden="true">YMR · 10 YEARS · 2026</span>
+    </section>
+
+    <section class="merch-collection" aria-labelledby="collection-title">
+      <div class="merch-section-heading">
+        <div><p class="merch-eyebrow"><span aria-hidden="true"></span> THE OFFICIAL COLLECTION</p><h2 id="collection-title">Made to <span>carry the fire.</span></h2></div>
+        <p>From City Takers pieces to everyday reminders of the message, find your YMR look.</p>
+      </div>
+      <div class="merch-grid">
+        {products.map((product, index) => (
+          <article class="merch-card">
+            <div class="merch-card__image"><img src={product.image} alt={product.alt} width="640" height="698" loading={index < 3 ? 'eager' : 'lazy'} decoding="async" /></div>
+            <div class="merch-card__details"><span>{product.category}</span><h3>{product.name}</h3></div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="merch-cta" aria-labelledby="merch-cta-title">
+      <p class="merch-eyebrow"><span aria-hidden="true"></span> OFFICIAL YMR MERCH STORE</p>
+      <h2 id="merch-cta-title">Find your next <span>favourite.</span></h2>
+      <p>Visit the official store to see what’s available and place your order.</p>
+      <a class="merch-order merch-order--light" href={storeUrl} target="_blank" rel="noopener noreferrer">Order Now</a>
+    </section>
+  </main>
+</SiteLayout>
+
+<style>
+  .merch-page{color:var(--ink)}
+  .merch-hero{position:relative;display:grid;width:min(calc(100% - var(--page-gutter)*2),var(--content-width));min-height:570px;grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);align-items:center;gap:clamp(40px,8vw,118px);margin:0 auto;padding:clamp(54px,8vw,104px) 0 clamp(62px,8vw,104px);overflow:hidden}
+  .merch-hero__copy{position:relative;z-index:1;max-width:690px}
+  .merch-eyebrow{display:flex;align-items:center;gap:10px;margin:0 0 18px;color:var(--muted);font-size:.68rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+  .merch-eyebrow>span{width:22px;height:2px;background:var(--ember)}
+  .merch-hero h1{max-width:760px;margin:0;font:650 clamp(3.8rem,9vw,8rem)/.88 var(--display);letter-spacing:-.09em;text-wrap:balance}
+  .merch-hero h1 span,.merch-section-heading h2 span,.merch-cta h2 span{color:var(--ember-ink)}
+  .merch-hero__intro{max-width:540px;margin:25px 0 26px;color:var(--muted);font-size:clamp(1.05rem,1.7vw,1.3rem);line-height:1.6;text-wrap:pretty}
+  .merch-order{display:inline-flex;min-height:54px;align-items:center;justify-content:center;gap:16px;padding:0 26px;border:1px solid var(--ember);border-radius:var(--radius-control);background:var(--ember);color:#211d1a;font-size:.98rem;font-weight:800;text-decoration:none;transition:transform .16s ease,background-color .16s ease,box-shadow .16s ease}
+  .merch-order:hover{transform:translateY(-2px);background:var(--gold);box-shadow:0 10px 24px color-mix(in srgb,var(--ember) 24%,transparent)}
+  .merch-order span{font-size:1.1em}
+  .merch-hero__note{margin:12px 0 0;color:var(--muted);font-size:.78rem;line-height:1.5}
+  .merch-hero__feature{position:relative;z-index:1;justify-self:end;width:min(100%,430px);margin:0;padding:10px;border:1px solid var(--line);border-radius:22px;background:var(--paper);box-shadow:0 22px 56px rgba(33,29,26,.09);transform:rotate(1.5deg)}
+  .merch-hero__feature img{display:block;width:100%;height:auto;aspect-ratio:640/698;object-fit:cover;border-radius:14px;background:#e9e6e1}
+  .merch-hero__feature figcaption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 8px 5px}
+  .merch-hero__feature figcaption span{color:var(--muted);font-size:.61rem;font-weight:800;letter-spacing:.12em}
+  .merch-hero__feature figcaption strong{color:var(--ember-ink);font-size:.78rem}
+  .merch-hero__edition{position:absolute;right:0;bottom:26px;color:var(--muted);font-size:.62rem;font-weight:750;letter-spacing:.16em}
+  .merch-collection{padding:clamp(56px,8vw,100px) var(--page-gutter) clamp(64px,9vw,112px);border-top:1px solid var(--line);background:var(--surface)}
+  .merch-section-heading{display:flex;width:min(100%,var(--content-width));align-items:end;justify-content:space-between;gap:32px;margin:0 auto 34px}
+  .merch-section-heading .merch-eyebrow{margin-bottom:10px}
+  .merch-section-heading h2,.merch-cta h2{margin:0;font:620 clamp(2.35rem,5.2vw,4.8rem)/.96 var(--display);letter-spacing:-.075em;text-wrap:balance}
+  .merch-section-heading>p{max-width:365px;margin:0 0 4px;color:var(--muted);font-size:.98rem;line-height:1.6}
+  .merch-grid{display:grid;width:min(100%,var(--content-width));grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin:0 auto}
+  .merch-card{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:15px;background:var(--paper);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+  .merch-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--ember) 50%,var(--line));box-shadow:0 12px 28px rgba(33,29,26,.08)}
+  .merch-card__image{overflow:hidden;aspect-ratio:640/698;background:#e9e6e1}
+  .merch-card__image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+  .merch-card:hover .merch-card__image img{transform:scale(1.025)}
+  .merch-card__details{padding:16px 17px 19px}
+  .merch-card__details>span{color:var(--ember-ink);font-size:.62rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+  .merch-card h3{margin:7px 0 0;font:620 clamp(1.05rem,1.4vw,1.3rem)/1.18 var(--display);letter-spacing:-.035em}
+  .merch-cta{display:grid;justify-items:center;padding:clamp(58px,8vw,96px) var(--page-gutter);background:var(--deep-surface);color:var(--cream);text-align:center}
+  .merch-cta .merch-eyebrow{color:#c7bdb2}
+  .merch-cta h2{max-width:800px}
+  .merch-cta h2 span{color:var(--gold)}
+  .merch-cta>p:not(.merch-eyebrow){max-width:490px;margin:17px 0 25px;color:#c7bdb2;font-size:1rem;line-height:1.6}
+  .merch-order--light{min-width:170px}
+  @media(max-width:1000px){.merch-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.merch-hero{gap:44px}}
+  @media(max-width:700px){.merch-hero{min-height:0;grid-template-columns:1fr;gap:30px;padding:50px 0 68px}.merch-hero h1{font-size:clamp(3.45rem,14vw,6rem)}.merch-hero__intro{margin-top:18px}.merch-hero__feature{width:min(82%,390px);justify-self:center}.merch-hero__edition{bottom:18px}.merch-section-heading{align-items:flex-start;flex-direction:column;gap:14px;margin-bottom:25px}.merch-section-heading>p{max-width:480px}.merch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.merch-card__details{padding:12px 12px 15px}.merch-card h3{font-size:1rem}}
+  @media(max-width:390px){.merch-grid{grid-template-columns:1fr}.merch-order{min-height:50px;padding-inline:22px}}
+  @media(prefers-reduced-motion:reduce){.merch-order,.merch-card,.merch-card__image img{transition:none}.merch-order:hover,.merch-card:hover,.merch-card:hover .merch-card__image img{transform:none}}
+</style>
